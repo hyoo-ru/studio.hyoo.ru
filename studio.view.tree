@@ -25,7 +25,7 @@ $hyoo_mol_studio $mol_book2
 						<= Source $mol_textarea
 							sidebar_showed true
 							value?val <=> source?val \
-								\$my $mol_view
+								\$hyoo_mol_studio_example $mol_view
 								\
 		<= Preview $mol_frame
 			uri <= pack
