@@ -14,6 +14,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_offline(uri?: string): void;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     const $mol_ambient_ref: unique symbol;
     type $mol_ambient_context = $;
     function $mol_ambient(this: $ | void, overrides: Partial<$>): $;
@@ -2115,13 +2122,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    function $mol_offline(uri?: string): void;
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_card extends $mol_list {
         attr(): {
             mol_card_status_type: string;
@@ -2654,14 +2654,6 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_row extends $mol_view {
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_hor extends $mol_view {
     }
 }
@@ -2927,6 +2919,14 @@ declare namespace $.$$ {
     class $mol_calendar_demo_simple extends $.$mol_calendar_demo_simple {
         month_name(): string;
     }
+}
+
+declare namespace $ {
+    class $mol_row extends $mol_view {
+    }
+}
+
+declare namespace $ {
 }
 
 declare namespace $ {
@@ -8098,13 +8098,18 @@ declare namespace $ {
         Preview_open(): $$.$mol_link;
         pack(val?: any): any;
         Pack(): $$.$mol_string;
-        self(val?: any): any;
-        Self(): $$.$mol_string;
+        Pack_field(): $mol_form_field;
         base(val?: any): any;
         base_options(): readonly string[];
         Base(): $$.$mol_select;
+        Base_field(): $mol_form_field;
+        self(val?: any): any;
+        Self(): $$.$mol_string;
+        Self_field(): $mol_form_field;
+        Classes(): $mol_view;
         source(val?: any): any;
         Source(): $$.$mol_textarea;
+        Source_field(): $mol_form_field;
         Edit_form(): $$.$mol_list;
         Edit(): $$.$mol_page;
         preview_html(): string;
@@ -8118,7 +8123,7 @@ declare namespace $.$$ {
 declare namespace $.$$ {
     class $hyoo_mol_studio extends $.$hyoo_mol_studio {
         pack(next?: string): any;
-        source(next?: string): any;
+        source(next?: string): string;
         tree(next?: $mol_tree2): $mol_tree2;
         self(next?: string): string;
         base(next?: string): string;
