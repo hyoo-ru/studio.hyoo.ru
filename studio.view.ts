@@ -8,13 +8,13 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		source( next?: string ) {
+		source( next?: string ): string {
 			return this.$.$mol_state_arg.value( 'source', next ) ?? super.source()
 		}
 		
 		@ $mol_mem
 		tree( next?: $mol_tree2 ) {
-			const source = this.source( next && next.toString() )
+			const source = this.source( next && next.toString() ).replace( /\n?$/, '\n' )
 			return this.$.$mol_view_tree2_classes(
 				this.$.$mol_tree2_from_string( source )
 			).kids[0]
@@ -60,8 +60,8 @@ namespace $.$$ {
 					<body style="margin:0;height:100%;width:100%">
 						<script src="${ script }"></script>
 						<script>${ this.self_code() }</script>
-						<div mol_view_root="${ self }"></div>
-						<script>$mol_view.autobind()</script>
+						<div mol_view_root="${ self }" style="background:none"></div>
+						<script>setTimeout( ()=> $mol_view.autobind(), 1000 )</script>
 					</body>
 				</html>
 			`

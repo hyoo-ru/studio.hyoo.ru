@@ -15,18 +15,31 @@ $hyoo_mol_studio $mol_book2
 			body /
 				<= Edit_form $mol_list
 					rows /
-						<= Pack $mol_string
-							value?val <=> pack?val \http://mol.hyoo.ru
-						<= Self $mol_string
-							value?val <=> self?val \
-						<= Base $mol_select
-							value?val <=> base?val \
-							options <= base_options /string
-						<= Source $mol_textarea
-							sidebar_showed true
-							value?val <=> source?val \
-								\$hyoo_mol_studio_example $mol_view
-								\
+						<= Pack_field $mol_form_field
+							name @ \Donor App
+							control <= Pack $mol_string
+								hint \http://mol.hyoo.ru
+								value?val <=> pack?val \http://mol.hyoo.ru
+						<= Classes $mol_view
+							sub /
+								<= Base_field $mol_form_field
+									name @ \Base Component
+									control <= Base $mol_select
+										value?val <=> base?val \
+										options <= base_options /string
+								<= Self_field $mol_form_field
+									name @ \Custom Component
+									control <= Self $mol_string
+										hint \$hyoo_mol_studio_example
+										value?val <=> self?val \
+						<= Source_field $mol_form_field
+							name @ \View.Tree Source
+							control <= Source $mol_textarea
+								hint \$hyoo_mol_studio_example $mol_view
+								sidebar_showed true
+								value?val <=> source?val \
+									\$hyoo_mol_studio_example $mol_view
+									\
 		<= Preview $mol_frame
 			uri <= pack
 			html <= preview_html \
