@@ -9496,7 +9496,7 @@ var $;
         }
         Source_link() {
             const obj = new this.$.$mol_link_source();
-            obj.uri = () => "https://github.com/hyoo-ru/studio.mol.hyoo.ru";
+            obj.uri = () => "https://github.com/hyoo-ru/studio.hyoo.ru";
             return obj;
         }
         Lights() {
