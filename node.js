@@ -9433,6 +9433,30 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_play extends $.$mol_icon {
+        path() {
+            return "M8,5.14V19.14L19,12.14L8,5.14Z";
+        }
+    }
+    $.$mol_icon_play = $mol_icon_play;
+})($ || ($ = {}));
+//play.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_icon_play_circle extends $.$mol_icon {
+        path() {
+            return "M10,16.5V7.5L16,12M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2Z";
+        }
+    }
+    $.$mol_icon_play_circle = $mol_icon_play_circle;
+})($ || ($ = {}));
+//circle.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_search extends $.$mol_pop {
         query(val) {
             if (val !== undefined)
@@ -10044,6 +10068,21 @@ var $;
             ];
             return obj;
         }
+        Preview_open_icon() {
+            const obj = new this.$.$mol_icon_play_circle();
+            return obj;
+        }
+        Preview_open() {
+            const obj = new this.$.$mol_link();
+            obj.hint = () => this.$.$mol_locale.text('$hyoo_studio_Preview_open_hint');
+            obj.arg = () => ({
+                preview: ""
+            });
+            obj.sub = () => [
+                this.Preview_open_icon()
+            ];
+            return obj;
+        }
         pack(val) {
             if (val !== undefined)
                 return val;
@@ -10171,7 +10210,8 @@ var $;
             obj.tools = () => [
                 this.Source_link(),
                 this.Lights(),
-                this.Editor_toggle()
+                this.Editor_toggle(),
+                this.Preview_open()
             ];
             obj.body = () => [
                 this.Edit_form()
@@ -10212,6 +10252,12 @@ var $;
     __decorate([
         $.$mol_mem
     ], $hyoo_studio.prototype, "Editor_toggle", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio.prototype, "Preview_open_icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio.prototype, "Preview_open", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_studio.prototype, "pack", null);
@@ -11229,7 +11275,7 @@ var $;
     (function ($$) {
         class $hyoo_studio extends $.$hyoo_studio {
             preview_show() {
-                return true;
+                return this.$.$mol_state_arg.value('preview') !== null;
             }
             editor_raw() {
                 return this.$.$mol_state_arg.value('raw') !== null;
@@ -11249,7 +11295,8 @@ var $;
             library() {
                 const uri = new URL('web.view.tree', this.pack()).toString();
                 const str = this.$.$mol_fetch.text(uri);
-                const tree = this.$.$mol_tree2_from_string(str);
+                const predef = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tfield *\n\tdom_name \\\n\n';
+                const tree = this.$.$mol_tree2_from_string(predef + str);
                 const norm = this.$.$mol_view_tree2_normalize(tree);
                 return norm;
             }
@@ -11297,38 +11344,39 @@ var $;
 			`;
             }
             base_options() {
-                const win = this.Preview().window();
-                return Object.keys(win)
-                    .filter(name => typeof win[name] === 'function')
-                    .filter(name => win[name].prototype instanceof win['$mol_view']);
+                return this.library().kids.map(cl => cl.type).reverse();
             }
-            props_derived(base_name) {
+            props_all() {
                 const lib = this.library();
                 const all = new Map();
-                const collect = (name) => {
-                    const sup = lib.select(name, null).kids[0];
+                const add = (prop) => {
+                    const name = [...prop.type.matchAll(this.$.$mol_view_tree2_prop_signature)][0].groups.name;
+                    all.set(name, prop);
+                };
+                const collect = (cl) => {
+                    const sup = lib.select(cl, null).kids[0];
                     if (!sup)
                         return;
                     collect(sup.type);
                     for (const prop of sup.kids)
-                        all.set(prop.type, prop);
+                        add(prop);
                 };
-                collect(base_name);
-                return lib.list([...all.values()]);
+                collect(this.base());
+                for (const prop of this.$.$mol_view_tree2_class_props(this.tree()))
+                    add(prop);
+                return lib.list([...all.values()].reverse());
             }
-            prop_indexes_filtered() {
-                const all = this.$.$mol_view_tree2_class_props(this.tree());
-                return all.map((_, i) => i).filter($.$mol_match_text(this.prop_filter(), i => [all[i].type]));
+            prop_filtered() {
+                return this.props_all().kids.filter($.$mol_match_text(this.prop_filter(), prop => [prop.type]));
             }
             props() {
-                return this.prop_indexes_filtered().map(index => this.Prop(index));
+                return this.prop_filtered().map(prop => this.Prop(prop.type));
             }
-            prop_tree(index, next) {
-                let tree = this.tree();
+            prop_tree(prop, next) {
                 if (next !== undefined) {
-                    tree = this.tree(tree.insert(next, this.base(), index));
+                    this.tree(this.tree().insert(next, this.base(), prop));
                 }
-                return tree.select(this.base(), index).kids[0];
+                return this.props_all().select(prop).kids[0];
             }
             form_sections() {
                 return [
@@ -11370,11 +11418,11 @@ var $;
             $.$mol_mem
         ], $hyoo_studio.prototype, "base_options", null);
         __decorate([
-            $.$mol_mem_key
-        ], $hyoo_studio.prototype, "props_derived", null);
+            $.$mol_mem
+        ], $hyoo_studio.prototype, "props_all", null);
         __decorate([
             $.$mol_mem
-        ], $hyoo_studio.prototype, "prop_indexes_filtered", null);
+        ], $hyoo_studio.prototype, "prop_filtered", null);
         __decorate([
             $.$mol_mem
         ], $hyoo_studio.prototype, "props", null);

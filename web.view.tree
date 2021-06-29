@@ -584,6 +584,10 @@ $mol_icon_card $mol_icon path \M20,20H4C2.9,20 2,19.1 2,18V6C2,4.9 2.9,4 4,4H20C
 
 $mol_icon_card_text $mol_icon path \M20,20H4C2.9,20 2,19.1 2,18V6C2,4.9 2.9,4 4,4H20C21.1,4 22,4.9 22,6V18C22,19.1 21.1,20 20,20M5,13V15H16V13H5M5,9V11H19V9H5Z
 
+$mol_icon_play $mol_icon path \M8,5.14V19.14L19,12.14L8,5.14Z
+
+$mol_icon_play_circle $mol_icon path \M10,16.5V7.5L16,12M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2Z
+
 $mol_search $mol_pop
 	query?val \
 	suggests /string
@@ -655,7 +659,7 @@ $hyoo_studio $mol_book2
 					arg * raw \
 					sub /
 						<= Editor_toggle_icon $mol_icon_card_text
-				- <= Preview_open $mol_link
+				<= Preview_open $mol_link
 					hint @ \Show Preview
 					arg * preview \
 					sub /

@@ -2911,6 +2911,18 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_play extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_play_circle extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_search extends $mol_pop {
         query(val?: any): string;
         suggests(): readonly string[];
@@ -3029,6 +3041,8 @@ declare namespace $ {
         Lights(): $$.$mol_lights_toggle;
         Editor_toggle_icon(): $mol_icon_card_text;
         Editor_toggle(): $$.$mol_link;
+        Preview_open_icon(): $mol_icon_play_circle;
+        Preview_open(): $$.$mol_link;
         pack(val?: any): string;
         Pack(): $mol_string_button;
         Pack_field(): $mol_form_field;
@@ -3161,10 +3175,10 @@ declare namespace $.$$ {
         preview_html(): string;
         self_code(): string;
         base_options(): string[];
-        props_derived(base_name: string): $mol_tree2;
-        prop_indexes_filtered(): number[];
+        props_all(): $mol_tree2;
+        prop_filtered(): $mol_tree2[];
         props(): $hyoo_studio_prop[];
-        prop_tree(index: number, next?: $mol_tree2): $mol_tree2;
+        prop_tree(prop: string, next?: $mol_tree2): $mol_tree2;
         form_sections(): ($mol_list | $mol_form_field)[];
     }
 }
