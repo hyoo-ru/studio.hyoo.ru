@@ -2688,7 +2688,6 @@ declare namespace $ {
             list: string;
             dict: string;
             null: string;
-            "": string;
         };
         Type(): $$.$mol_select;
         value(): readonly any[];
@@ -3139,12 +3138,14 @@ declare namespace $.$$ {
         pages(): ($mol_page | $mol_frame)[];
         pack(next?: string): string;
         source(next?: string): string;
+        library(): $mol_tree2;
         tree(next?: $mol_tree2): $mol_tree2;
         self(next?: string): string;
         base(next?: string): string;
         preview_html(): string;
         self_code(): string;
         base_options(): string[];
+        props_derived(base_name: string): $mol_tree2;
         prop_indexes_filtered(): number[];
         props(): $hyoo_studio_prop[];
         prop_tree(index: number, next?: $mol_tree2): $mol_tree2;

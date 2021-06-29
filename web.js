@@ -8317,8 +8317,7 @@ var $;
                 bool: "flag",
                 list: "list",
                 dict: "dict",
-                null: "null",
-                "": "none"
+                null: "null"
             };
         }
         Type() {
@@ -10807,8 +10806,8 @@ var $;
         const { rem } = $.$mol_style_unit;
         $.$mol_style_define($$.$hyoo_studio, {
             Edit: {
-                minWidth: rem(30),
                 flex: {
+                    basis: rem(30),
                     shrink: 0,
                 },
                 Body: {
@@ -10830,6 +10829,9 @@ var $;
                         grow: 1,
                     },
                 },
+            },
+            Base: {
+                alignSelf: 'stretch',
             },
             Prop_filter: {
                 margin: $.$mol_gap.block,
@@ -10872,6 +10874,13 @@ var $;
             }
             source(next) {
                 return this.$.$mol_state_arg.value('source', next) ?? super.source();
+            }
+            library() {
+                const uri = new URL('web.view.tree', this.pack()).toString();
+                const str = this.$.$mol_fetch.text(uri);
+                const tree = this.$.$mol_tree2_from_string(str);
+                const norm = this.$.$mol_view_tree2_normalize(tree);
+                return norm;
             }
             tree(next) {
                 const source = this.source(next && next.toString()).replace(/\n?$/, '\n');
@@ -10922,6 +10931,20 @@ var $;
                     .filter(name => typeof win[name] === 'function')
                     .filter(name => win[name].prototype instanceof win['$mol_view']);
             }
+            props_derived(base_name) {
+                const lib = this.library();
+                const all = new Map();
+                const collect = (name) => {
+                    const sup = lib.select(name, null).kids[0];
+                    if (!sup)
+                        return;
+                    collect(sup.type);
+                    for (const prop of sup.kids)
+                        all.set(prop.type, prop);
+                };
+                collect(base_name);
+                return lib.list([...all.values()]);
+            }
             prop_indexes_filtered() {
                 const all = this.$.$mol_view_tree2_class_props(this.tree());
                 return all.map((_, i) => i).filter($.$mol_match_text(this.prop_filter(), i => [all[i].type]));
@@ -10956,6 +10979,9 @@ var $;
         ], $hyoo_studio.prototype, "source", null);
         __decorate([
             $.$mol_mem
+        ], $hyoo_studio.prototype, "library", null);
+        __decorate([
+            $.$mol_mem
         ], $hyoo_studio.prototype, "tree", null);
         __decorate([
             $.$mol_mem
@@ -10972,6 +10998,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $hyoo_studio.prototype, "base_options", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $hyoo_studio.prototype, "props_derived", null);
         __decorate([
             $.$mol_mem
         ], $hyoo_studio.prototype, "prop_indexes_filtered", null);

@@ -2673,7 +2673,6 @@ declare namespace $ {
             list: string;
             dict: string;
             null: string;
-            "": string;
         };
         Type(): $$.$mol_select;
         value(): readonly any[];
@@ -3059,6 +3058,37 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_dom_parse(text: string, type?: DOMParserSupportedType): Document;
+}
+
+declare namespace $ {
+    class $mol_fetch_response extends $mol_object2 {
+        readonly native: Response;
+        constructor(native: Response);
+        headers(): Headers;
+        mime(): string | null;
+        stream(): ReadableStream<Uint8Array> | null;
+        text(): string;
+        json(): unknown;
+        buffer(): ArrayBuffer;
+        xml(): Document;
+        xhtml(): Document;
+        html(): Document;
+    }
+    class $mol_fetch extends $mol_object2 {
+        static request: (input: RequestInfo, init?: RequestInit | undefined) => Response;
+        static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
+        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array> | null;
+        static text(input: RequestInfo, init?: RequestInit): string;
+        static json(input: RequestInfo, init?: RequestInit): unknown;
+        static buffer(input: RequestInfo, init?: RequestInit): void;
+        static xml(input: RequestInfo, init?: RequestInit): Document;
+        static xhtml(input: RequestInfo, init?: RequestInit): Document;
+        static html(input: RequestInfo, init?: RequestInit): Document;
+    }
+}
+
+declare namespace $ {
     class $mol_error_syntax extends SyntaxError {
         reason: string;
         line: string;
@@ -3124,12 +3154,14 @@ declare namespace $.$$ {
         pages(): ($mol_page | $mol_frame)[];
         pack(next?: string): string;
         source(next?: string): string;
+        library(): $mol_tree2;
         tree(next?: $mol_tree2): $mol_tree2;
         self(next?: string): string;
         base(next?: string): string;
         preview_html(): string;
         self_code(): string;
         base_options(): string[];
+        props_derived(base_name: string): $mol_tree2;
         prop_indexes_filtered(): number[];
         props(): $hyoo_studio_prop[];
         prop_tree(index: number, next?: $mol_tree2): $mol_tree2;

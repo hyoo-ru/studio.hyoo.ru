@@ -8524,8 +8524,7 @@ var $;
                 bool: "flag",
                 list: "list",
                 dict: "dict",
-                null: "null",
-                "": "none"
+                null: "null"
             };
         }
         Type() {
@@ -10275,6 +10274,162 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
+        const parser = new $.$mol_dom_context.DOMParser();
+        const doc = parser.parseFromString(text, type);
+        const error = doc.getElementsByTagName('parsererror');
+        if (error.length)
+            throw new Error(error[0].textContent);
+        return doc;
+    }
+    $.$mol_dom_parse = $mol_dom_parse;
+})($ || ($ = {}));
+//parse.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    class $mol_fetch_response extends $.$mol_object2 {
+        constructor(native) {
+            super();
+            this.native = native;
+        }
+        headers() {
+            return this.native.headers;
+        }
+        mime() {
+            return this.headers().get('content-type');
+        }
+        stream() {
+            return this.native.body;
+        }
+        text() {
+            const buffer = this.buffer();
+            const native = this.native;
+            const mime = native.headers.get('content-type') || '';
+            const [, charset] = /charset=(.*)/.exec(mime) || [, 'utf-8'];
+            const decoder = new TextDecoder(charset);
+            return decoder.decode(buffer);
+        }
+        json() {
+            const response = this.native;
+            const parse = $.$mol_fiber_sync(response.json);
+            return parse.call(response);
+        }
+        buffer() {
+            const response = this.native;
+            const parse = $.$mol_fiber_sync(response.arrayBuffer);
+            return parse.call(response);
+        }
+        xml() {
+            return $.$mol_dom_parse(this.text(), 'application/xml');
+        }
+        xhtml() {
+            return $.$mol_dom_parse(this.text(), 'application/xhtml+xml');
+        }
+        html() {
+            return $.$mol_dom_parse(this.text(), 'text/html');
+        }
+    }
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "stream", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "text", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "json", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "buffer", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "xml", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "xhtml", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch_response.prototype, "html", null);
+    $.$mol_fetch_response = $mol_fetch_response;
+    class $mol_fetch extends $.$mol_object2 {
+        static response(input, init) {
+            const response = this.request(input, init);
+            if (Math.floor(response.status / 100) === 2)
+                return new $mol_fetch_response(response);
+            throw new Error(response.statusText || `HTTP Error ${response.status}`);
+        }
+        static stream(input, init) {
+            return this.response(input, init).stream();
+        }
+        static text(input, init) {
+            return this.response(input, init).text();
+        }
+        static json(input, init) {
+            return this.response(input, init).json();
+        }
+        static buffer(input, init) {
+            this.response(input, init).buffer();
+        }
+        static xml(input, init) {
+            return this.response(input, init).xml();
+        }
+        static xhtml(input, init) {
+            return this.response(input, init).xhtml();
+        }
+        static html(input, init) {
+            return this.response(input, init).html();
+        }
+    }
+    $mol_fetch.request = $.$mol_fiber_sync((input, init = {}) => {
+        if (typeof AbortController === 'function') {
+            var controller = new AbortController();
+            init.signal = controller.signal;
+            const fiber = $.$mol_fiber.current;
+            fiber.abort = () => {
+                if (fiber.cursor === -2)
+                    return true;
+                controller.abort();
+                return true;
+            };
+        }
+        let native = $.$mol_dom_context.fetch;
+        if (!native)
+            native = $node['node-fetch'];
+        return native(input, init);
+    });
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "response", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "stream", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "text", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "json", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "buffer", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "xml", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "xhtml", null);
+    __decorate([
+        $.$mol_fiber.method
+    ], $mol_fetch, "html", null);
+    $.$mol_fetch = $mol_fetch;
+})($ || ($ = {}));
+//fetch.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_error_syntax extends SyntaxError {
         constructor(reason, line, span) {
             super(`${reason}\n${span}\n${line.substring(0, span.col - 1).replace(/\S/g, ' ')}${''.padEnd(span.length, '!')}\n${line}`);
@@ -11014,8 +11169,8 @@ var $;
         const { rem } = $.$mol_style_unit;
         $.$mol_style_define($$.$hyoo_studio, {
             Edit: {
-                minWidth: rem(30),
                 flex: {
+                    basis: rem(30),
                     shrink: 0,
                 },
                 Body: {
@@ -11037,6 +11192,9 @@ var $;
                         grow: 1,
                     },
                 },
+            },
+            Base: {
+                alignSelf: 'stretch',
             },
             Prop_filter: {
                 margin: $.$mol_gap.block,
@@ -11079,6 +11237,13 @@ var $;
             }
             source(next) {
                 return this.$.$mol_state_arg.value('source', next) ?? super.source();
+            }
+            library() {
+                const uri = new URL('web.view.tree', this.pack()).toString();
+                const str = this.$.$mol_fetch.text(uri);
+                const tree = this.$.$mol_tree2_from_string(str);
+                const norm = this.$.$mol_view_tree2_normalize(tree);
+                return norm;
             }
             tree(next) {
                 const source = this.source(next && next.toString()).replace(/\n?$/, '\n');
@@ -11129,6 +11294,20 @@ var $;
                     .filter(name => typeof win[name] === 'function')
                     .filter(name => win[name].prototype instanceof win['$mol_view']);
             }
+            props_derived(base_name) {
+                const lib = this.library();
+                const all = new Map();
+                const collect = (name) => {
+                    const sup = lib.select(name, null).kids[0];
+                    if (!sup)
+                        return;
+                    collect(sup.type);
+                    for (const prop of sup.kids)
+                        all.set(prop.type, prop);
+                };
+                collect(base_name);
+                return lib.list([...all.values()]);
+            }
             prop_indexes_filtered() {
                 const all = this.$.$mol_view_tree2_class_props(this.tree());
                 return all.map((_, i) => i).filter($.$mol_match_text(this.prop_filter(), i => [all[i].type]));
@@ -11163,6 +11342,9 @@ var $;
         ], $hyoo_studio.prototype, "source", null);
         __decorate([
             $.$mol_mem
+        ], $hyoo_studio.prototype, "library", null);
+        __decorate([
+            $.$mol_mem
         ], $hyoo_studio.prototype, "tree", null);
         __decorate([
             $.$mol_mem
@@ -11179,6 +11361,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $hyoo_studio.prototype, "base_options", null);
+        __decorate([
+            $.$mol_mem_key
+        ], $hyoo_studio.prototype, "props_derived", null);
         __decorate([
             $.$mol_mem
         ], $hyoo_studio.prototype, "prop_indexes_filtered", null);
@@ -15166,21 +15351,6 @@ var $;
     $.$mol_view_tree_compile = $mol_view_tree_compile;
 })($ || ($ = {}));
 //tree.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    function $mol_dom_parse(text, type = 'application/xhtml+xml') {
-        const parser = new $.$mol_dom_context.DOMParser();
-        const doc = parser.parseFromString(text, type);
-        const error = doc.getElementsByTagName('parsererror');
-        if (error.length)
-            throw new Error(error[0].textContent);
-        return doc;
-    }
-    $.$mol_dom_parse = $mol_dom_parse;
-})($ || ($ = {}));
-//parse.js.map
 ;
 "use strict";
 var $;

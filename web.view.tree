@@ -539,8 +539,6 @@ $hyoo_studio_value $mol_view
 				list \list
 				dict \dict
 				null \null
-				\
-					\none
 
 $hyoo_studio_prop $mol_list
 	tree?val $mol_tree2_empty
