@@ -11224,7 +11224,7 @@ var $;
         $.$mol_style_define($$.$hyoo_studio, {
             Edit: {
                 flex: {
-                    basis: rem(30),
+                    basis: rem(40),
                     shrink: 0,
                 },
                 Body: {
