@@ -17,11 +17,11 @@ jobs:
       uses: hyoo-ru/mam_build@master2
       with:
         token: ${{ secrets.GH_PAT }}
-        package: 'hyoo/mol/studio'
+        package: 'hyoo/studio'
     
     - name: Deploy on GitHub Pages
       if: github.ref == 'refs/heads/master'
       uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
       with:
         repo-token: ${{ secrets.GH_PAT }}
-        site-directory: 'hyoo/mol/studio/-'
+        site-directory: 'hyoo/studio/-'
