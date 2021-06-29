@@ -6,7 +6,7 @@ $hyoo_studio $mol_book2
 			title @ \$mol Studio
 			tools /
 				<= Source_link $mol_link_source
-					uri \https://github.com/hyoo-ru/studio.mol.hyoo.ru
+					uri \https://github.com/hyoo-ru/studio.hyoo.ru
 				<= Lights $mol_lights_toggle
 				<= Editor_toggle $mol_link
 					hint @ \Change Editor
