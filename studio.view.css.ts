@@ -6,8 +6,8 @@ namespace $.$$ {
 		
 		Edit: {
 			
-			minWidth: rem(30),
 			flex: {
+				basis: rem(30),
 				shrink: 0,
 			},
 			
@@ -38,6 +38,10 @@ namespace $.$$ {
 				},
 			},
 			
+		},
+		
+		Base: {
+			alignSelf: 'stretch',
 		},
 		
 		Prop_filter: {

@@ -30,6 +30,15 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		library() {
+			const uri = new URL( 'web.view.tree', this.pack() ).toString()
+			const str = this.$.$mol_fetch.text( uri )
+			const tree = this.$.$mol_tree2_from_string( str )
+			const norm = this.$.$mol_view_tree2_normalize( tree )
+			return norm
+		}
+		
+		@ $mol_mem
 		tree( next?: $mol_tree2 ) {
 			
 			const source = this.source( next && next.toString() ).replace( /\n?$/, '\n' )
@@ -113,6 +122,28 @@ namespace $.$$ {
 			return Object.keys( win )
 				.filter( name => typeof win[name] === 'function' )
 				.filter( name => win[name].prototype instanceof win['$mol_view'] )
+		}
+		
+		@ $mol_mem_key
+		props_derived( base_name: string ) {
+			
+			const lib = this.library()
+			const all = new Map< string, $mol_tree2 >()
+
+			const collect = ( name: string )=> {
+				
+				const sup = lib.select( name, null ).kids[0]
+				if( !sup ) return
+				
+				collect( sup.type )
+				
+				for( const prop of sup.kids ) all.set( prop.type, prop )
+				
+			}
+
+			collect( base_name )
+			
+			return lib.list([ ... all.values() ])
 		}
 		
 		@ $mol_mem
