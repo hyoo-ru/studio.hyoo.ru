@@ -1,0 +1,39 @@
+$hyoo_studio_prop $mol_list
+	tree?val $mol_tree2_empty
+	rows /
+		<= Main $mol_view
+			sub /
+				<= Title $mol_string_button
+					value?next <=> title?next \
+				<= Meta $mol_view
+					sub /
+						<= Type $mol_select
+							hint @ \Type
+							align \bottom_left
+							value?next <=> type?next \
+							dictionary <= types *
+								get \get
+								put \alias
+								bind \bind
+								object \object
+								string \text
+								locale \locale
+								number \number
+								bool \flag
+								list \list
+								dict \dict
+								null \null
+								\
+									\none
+						<= Key $mol_check_icon
+							hint @ \Keyed
+							Icon <= Key_icon $mol_icon_bookmark_multiple_outline
+							checked?next <=> key?next false
+						<= Next $mol_check_icon
+							hint @ \Changable
+							Icon <= Next_icon $mol_icon_cached
+							checked?next <=> next?next false
+		<= Value $mol_view
+			sub <= value /
+				<= Str $mol_textarea
+					value?next <=> str?next \

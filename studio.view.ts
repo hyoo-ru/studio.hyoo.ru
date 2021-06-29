@@ -1,6 +1,23 @@
 namespace $.$$ {
 	
-	export class $hyoo_mol_studio extends $.$hyoo_mol_studio {
+	export class $hyoo_studio extends $.$hyoo_studio {
+		
+		preview_show() {
+			return true
+			// return this.$.$mol_state_arg.value( 'preview' ) !== null
+		}
+		
+		editor_raw() {
+			return this.$.$mol_state_arg.value( 'raw' ) !== null
+		}
+		
+		@ $mol_mem
+		pages() {
+			return [
+				this.Edit(),
+				... this.preview_show() ? [ this.Preview() ] : [],
+			]
+		}
 		
 		@ $mol_mem
 		pack( next?: string ) {
@@ -14,10 +31,14 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		tree( next?: $mol_tree2 ) {
+			
 			const source = this.source( next && next.toString() ).replace( /\n?$/, '\n' )
-			return this.$.$mol_view_tree2_classes(
+			
+			const tree = this.$.$mol_view_tree2_normalize(
 				this.$.$mol_tree2_from_string( source )
 			).kids[0]
+			
+			return tree
 		}
 		
 		@ $mol_mem
@@ -92,6 +113,44 @@ namespace $.$$ {
 			return Object.keys( win )
 				.filter( name => typeof win[name] === 'function' )
 				.filter( name => win[name].prototype instanceof win['$mol_view'] )
+		}
+		
+		@ $mol_mem
+		prop_indexes_filtered() {
+			const all = this.$.$mol_view_tree2_class_props( this.tree() )
+			return all.map( (_,i)=> i).filter(
+				$mol_match_text(
+					this.prop_filter(),
+					i => [ all[i].type ],
+				)
+			)
+		}
+		
+		@ $mol_mem
+		props() {
+			return this.prop_indexes_filtered().map( index => this.Prop( index ) )
+		}
+		
+		@ $mol_mem_key
+		prop_tree( index: number, next?: $mol_tree2 ) {
+			
+			let tree = this.tree()
+			
+			if( next !== undefined ) {
+				tree = this.tree( tree.insert( next, this.base(), index ) )
+			}
+			
+			return tree.select( this.base(), index ).kids[0]
+		}
+		
+		@ $mol_mem
+		form_sections() {
+			return [
+				this.Pack_field(),
+				... this.editor_raw()
+					? [ this.Source_field() ]
+					: [ this.Config() ],
+			]
 		}
 		
 	}

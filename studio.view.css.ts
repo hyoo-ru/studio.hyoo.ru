@@ -2,12 +2,19 @@ namespace $.$$ {
 	
 	const { rem } = $mol_style_unit
 	
-	$mol_style_define( $hyoo_mol_studio, {
+	$mol_style_define( $hyoo_studio, {
 		
 		Edit: {
+			
+			minWidth: rem(20),
 			flex: {
 				shrink: 0,
 			},
+			
+			Body: {
+				padding: 0,
+			},
+			
 		},
 		
 		Edit_form: {
@@ -31,6 +38,15 @@ namespace $.$$ {
 				},
 			},
 			
+		},
+		
+		Prop_filter: {
+			margin: $mol_gap.block,
+			alignSelf: 'stretch',
+		},
+		
+		Prop: {
+			padding: $mol_gap.block,
 		},
 		
 		Preview: {

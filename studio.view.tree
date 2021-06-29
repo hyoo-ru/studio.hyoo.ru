@@ -1,4 +1,4 @@
-$hyoo_mol_studio $mol_book2
+$hyoo_studio $mol_book2
 	plugins /
 		<= Theme $mol_theme_auto
 	pages /
@@ -8,39 +8,55 @@ $hyoo_mol_studio $mol_book2
 				<= Source_link $mol_link_source
 					uri \https://github.com/hyoo-ru/studio.mol.hyoo.ru
 				<= Lights $mol_lights_toggle
-				<= Preview_open $mol_link
+				<= Editor_toggle $mol_link
+					hint @ \Change Editor
+					arg * raw \
+					sub /
+						<= Editor_toggle_icon $mol_icon_card_text
+				- <= Preview_open $mol_link
+					hint @ \Show Preview
 					arg * preview \
 					sub /
-						<= Preview_open_icon $mol_icon_play_box_outline
+						<= Preview_open_icon $mol_icon_play_circle
 			body /
 				<= Edit_form $mol_list
-					rows /
+					rows <= form_sections /
 						<= Pack_field $mol_form_field
-							name @ \Donor App
-							control <= Pack $mol_string
+							name @ \Components Donor App
+							control <= Pack $mol_string_button
 								hint \http://mol.hyoo.ru
 								value?val <=> pack?val \http://mol.hyoo.ru
-						<= Classes $mol_view
-							sub /
-								<= Base_field $mol_form_field
-									name @ \Base Component
-									control <= Base $mol_select
-										value?val <=> base?val \
-										options <= base_options /string
-								<= Self_field $mol_form_field
-									name @ \Custom Component
-									control <= Self $mol_string
-										hint \$hyoo_mol_studio_example
-										value?val <=> self?val \
+						<= Config $mol_list
+							rows /
+								<= Classes $mol_view
+									sub /
+										<= Self_field $mol_form_field
+											name @ \Custom Component
+											control <= Self $mol_string_button
+												hint \$hyoo_studio_example
+												value?val <=> self?val \
+										<= Base_field $mol_form_field
+											name @ \Base Class
+											control <= Base $mol_select
+												value?val <=> base?val \
+												options <= base_options /string
+												align \bottom_left
+								<= Prop_filter $mol_search
+									hint @ \Filter properties..
+									query?next <=> prop_filter?next \
+								<= Props $mol_list
+									rows <= props /$hyoo_studio_prop
 						<= Source_field $mol_form_field
 							name @ \View.Tree Source
 							control <= Source $mol_textarea
-								hint \$hyoo_mol_studio_example $mol_view
+								hint \$hyoo_studio_example $mol_view
 								sidebar_showed true
 								value?val <=> source?val \
-									\$hyoo_mol_studio_example $mol_view
+									\$hyoo_studio_example $mol_view
 									\
 		<= Preview $mol_frame
 			uri <= pack
 			html <= preview_html \
+	Prop!name $hyoo_studio_prop
+		tree?next <=> prop_tree!name?next $mol_tree2_empty
 	Placeholder null
