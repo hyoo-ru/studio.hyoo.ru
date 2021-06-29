@@ -2220,6 +2220,15 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
+    $_1.$mol_test_mocks.push($ => {
+        $.$mol_after_work = $_1.$mol_after_mock_timeout;
+    });
+})($ || ($ = {}));
+//work.test.js.map
+;
+"use strict";
+var $;
+(function ($_1) {
     var $$;
     (function ($$) {
         $_1.$mol_test({
@@ -2252,22 +2261,6 @@ var $;
     })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
 //button.test.js.map
-;
-"use strict";
-var $;
-(function ($) {
-    $.$mol_test({
-        'all cases of using maybe'() {
-            $.$mol_assert_equal($.$mol_maybe(0)[0], 0);
-            $.$mol_assert_equal($.$mol_maybe(false)[0], false);
-            $.$mol_assert_equal($.$mol_maybe(null)[0], void 0);
-            $.$mol_assert_equal($.$mol_maybe(void 0)[0], void 0);
-            $.$mol_assert_equal($.$mol_maybe(void 0).map(v => v.toString())[0], void 0);
-            $.$mol_assert_equal($.$mol_maybe(0).map(v => v.toString())[0], '0');
-        },
-    });
-})($ || ($ = {}));
-//maybe.test.js.map
 ;
 "use strict";
 var $;
@@ -2336,12 +2329,19 @@ var $;
 ;
 "use strict";
 var $;
-(function ($_1) {
-    $_1.$mol_test_mocks.push($ => {
-        $.$mol_after_work = $_1.$mol_after_mock_timeout;
+(function ($) {
+    $.$mol_test({
+        'all cases of using maybe'() {
+            $.$mol_assert_equal($.$mol_maybe(0)[0], 0);
+            $.$mol_assert_equal($.$mol_maybe(false)[0], false);
+            $.$mol_assert_equal($.$mol_maybe(null)[0], void 0);
+            $.$mol_assert_equal($.$mol_maybe(void 0)[0], void 0);
+            $.$mol_assert_equal($.$mol_maybe(void 0).map(v => v.toString())[0], void 0);
+            $.$mol_assert_equal($.$mol_maybe(0).map(v => v.toString())[0], '0');
+        },
     });
 })($ || ($ = {}));
-//work.test.js.map
+//maybe.test.js.map
 ;
 "use strict";
 //equals.test.js.map
