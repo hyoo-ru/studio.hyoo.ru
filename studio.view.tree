@@ -13,7 +13,7 @@ $hyoo_studio $mol_book2
 					arg * raw \
 					sub /
 						<= Editor_toggle_icon $mol_icon_card_text
-				- <= Preview_open $mol_link
+				<= Preview_open $mol_link
 					hint @ \Show Preview
 					arg * preview \
 					sub /
