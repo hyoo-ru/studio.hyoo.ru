@@ -5,35 +5,18 @@ $hyoo_studio_prop $mol_list
 			sub /
 				<= Title $mol_string_button
 					value?next <=> title?next \
-				<= Meta $mol_view
+				<= Drop $mol_button_minor
+					hint @ \Drop
 					sub /
-						<= Type $mol_select
-							hint @ \Type
-							align \bottom_left
-							value?next <=> type?next \
-							dictionary <= types *
-								get \get
-								put \alias
-								bind \bind
-								object \object
-								string \text
-								locale \locale
-								number \number
-								bool \flag
-								list \list
-								dict \dict
-								null \null
-								\
-									\none
-						<= Key $mol_check_icon
-							hint @ \Keyed
-							Icon <= Key_icon $mol_icon_bookmark_multiple_outline
-							checked?next <=> key?next false
-						<= Next $mol_check_icon
-							hint @ \Changable
-							Icon <= Next_icon $mol_icon_cached
-							checked?next <=> next?next false
-		<= Value $mol_view
-			sub <= value /
-				<= Str $mol_textarea
-					value?next <=> str?next \
+						<= Drop_icon $mol_icon_cross
+					click?next <=> drop?next null
+				<= Key $mol_check_icon
+					hint @ \Keyed
+					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
+					checked?next <=> key?next false
+				<= Next $mol_check_icon
+					hint @ \Changable
+					Icon <= Next_icon $mol_icon_cached
+					checked?next <=> next?next false
+		<= Value $hyoo_studio_value
+			tree?next <=> value?next $mol_tree2_empty

@@ -71,53 +71,19 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		type( next? : types ): types {
+		value( next?: $mol_tree2 ) {
 			
-			let prop = this.tree()
-			
+			let val = this.tree()
 			if( next !== undefined ) {
-				
-				let val
-				
-				switch( next ) {
-					case '' : this.tree( null ); return ''
-					case 'null' : val = prop.struct( 'null' ); break
-					case 'bool' : val = prop.struct( 'false' ); break
-					case 'number' : val = prop.struct( 'NaN' ); break
-					case 'string' : val = prop.data(''); break
-					case 'locale' : val = prop.struct( '@' , [ prop.data('') ] ); break
-					case 'get' : val = prop.struct( '<=' , [ prop.struct( '?' ) ] ); break
-					case 'bind' : val = prop.struct( '<=>' , [ prop.struct( '?' ) ] ); break
-					case 'list' : val = prop.struct( '/' ); break
-					case 'dict' : val = prop.struct( '*' ); break
-					case 'object' : val = prop.struct( '$mol_view' ); break
-					default : $mol_fail( new TypeError( `Unsupported type: ${ next }` ) )
-				}
-				
-				prop = this.tree( prop.clone([ val ]) )
+				val = this.tree( val.clone([ next ]) )
 			}
 			
-			
-			return this.$.$mol_view_tree2_value_type( prop.kids[0] )
+			return val.kids[0]
 		}
 		
 		@ $mol_mem
-		value() {
-			switch( this.type() ) {
-				case 'string': return [ this.Str() ]
-				case 'locale': return [ this.Str() ]
-				default: return []
-			}
-		}
-		
-		str( next?: string ) {
-			
-			let prop = this.tree()
-			if( next !== undefined ) {
-				prop = this.tree( prop.insert( prop.data( next ), 0 ) )
-			}
-			
-			return prop.kids[0].text()
+		drop() {
+			this.tree( null )
 		}
 		
 	}

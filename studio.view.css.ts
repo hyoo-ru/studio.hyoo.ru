@@ -6,7 +6,7 @@ namespace $.$$ {
 		
 		Edit: {
 			
-			minWidth: rem(20),
+			minWidth: rem(30),
 			flex: {
 				shrink: 0,
 			},

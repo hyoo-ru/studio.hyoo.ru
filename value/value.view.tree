@@ -1,0 +1,25 @@
+$hyoo_studio_value $mol_view
+	tree?next $mol_tree2_empty
+	sub <= value /
+		<= Str $mol_textarea
+			value?next <=> str?next \
+		<= Numb $mol_number
+			value?next <=> numb?next NaN
+		<= Type $mol_select
+			hint @ \Type
+			align \bottom_left
+			value?next <=> type?next \
+			dictionary <= types *
+				get \get
+				put \alias
+				bind \bind
+				object \object
+				string \text
+				locale \locale
+				number \number
+				bool \flag
+				list \list
+				dict \dict
+				null \null
+				\
+					\none
