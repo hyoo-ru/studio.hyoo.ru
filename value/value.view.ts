@@ -14,7 +14,7 @@ namespace $.$$ {
 				switch( next ) {
 					case '' : val = null!; break
 					case 'unit' : val = val.struct( 'null' ); break
-					case 'number' : val = val.struct( val.text() || val.type ); break
+					case 'number' : val = val.struct( Number( val.text() || val.type ).toString() ); break
 					case 'string' : val = val.data( val.text() || val.type ); break
 					case 'bind' : val = val.struct( '<=' , [ val.data( '' ) ] ); break
 					case 'list' : val = val.struct( '/' ); break
