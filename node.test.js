@@ -9143,7 +9143,7 @@ var $;
                             val = val.struct('null');
                             break;
                         case 'number':
-                            val = val.struct(val.text() || val.type);
+                            val = val.struct(Number(val.text() || val.type).toString());
                             break;
                         case 'string':
                             val = val.data(val.text() || val.type);
