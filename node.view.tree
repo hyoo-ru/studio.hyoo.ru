@@ -112,7 +112,11 @@ $mol_icon $mol_svg_root
 		<= Path $mol_svg_path
 			geometry <= path \
 
-$mol_icon_cross $mol_icon path \M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z
+$mol_icon_bookmark $mol_icon path \M17,3H7C5.9,3 5,3.9 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z
+
+$mol_icon_bookmark_multiple $mol_icon path \M15,5C16.1,5 17,5.9 17,7V23L10,20L3,23V7C3,5.89 3.9,5 5,5H15M9,1H19C20.1,1 21,1.9 21,3V19L19,18.13V3H7C7,1.9 7.9,1 9,1Z
+
+$mol_icon_bookmark_multiple_outline $mol_icon path \M9,1H19C20.1,1 21,1.9 21,3V19L19,18.13V3H7C7,1.9 7.9,1 9,1M15,20V7H5V20L10,17.82L15,20M15,5C16.11,5 17,5.9 17,7V23L10,20L3,23V7C3,5.9 3.9,5 5,5H15Z
 
 $mol_speck $mol_view
 	attr *
@@ -146,12 +150,6 @@ $mol_button $mol_view
 $mol_button_typed $mol_button
 
 $mol_button_minor $mol_button_typed
-
-$mol_icon_bookmark $mol_icon path \M17,3H7C5.9,3 5,3.9 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z
-
-$mol_icon_bookmark_multiple $mol_icon path \M15,5C16.1,5 17,5.9 17,7V23L10,20L3,23V7C3,5.89 3.9,5 5,5H15M9,1H19C20.1,1 21,1.9 21,3V19L19,18.13V3H7C7,1.9 7.9,1 9,1Z
-
-$mol_icon_bookmark_multiple_outline $mol_icon path \M9,1H19C20.1,1 21,1.9 21,3V19L19,18.13V3H7C7,1.9 7.9,1 9,1M15,20V7H5V20L10,17.82L15,20M15,5C16.11,5 17,5.9 17,7V23L10,20L3,23V7C3,5.9 3.9,5 5,5H15Z
 
 $mol_check $mol_button_minor
 	attr *
@@ -576,9 +574,12 @@ $hyoo_studio_value $mol_view
 				number \number
 				list \list
 				dict \dict
+				\
+					\drop
 	Value!index $hyoo_studio_value
 		tree?next <=> value!index?next $mol_tree2_empty
 		props_all <= props_all $mol_tree2_empty
+		Locale null
 
 $hyoo_studio_prop $mol_list
 	tree?val $mol_tree2_empty
@@ -587,7 +588,7 @@ $hyoo_studio_prop $mol_list
 			sub /
 				<= Title $mol_string_button
 					value?next <=> title?next \
-				<= Drop $mol_button_minor
+				- <= Drop $mol_button_minor
 					hint @ \Drop
 					sub /
 						<= Drop_icon $mol_icon_cross
@@ -728,9 +729,16 @@ $hyoo_studio $mol_book2
 												value?val <=> base?val \
 												options <= base_options /string
 												align \bottom_left
-								<= Prop_filter $mol_search
-									hint @ \Filter properties..
-									query?next <=> prop_filter?next \
+								<= Props_controls $mol_view
+									sub <= props_controls /
+										<= Prop_filter $mol_search
+											hint @ \Filter properties or Add one..
+											query?next <=> prop_filter?next \
+										<= Prop_add $mol_button_minor
+											hint @ \Add this property
+											click?next <=> prop_add?next null
+											sub /
+												<= Prop_add_icon $mol_icon_plus
 								<= Props $mol_list
 									rows <= props /$hyoo_studio_prop
 						<= Source_field $mol_form_field

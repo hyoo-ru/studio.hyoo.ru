@@ -1543,7 +1543,19 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    class $mol_icon_cross extends $mol_icon {
+    class $mol_icon_bookmark extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_bookmark_multiple extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_bookmark_multiple_outline extends $mol_icon {
         path(): string;
     }
 }
@@ -1617,6 +1629,48 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_button_minor extends $mol_button_typed {
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_check extends $mol_button_minor {
+        attr(): {
+            mol_check_checked: boolean;
+            "aria-checked": boolean;
+            role: string;
+            disabled: boolean;
+            tabindex: number;
+            title: string;
+        };
+        sub(): readonly $mol_view_content[];
+        checked(val?: any): boolean;
+        Icon(): any;
+        title(): string;
+        Title(): $mol_view;
+        label(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    function $mol_maybe<Value>(value: Value | null | undefined): Value[];
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_check extends $.$mol_check {
+        click(next?: Event): void;
+        sub(): readonly $mol_view_content[];
+        label(): readonly any[];
+    }
+}
+
+declare namespace $ {
+    class $mol_check_icon extends $mol_check {
     }
 }
 
@@ -1720,66 +1774,6 @@ declare namespace $ {
         static text(key: string): string;
         static warn(key: string): null;
     }
-}
-
-declare namespace $ {
-    class $mol_icon_bookmark extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_bookmark_multiple extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_bookmark_multiple_outline extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_check extends $mol_button_minor {
-        attr(): {
-            mol_check_checked: boolean;
-            "aria-checked": boolean;
-            role: string;
-            disabled: boolean;
-            tabindex: number;
-            title: string;
-        };
-        sub(): readonly $mol_view_content[];
-        checked(val?: any): boolean;
-        Icon(): any;
-        title(): string;
-        Title(): $mol_view;
-        label(): readonly any[];
-    }
-}
-
-declare namespace $ {
-    function $mol_maybe<Value>(value: Value | null | undefined): Value[];
-}
-
-declare namespace $ {
-}
-
-declare namespace $.$$ {
-    class $mol_check extends $.$mol_check {
-        click(next?: Event): void;
-        sub(): readonly $mol_view_content[];
-        label(): readonly any[];
-    }
-}
-
-declare namespace $ {
-    class $mol_check_icon extends $mol_check {
-    }
-}
-
-declare namespace $ {
 }
 
 declare namespace $ {
@@ -2723,6 +2717,7 @@ declare namespace $ {
             number: string;
             list: string;
             dict: string;
+            "": string;
         };
         Type(): $$.$mol_select;
         controls(): readonly any[];
@@ -2811,7 +2806,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $.$$ {
-    type types = "unit" | "dict" | "string" | "bind" | "list" | "object" | "number";
+    type types = "" | "unit" | "dict" | "string" | "bind" | "list" | "object" | "number";
     export class $hyoo_studio_value extends $.$hyoo_studio_value {
         type(next?: types): types;
         controls(): ($mol_textarea | $mol_select | $mol_check_icon)[] | ($mol_number | $mol_select)[] | ($mol_switch | $mol_select)[] | ($mol_list | $mol_select)[];
@@ -2823,7 +2818,7 @@ declare namespace $.$$ {
         numb(next?: number): number;
         unit(next?: string): string;
         list(): $hyoo_studio_value[];
-        value(index: number): $mol_tree2;
+        value(index: number, next?: $mol_tree2): $mol_tree2;
     }
     export {};
 }
@@ -2834,9 +2829,6 @@ declare namespace $ {
         rows(): readonly any[];
         title(next?: any): string;
         Title(): $mol_string_button;
-        Drop_icon(): $mol_icon_cross;
-        drop(next?: any): any;
-        Drop(): $mol_button_minor;
         Key_icon(): $mol_icon_bookmark_multiple_outline;
         key(next?: any): boolean;
         Key(): $mol_check_icon;
@@ -3116,6 +3108,11 @@ declare namespace $ {
         Classes(): $mol_view;
         prop_filter(next?: any): string;
         Prop_filter(): $$.$mol_search;
+        prop_add(next?: any): any;
+        Prop_add_icon(): $mol_icon_plus;
+        Prop_add(): $mol_button_minor;
+        props_controls(): readonly any[];
+        Props_controls(): $mol_view;
         props(): readonly $hyoo_studio_prop[];
         Props(): $$.$mol_list;
         Config(): $$.$mol_list;
@@ -3239,6 +3236,9 @@ declare namespace $.$$ {
         props_all(): $mol_tree2;
         prop_filtered(): $mol_tree2[];
         props(): $hyoo_studio_prop[];
+        prop_add_allow(): boolean;
+        prop_add(): void;
+        props_controls(): ($mol_button_minor | $mol_search)[];
         prop_tree(prop: string, next?: $mol_tree2): $mol_tree2;
         form_sections(): ($mol_list | $mol_form_field)[];
     }
