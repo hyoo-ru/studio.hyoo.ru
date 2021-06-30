@@ -2474,6 +2474,12 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_icon_translate extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_minus extends $mol_icon {
         path(): string;
     }
@@ -2705,23 +2711,24 @@ declare namespace $ {
         sub(): readonly any[];
         str(next?: any): string;
         Str(): $$.$mol_textarea;
+        Locale_icon(): $mol_icon_translate;
+        locale(next?: any): boolean;
+        Locale(): $mol_check_icon;
         numb(next?: any): number;
         Numb(): $$.$mol_number;
-        flag(next?: any): string;
-        Flag(): $$.$mol_switch;
+        unit(next?: any): string;
+        Unit(): $$.$mol_switch;
         type(next?: any): string;
         types(): {
+            unit: string;
             get: string;
             put: string;
             bind: string;
             object: string;
             string: string;
-            locale: string;
             number: string;
-            bool: string;
             list: string;
             dict: string;
-            null: string;
         };
         Type(): $$.$mol_select;
         value(): readonly any[];
@@ -2797,7 +2804,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_value_type(this: $, val: $mol_tree2): "number" | "locale" | "null" | "bool" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object";
+    function $mol_view_tree2_value_type(this: $, val: $mol_tree2): "number" | "locale" | "null" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | "bool";
 }
 
 declare namespace $ {
@@ -2808,13 +2815,14 @@ declare namespace $.$$ {
 }
 
 declare namespace $.$$ {
-    type types = "null" | "bool" | "dict" | "locale" | "string" | "get" | "bind" | "put" | "list" | "object" | "number";
+    type types = "unit" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | "number";
     export class $hyoo_studio_value extends $.$hyoo_studio_value {
         type(next?: types): types;
-        value(): ($mol_textarea | $mol_select)[] | ($mol_number | $mol_select)[] | ($mol_switch | $mol_select)[];
+        value(): ($mol_textarea | $mol_select | $mol_check_icon)[] | ($mol_number | $mol_select)[] | ($mol_switch | $mol_select)[];
         str(next?: string): string;
+        locale(next?: boolean): boolean;
         numb(next?: number): number;
-        flag(next?: string): string;
+        unit(next?: string): string;
     }
     export {};
 }

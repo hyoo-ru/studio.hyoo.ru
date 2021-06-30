@@ -7599,6 +7599,18 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    class $mol_icon_translate extends $.$mol_icon {
+        path() {
+            return "M12.87,15.07L10.33,12.56L10.36,12.53C12.1,10.59 13.34,8.36 14.07,6H17V4H10V2H8V4H1V6H12.17C11.5,7.92 10.44,9.75 9,11.35C8.07,10.32 7.3,9.19 6.69,8H4.69C5.42,9.63 6.42,11.17 7.67,12.56L2.58,17.58L4,19L9,14L12.11,17.11L12.87,15.07M18.5,10H16.5L12,22H14L15.12,19H19.87L21,22H23L18.5,10M15.88,17L17.5,12.67L19.12,17H15.88Z";
+        }
+    }
+    $.$mol_icon_translate = $mol_icon_translate;
+})($ || ($ = {}));
+//translate.view.tree.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_icon_minus extends $.$mol_icon {
         path() {
             return "M19,13H5V11H19V13Z";
@@ -8613,6 +8625,22 @@ var $;
             obj.value = (next) => this.str(next);
             return obj;
         }
+        Locale_icon() {
+            const obj = new this.$.$mol_icon_translate();
+            return obj;
+        }
+        locale(next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        Locale() {
+            const obj = new this.$.$mol_check_icon();
+            obj.hint = () => this.$.$mol_locale.text('$hyoo_studio_value_Locale_hint');
+            obj.Icon = () => this.Locale_icon();
+            obj.checked = (next) => this.locale(next);
+            return obj;
+        }
         numb(next) {
             if (next !== undefined)
                 return next;
@@ -8623,17 +8651,18 @@ var $;
             obj.value = (next) => this.numb(next);
             return obj;
         }
-        flag(next) {
+        unit(next) {
             if (next !== undefined)
                 return next;
-            return "false";
+            return "null";
         }
-        Flag() {
+        Unit() {
             const obj = new this.$.$mol_switch();
-            obj.value = (next) => this.flag(next);
+            obj.value = (next) => this.unit(next);
             obj.options = () => ({
-                true: "On",
-                false: "Off"
+                null: "Null",
+                false: "Off",
+                true: "On"
             });
             return obj;
         }
@@ -8644,17 +8673,15 @@ var $;
         }
         types() {
             return {
+                unit: "unit",
                 get: "get",
                 put: "alias",
                 bind: "bind",
                 object: "object",
                 string: "text",
-                locale: "locale",
                 number: "number",
-                bool: "flag",
                 list: "list",
-                dict: "dict",
-                null: "null"
+                dict: "dict"
             };
         }
         Type() {
@@ -8668,8 +8695,9 @@ var $;
         value() {
             return [
                 this.Str(),
+                this.Locale(),
                 this.Numb(),
-                this.Flag(),
+                this.Unit(),
                 this.Type()
             ];
         }
@@ -8685,16 +8713,25 @@ var $;
     ], $hyoo_studio_value.prototype, "Str", null);
     __decorate([
         $.$mol_mem
+    ], $hyoo_studio_value.prototype, "Locale_icon", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio_value.prototype, "locale", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio_value.prototype, "Locale", null);
+    __decorate([
+        $.$mol_mem
     ], $hyoo_studio_value.prototype, "numb", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_studio_value.prototype, "Numb", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_studio_value.prototype, "flag", null);
+    ], $hyoo_studio_value.prototype, "unit", null);
     __decorate([
         $.$mol_mem
-    ], $hyoo_studio_value.prototype, "Flag", null);
+    ], $hyoo_studio_value.prototype, "Unit", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_studio_value.prototype, "type", null);
@@ -8971,9 +9008,17 @@ var $;
     var $$;
     (function ($$) {
         $.$mol_style_define($$.$hyoo_studio_value, {
+            justifyContent: 'flex-end',
             Numb: {
                 flex: {
                     grow: 1,
+                    shrink: 1,
+                },
+            },
+            Str: {
+                flex: {
+                    grow: 1,
+                    shrink: 1,
                 },
             },
         });
@@ -8991,20 +9036,14 @@ var $;
                 let val = this.tree();
                 if (next !== undefined) {
                     switch (next) {
-                        case 'null':
+                        case 'unit':
                             val = val.struct('null');
-                            break;
-                        case 'bool':
-                            val = val.struct('false');
                             break;
                         case 'number':
                             val = val.struct(val.text() || val.type);
                             break;
                         case 'string':
                             val = val.data(val.text() || val.type);
-                            break;
-                        case 'locale':
-                            val = val.struct('@', [val.data(val.text() || val.type)]);
                             break;
                         case 'get':
                             val = val.struct('<=', [val.struct('?')]);
@@ -9025,15 +9064,20 @@ var $;
                     }
                     val = this.tree(val);
                 }
-                return this.$.$mol_view_tree2_value_type(val);
+                const type = this.$.$mol_view_tree2_value_type(val);
+                if (type === 'bool')
+                    return 'unit';
+                if (type === 'null')
+                    return 'unit';
+                if (type === 'locale')
+                    return 'string';
+                return type;
             }
             value() {
                 switch (this.type()) {
-                    case 'string': return [this.Str(), this.Type()];
-                    case 'locale': return [this.Str(), this.Type()];
+                    case 'string': return [this.Str(), this.Locale(), this.Type()];
                     case 'number': return [this.Numb(), this.Type()];
-                    case 'bool': return [this.Flag(), this.Type()];
-                    case 'null': return [this.Type()];
+                    case 'unit': return [this.Unit(), this.Type()];
                     default: return [];
                 }
             }
@@ -9042,15 +9086,26 @@ var $;
                     ? undefined
                     : this.tree().data(next)).text();
             }
+            locale(next) {
+                const val = this.tree();
+                if (next === undefined)
+                    return '@' === val.type;
+                this.tree(next
+                    ? val.struct('@', [
+                        val.data(val.text() || val.type)
+                    ])
+                    : val.data(val.text() || val.type));
+                return next;
+            }
             numb(next) {
                 return Number(this.tree(next === undefined
                     ? undefined
                     : this.tree().struct(String(next))).type);
             }
-            flag(next) {
-                return String('true' === this.tree(next === undefined
+            unit(next) {
+                return this.tree(next === undefined
                     ? undefined
-                    : this.tree().struct(String(next))).type);
+                    : this.tree().struct(next)).type;
             }
         }
         __decorate([
@@ -9064,10 +9119,13 @@ var $;
         ], $hyoo_studio_value.prototype, "str", null);
         __decorate([
             $.$mol_mem
+        ], $hyoo_studio_value.prototype, "locale", null);
+        __decorate([
+            $.$mol_mem
         ], $hyoo_studio_value.prototype, "numb", null);
         __decorate([
             $.$mol_mem
-        ], $hyoo_studio_value.prototype, "flag", null);
+        ], $hyoo_studio_value.prototype, "unit", null);
         $$.$hyoo_studio_value = $hyoo_studio_value;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -11362,10 +11420,7 @@ var $;
         const { rem } = $.$mol_style_unit;
         $.$mol_style_define($$.$hyoo_studio, {
             Edit: {
-                flex: {
-                    basis: rem(40),
-                    shrink: 0,
-                },
+                minWidth: rem(20),
                 Body: {
                     padding: 0,
                 },
