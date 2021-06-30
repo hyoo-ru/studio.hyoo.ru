@@ -2520,6 +2520,38 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+    class $mol_switch extends $mol_view {
+        Option(id: any): $$.$mol_check;
+        value(val?: any): any;
+        options(): {};
+        keys(): readonly string[];
+        sub(): readonly $mol_check[];
+        option_checked(id: any, val?: any): boolean;
+        option_title(id: any): string;
+        option_label(id: any): readonly any[];
+        enabled(): boolean;
+        option_enabled(id: any): boolean;
+        items(): readonly $mol_check[];
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_switch extends $.$mol_switch {
+        value(next?: any): any;
+        options(): {
+            [key: string]: string;
+        };
+        keys(): string[];
+        items(): $mol_check[];
+        option_title(key: string): string;
+        option_checked(key: string, next?: boolean): boolean;
+    }
+}
+
+declare namespace $ {
     class $mol_pop extends $mol_view {
         event(): {
             keydown: (event?: any) => any;
@@ -2675,6 +2707,8 @@ declare namespace $ {
         Str(): $$.$mol_textarea;
         numb(next?: any): number;
         Numb(): $$.$mol_number;
+        flag(next?: any): string;
+        Flag(): $$.$mol_switch;
         type(next?: any): string;
         types(): {
             get: string;
@@ -2777,9 +2811,10 @@ declare namespace $.$$ {
     type types = "null" | "bool" | "dict" | "locale" | "string" | "get" | "bind" | "put" | "list" | "object" | "number";
     export class $hyoo_studio_value extends $.$hyoo_studio_value {
         type(next?: types): types;
-        value(): ($mol_textarea | $mol_select)[] | ($mol_number | $mol_select)[];
+        value(): ($mol_textarea | $mol_select)[] | ($mol_number | $mol_select)[] | ($mol_switch | $mol_select)[];
         str(next?: string): string;
         numb(next?: number): number;
+        flag(next?: string): string;
     }
     export {};
 }

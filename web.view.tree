@@ -435,6 +435,17 @@ $mol_number $mol_view
 			enabled <= inc_enabled <= enabled true
 			sub / <= inc_icon $mol_icon_plus
 
+$mol_switch $mol_view
+	Option!id $mol_check
+		checked?val <=> option_checked!id?val false
+		label <= option_label!id / <= option_title!id \
+		enabled <= option_enabled!id <= enabled true
+		minimal_height 24
+	value?val null
+	options *
+	keys /string
+	sub <= items /$mol_check
+
 $mol_pop $mol_view
 	event * keydown?event <=> keydown?event null
 	showed?val false
@@ -523,6 +534,11 @@ $hyoo_studio_value $mol_view
 			value?next <=> str?next \
 		<= Numb $mol_number
 			value?next <=> numb?next NaN
+		<= Flag $mol_switch
+			value?next <=> flag?next \false
+			options *
+				true \On
+				false \Off
 		<= Type $mol_select
 			hint @ \Type
 			align \bottom_left
