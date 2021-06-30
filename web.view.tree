@@ -451,6 +451,8 @@ $mol_switch $mol_view
 $mol_pop $mol_view
 	event * keydown?event <=> keydown?event null
 	showed?val false
+	align_vert \
+	align_hor \
 	sub /
 		<= Anchor null
 		<= Bubble $mol_pop_bubble
@@ -531,7 +533,7 @@ $mol_select $mol_pick
 
 $hyoo_studio_value $mol_view
 	tree?next $mol_tree2_empty
-	sub <= value /
+	sub <= controls /
 		<= Str $mol_textarea
 			value?next <=> str?next \
 		<= Locale $mol_check_icon
@@ -546,20 +548,37 @@ $hyoo_studio_value $mol_view
 				null \Null
 				false \Off
 				true \On
+		<= Prop_bind $mol_select
+			hint @ \Bind Direction
+			align_hor \right
+			Filter null
+			value?next <=> prop_bind?next \<=
+			options <= prop_bind_list /
+				\<=
+				\<=>
+				\=>
+		<= Prop_name $mol_select
+			hint @ \Bound Property
+			value?next <=> prop_name?next \
+			options <= prop_name_list /string
+		<= List $mol_list
+			rows <= list /
 		<= Type $mol_select
 			hint @ \Type
-			align \bottom_left
-			value?next <=> type?next \
+			align_hor \left
+			Filter null
+			value?next <=> type?next \unit
 			dictionary <= types *
 				unit \unit
-				get \get
-				put \alias
 				bind \bind
 				object \object
 				string \text
 				number \number
 				list \list
 				dict \dict
+	Value!index $hyoo_studio_value
+		tree?next <=> value!index?next $mol_tree2_empty
+		props_all <= props_all $mol_tree2_empty
 
 $hyoo_studio_prop $mol_list
 	tree?val $mol_tree2_empty
@@ -583,6 +602,7 @@ $hyoo_studio_prop $mol_list
 					checked?next <=> next?next false
 		<= Value $hyoo_studio_value
 			tree?next <=> value?next $mol_tree2_empty
+			props_all <= props_all $mol_tree2_empty
 
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
@@ -726,6 +746,7 @@ $hyoo_studio $mol_book2
 			html <= preview_html \
 	Prop!name $hyoo_studio_prop
 		tree?next <=> prop_tree!name?next $mol_tree2_empty
+		props_all <= props_all $mol_tree2_empty
 	Placeholder null
 
 $mol_row $mol_view

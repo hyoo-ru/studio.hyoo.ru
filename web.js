@@ -7703,6 +7703,12 @@ var $;
                 return val;
             return false;
         }
+        align_vert() {
+            return "";
+        }
+        align_hor() {
+            return "";
+        }
         sub() {
             return [
                 this.Anchor(),
@@ -8360,7 +8366,7 @@ var $;
             trigger_content() {
                 return [
                     ...this.option_content(this.value()),
-                    this.Trigger_icon(),
+                    ...!this.value() ? [this.Trigger_icon()] : [],
                 ];
             }
             menu_content() {
@@ -8398,7 +8404,13 @@ var $;
             return obj;
         }
         sub() {
-            return this.value();
+            return this.controls();
+        }
+        Value(index) {
+            const obj = new this.$.$hyoo_studio_value();
+            obj.tree = (next) => this.value(index, next);
+            obj.props_all = () => this.props_all();
+            return obj;
         }
         str(next) {
             if (next !== undefined)
@@ -8451,16 +8463,58 @@ var $;
             });
             return obj;
         }
-        type(next) {
+        prop_bind(next) {
+            if (next !== undefined)
+                return next;
+            return "<=";
+        }
+        prop_bind_list() {
+            return [
+                "<=",
+                "<=>",
+                "=>"
+            ];
+        }
+        Prop_bind() {
+            const obj = new this.$.$mol_select();
+            obj.hint = () => this.$.$mol_locale.text('$hyoo_studio_value_Prop_bind_hint');
+            obj.align_hor = () => "right";
+            obj.Filter = () => null;
+            obj.value = (next) => this.prop_bind(next);
+            obj.options = () => this.prop_bind_list();
+            return obj;
+        }
+        prop_name(next) {
             if (next !== undefined)
                 return next;
             return "";
         }
+        prop_name_list() {
+            return [];
+        }
+        Prop_name() {
+            const obj = new this.$.$mol_select();
+            obj.hint = () => this.$.$mol_locale.text('$hyoo_studio_value_Prop_name_hint');
+            obj.value = (next) => this.prop_name(next);
+            obj.options = () => this.prop_name_list();
+            return obj;
+        }
+        list() {
+            return [];
+        }
+        List() {
+            const obj = new this.$.$mol_list();
+            obj.rows = () => this.list();
+            return obj;
+        }
+        type(next) {
+            if (next !== undefined)
+                return next;
+            return "unit";
+        }
         types() {
             return {
                 unit: "unit",
-                get: "get",
-                put: "alias",
                 bind: "bind",
                 object: "object",
                 string: "text",
@@ -8472,24 +8526,41 @@ var $;
         Type() {
             const obj = new this.$.$mol_select();
             obj.hint = () => this.$.$mol_locale.text('$hyoo_studio_value_Type_hint');
-            obj.align = () => "bottom_left";
+            obj.align_hor = () => "left";
+            obj.Filter = () => null;
             obj.value = (next) => this.type(next);
             obj.dictionary = () => this.types();
             return obj;
         }
-        value() {
+        controls() {
             return [
                 this.Str(),
                 this.Locale(),
                 this.Numb(),
                 this.Unit(),
+                this.Prop_bind(),
+                this.Prop_name(),
+                this.List(),
                 this.Type()
             ];
+        }
+        value(index, next) {
+            if (next !== undefined)
+                return next;
+            const obj = new this.$.$mol_tree2_empty();
+            return obj;
+        }
+        props_all() {
+            const obj = new this.$.$mol_tree2_empty();
+            return obj;
         }
     }
     __decorate([
         $.$mol_mem
     ], $hyoo_studio_value.prototype, "tree", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $hyoo_studio_value.prototype, "Value", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_studio_value.prototype, "str", null);
@@ -8519,10 +8590,31 @@ var $;
     ], $hyoo_studio_value.prototype, "Unit", null);
     __decorate([
         $.$mol_mem
+    ], $hyoo_studio_value.prototype, "prop_bind", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio_value.prototype, "Prop_bind", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio_value.prototype, "prop_name", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio_value.prototype, "Prop_name", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio_value.prototype, "List", null);
+    __decorate([
+        $.$mol_mem
     ], $hyoo_studio_value.prototype, "type", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_studio_value.prototype, "Type", null);
+    __decorate([
+        $.$mol_mem_key
+    ], $hyoo_studio_value.prototype, "value", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio_value.prototype, "props_all", null);
     $.$hyoo_studio_value = $hyoo_studio_value;
 })($ || ($ = {}));
 //value.view.tree.js.map
@@ -8792,6 +8884,7 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        const { px, rem } = $.$mol_style_unit;
         $.$mol_style_define($$.$hyoo_studio_value, {
             justifyContent: 'flex-end',
             Numb: {
@@ -8805,6 +8898,31 @@ var $;
                     grow: 1,
                     shrink: 1,
                 },
+            },
+            Prop_name: {
+                flex: {
+                    grow: 1,
+                    shrink: 1,
+                },
+            },
+            List: {
+                flex: {
+                    grow: 1,
+                    shrink: 1,
+                },
+                padding: rem(.75),
+                border: {
+                    radius: $.$mol_gap.round,
+                },
+                box: {
+                    shadow: [{
+                            x: 0,
+                            y: 0,
+                            blur: 0,
+                            spread: px(1),
+                            color: $.$mol_theme.line,
+                        }],
+                }
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
@@ -8830,11 +8948,8 @@ var $;
                         case 'string':
                             val = val.data(val.text() || val.type);
                             break;
-                        case 'get':
-                            val = val.struct('<=', [val.struct('?')]);
-                            break;
                         case 'bind':
-                            val = val.struct('<=>', [val.struct('?')]);
+                            val = val.struct('<=', [val.data('')]);
                             break;
                         case 'list':
                             val = val.struct('/');
@@ -8856,13 +8971,19 @@ var $;
                     return 'unit';
                 if (type === 'locale')
                     return 'string';
+                if (type === 'get')
+                    return 'bind';
+                if (type === 'put')
+                    return 'bind';
                 return type;
             }
-            value() {
+            controls() {
                 switch (this.type()) {
                     case 'string': return [this.Str(), this.Locale(), this.Type()];
                     case 'number': return [this.Numb(), this.Type()];
                     case 'unit': return [this.Unit(), this.Type()];
+                    case 'bind': return [this.Prop_bind(), this.Prop_name(), this.Type()];
+                    case 'list': return [this.List(), this.Type()];
                     default: return [];
                 }
             }
@@ -8882,6 +9003,23 @@ var $;
                     : val.data(val.text() || val.type));
                 return next;
             }
+            prop_bind(next) {
+                const val = this.tree();
+                if (next === undefined)
+                    return val.type;
+                this.tree(val.struct(next, val.kids));
+                return next;
+            }
+            prop_name_list() {
+                return this.props_all().kids.map(prop => prop.type);
+            }
+            prop_name(next) {
+                const val = this.tree();
+                if (next === undefined)
+                    return val.kids[0].type;
+                this.tree(val.insert(val.struct(next), null));
+                return next;
+            }
             numb(next) {
                 return Number(this.tree(next === undefined
                     ? undefined
@@ -8892,13 +9030,19 @@ var $;
                     ? undefined
                     : this.tree().struct(next)).type;
             }
+            list() {
+                return this.tree().kids.map((_, i) => this.Value(i));
+            }
+            value(index) {
+                return this.tree().kids[index];
+            }
         }
         __decorate([
             $.$mol_mem
         ], $hyoo_studio_value.prototype, "type", null);
         __decorate([
             $.$mol_mem
-        ], $hyoo_studio_value.prototype, "value", null);
+        ], $hyoo_studio_value.prototype, "controls", null);
         __decorate([
             $.$mol_mem
         ], $hyoo_studio_value.prototype, "str", null);
@@ -8907,10 +9051,22 @@ var $;
         ], $hyoo_studio_value.prototype, "locale", null);
         __decorate([
             $.$mol_mem
+        ], $hyoo_studio_value.prototype, "prop_bind", null);
+        __decorate([
+            $.$mol_mem
+        ], $hyoo_studio_value.prototype, "prop_name_list", null);
+        __decorate([
+            $.$mol_mem
+        ], $hyoo_studio_value.prototype, "prop_name", null);
+        __decorate([
+            $.$mol_mem
         ], $hyoo_studio_value.prototype, "numb", null);
         __decorate([
             $.$mol_mem
         ], $hyoo_studio_value.prototype, "unit", null);
+        __decorate([
+            $.$mol_mem
+        ], $hyoo_studio_value.prototype, "list", null);
         $$.$hyoo_studio_value = $hyoo_studio_value;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));
@@ -9008,9 +9164,14 @@ var $;
             const obj = new this.$.$mol_tree2_empty();
             return obj;
         }
+        props_all() {
+            const obj = new this.$.$mol_tree2_empty();
+            return obj;
+        }
         Value() {
             const obj = new this.$.$hyoo_studio_value();
             obj.tree = (next) => this.value(next);
+            obj.props_all = () => this.props_all();
             return obj;
         }
     }
@@ -9056,6 +9217,9 @@ var $;
     __decorate([
         $.$mol_mem
     ], $hyoo_studio_prop.prototype, "value", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio_prop.prototype, "props_all", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_studio_prop.prototype, "Value", null);
@@ -9156,6 +9320,7 @@ var $;
         $.$mol_style_define($$.$hyoo_studio_prop, {
             Title: {
                 padding: $.$mol_gap.text,
+                textShadow: '0 0',
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
@@ -10017,6 +10182,7 @@ var $;
         Prop(name) {
             const obj = new this.$.$hyoo_studio_prop();
             obj.tree = (next) => this.prop_tree(name, next);
+            obj.props_all = () => this.props_all();
             return obj;
         }
         Placeholder() {
@@ -10215,6 +10381,10 @@ var $;
             const obj = new this.$.$mol_tree2_empty();
             return obj;
         }
+        props_all() {
+            const obj = new this.$.$mol_tree2_empty();
+            return obj;
+        }
     }
     __decorate([
         $.$mol_mem_key
@@ -10303,6 +10473,9 @@ var $;
     __decorate([
         $.$mol_mem_key
     ], $hyoo_studio.prototype, "prop_tree", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio.prototype, "props_all", null);
     $.$hyoo_studio = $hyoo_studio;
 })($ || ($ = {}));
 //studio.view.tree.js.map

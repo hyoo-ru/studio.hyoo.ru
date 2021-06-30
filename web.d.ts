@@ -2563,6 +2563,8 @@ declare namespace $ {
             keydown: (event?: any) => any;
         };
         showed(val?: any): boolean;
+        align_vert(): string;
+        align_hor(): string;
         sub(): readonly any[];
         keydown(event?: any): any;
         Anchor(): any;
@@ -2709,6 +2711,7 @@ declare namespace $ {
     class $hyoo_studio_value extends $mol_view {
         tree(next?: any): $mol_tree2_empty;
         sub(): readonly any[];
+        Value(index: any): $$.$hyoo_studio_value;
         str(next?: any): string;
         Str(): $$.$mol_textarea;
         Locale_icon(): $mol_icon_translate;
@@ -2718,11 +2721,17 @@ declare namespace $ {
         Numb(): $$.$mol_number;
         unit(next?: any): string;
         Unit(): $$.$mol_switch;
+        prop_bind(next?: any): string;
+        prop_bind_list(): readonly any[];
+        Prop_bind(): $$.$mol_select;
+        prop_name(next?: any): string;
+        prop_name_list(): readonly string[];
+        Prop_name(): $$.$mol_select;
+        list(): readonly any[];
+        List(): $$.$mol_list;
         type(next?: any): string;
         types(): {
             unit: string;
-            get: string;
-            put: string;
             bind: string;
             object: string;
             string: string;
@@ -2731,7 +2740,9 @@ declare namespace $ {
             dict: string;
         };
         Type(): $$.$mol_select;
-        value(): readonly any[];
+        controls(): readonly any[];
+        value(index: any, next?: any): $mol_tree2_empty;
+        props_all(): $mol_tree2_empty;
     }
 }
 
@@ -2804,7 +2815,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_value_type(this: $, val: $mol_tree2): "number" | "locale" | "null" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | "bool";
+    function $mol_view_tree2_value_type(this: $, val: $mol_tree2): "number" | "locale" | "null" | "dict" | "string" | "bind" | "list" | "object" | "bool" | "get" | "put";
 }
 
 declare namespace $ {
@@ -2815,14 +2826,19 @@ declare namespace $.$$ {
 }
 
 declare namespace $.$$ {
-    type types = "unit" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | "number";
+    type types = "unit" | "dict" | "string" | "bind" | "list" | "object" | "number";
     export class $hyoo_studio_value extends $.$hyoo_studio_value {
         type(next?: types): types;
-        value(): ($mol_textarea | $mol_select | $mol_check_icon)[] | ($mol_number | $mol_select)[] | ($mol_switch | $mol_select)[];
+        controls(): ($mol_textarea | $mol_select | $mol_check_icon)[] | ($mol_number | $mol_select)[] | ($mol_switch | $mol_select)[] | ($mol_list | $mol_select)[];
         str(next?: string): string;
         locale(next?: boolean): boolean;
+        prop_bind(next?: '<=' | '<=>' | '=>'): string;
+        prop_name_list(): string[];
+        prop_name(next?: string): string;
         numb(next?: number): number;
         unit(next?: string): string;
+        list(): $hyoo_studio_value[];
+        value(index: number): $mol_tree2;
     }
     export {};
 }
@@ -2844,6 +2860,7 @@ declare namespace $ {
         Next(): $mol_check_icon;
         Main(): $mol_view;
         value(next?: any): $mol_tree2_empty;
+        props_all(): $mol_tree2_empty;
         Value(): $$.$hyoo_studio_value;
     }
 }
@@ -3126,6 +3143,7 @@ declare namespace $ {
         preview_html(): string;
         Preview(): $$.$mol_frame;
         prop_tree(name: any, next?: any): $mol_tree2_empty;
+        props_all(): $mol_tree2_empty;
     }
 }
 
