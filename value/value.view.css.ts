@@ -1,5 +1,7 @@
 namespace $.$$ {
 	
+	const { px, rem } = $mol_style_unit
+	
 	$mol_style_define( $hyoo_studio_value, {
 		
 		justifyContent: 'flex-end',
@@ -23,6 +25,26 @@ namespace $.$$ {
 				grow: 1,
 				shrink: 1,
 			},
+		},
+		
+		List: {
+			flex: {
+				grow: 1,
+				shrink: 1,
+			},
+			padding: rem(.75),
+			border: {
+				radius: $mol_gap.round,
+			},
+			box: {
+				shadow: [{
+					x: 0,
+					y: 0,
+					blur: 0,
+					spread: px(1),
+					color: $mol_theme.line,
+				}],
+			}
 		},
 		
 	} )

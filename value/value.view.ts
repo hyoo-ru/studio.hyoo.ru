@@ -1,6 +1,6 @@
 namespace $.$$ {
 	
-	type types = "unit" | "dict" | "string" | "get" | "bind" | "put" | "list" | "object" | "number" 
+	type types = "unit" | "dict" | "string" | "bind" | "list" | "object" | "number" 
 	
 	export class $hyoo_studio_value extends $.$hyoo_studio_value {
 		
@@ -15,8 +15,7 @@ namespace $.$$ {
 					case 'unit' : val = val.struct( 'null' ); break
 					case 'number' : val = val.struct( val.text() || val.type ); break
 					case 'string' : val = val.data( val.text() || val.type ); break
-					case 'bind' : val = val.struct( '<=' , [ val.struct( '?' ) ] ); break
-					// case 'bind' : val = val.struct( '<=>' , [ val.struct( '?' ) ] ); break
+					case 'bind' : val = val.struct( '<=' , [ val.data( '' ) ] ); break
 					case 'list' : val = val.struct( '/' ); break
 					case 'dict' : val = val.struct( '*' ); break
 					case 'object' : val = val.struct( '$mol_view' ); break
@@ -38,12 +37,13 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		value() {
+		controls() {
 			switch( this.type() ) {
 				case 'string': return [ this.Str(), this.Locale(), this.Type() ]
 				case 'number': return [ this.Numb(), this.Type() ]
 				case 'unit': return [ this.Unit(), this.Type() ]
 				case 'bind': return [ this.Prop_bind(), this.Prop_name(), this.Type() ]
+				case 'list': return [ this.List(), this.Type() ]
 				default: return []
 			}
 		}
@@ -92,6 +92,11 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		prop_name_list() {
+			return this.props_all().kids.map( prop => prop.type )
+		}
+				
+		@ $mol_mem
 		prop_name( next?: string ) {
 			
 			const val = this.tree()
@@ -125,6 +130,15 @@ namespace $.$$ {
 					: this.tree().struct( next )
 			).type
 			
+		}
+		
+		@ $mol_mem
+		list() {
+			return this.tree().kids.map( (_,i)=> this.Value( i ) )
+		}
+		
+		value( index: number ) {
+			return this.tree().kids[ index ]
 		}
 		
 	}

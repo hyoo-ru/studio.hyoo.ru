@@ -1,6 +1,6 @@
 $hyoo_studio_value $mol_view
 	tree?next $mol_tree2_empty
-	sub <= value /
+	sub <= controls /
 		<= Str $mol_textarea
 			value?next <=> str?next \
 		<= Locale $mol_check_icon
@@ -28,6 +28,8 @@ $hyoo_studio_value $mol_view
 			hint @ \Bound Property
 			value?next <=> prop_name?next \
 			options <= prop_name_list /string
+		<= List $mol_list
+			rows <= list /
 		<= Type $mol_select
 			hint @ \Type
 			align_hor \left
@@ -41,3 +43,6 @@ $hyoo_studio_value $mol_view
 				number \number
 				list \list
 				dict \dict
+	Value!index $hyoo_studio_value
+		tree?next <=> value!index?next $mol_tree2_empty
+		props_all <= props_all $mol_tree2_empty
