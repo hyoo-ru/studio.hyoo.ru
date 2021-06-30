@@ -151,6 +151,11 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		prop_name_list() {
+			return this.props_all().kids.map( prop => prop.type )
+		}
+		
+		@ $mol_mem
 		prop_filtered() {
 			return this.props_all().kids.filter(
 				$mol_match_text(

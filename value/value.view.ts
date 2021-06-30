@@ -15,8 +15,8 @@ namespace $.$$ {
 					case 'unit' : val = val.struct( 'null' ); break
 					case 'number' : val = val.struct( val.text() || val.type ); break
 					case 'string' : val = val.data( val.text() || val.type ); break
-					case 'get' : val = val.struct( '<=' , [ val.struct( '?' ) ] ); break
-					case 'bind' : val = val.struct( '<=>' , [ val.struct( '?' ) ] ); break
+					case 'bind' : val = val.struct( '<=' , [ val.struct( '?' ) ] ); break
+					// case 'bind' : val = val.struct( '<=>' , [ val.struct( '?' ) ] ); break
 					case 'list' : val = val.struct( '/' ); break
 					case 'dict' : val = val.struct( '*' ); break
 					case 'object' : val = val.struct( '$mol_view' ); break
@@ -31,6 +31,8 @@ namespace $.$$ {
 			if( type === 'bool' ) return 'unit'
 			if( type === 'null' ) return 'unit'
 			if( type === 'locale' ) return 'string'
+			if( type === 'get' ) return 'bind'
+			if( type === 'put' ) return 'bind'
 			
 			return type
 		}
@@ -41,6 +43,7 @@ namespace $.$$ {
 				case 'string': return [ this.Str(), this.Locale(), this.Type() ]
 				case 'number': return [ this.Numb(), this.Type() ]
 				case 'unit': return [ this.Unit(), this.Type() ]
+				case 'bind': return [ this.Prop_bind(), this.Prop_name(), this.Type() ]
 				default: return []
 			}
 		}
@@ -69,6 +72,34 @@ namespace $.$$ {
 						val.data( val.text() || val.type )
 					] )
 					: val.data( val.text() || val.type )
+			)
+			
+			return next
+		}
+		
+		@ $mol_mem
+		prop_bind( next?: '<=' | '<=>' | '=>' ) {
+			
+			const val = this.tree()
+			
+			if( next === undefined ) return val.type 
+			
+			this.tree(
+				val.struct( next, val.kids )
+			)
+			
+			return next
+		}
+		
+		@ $mol_mem
+		prop_name( next?: string ) {
+			
+			const val = this.tree()
+			
+			if( next === undefined ) return val.kids[0].type
+			
+			this.tree(
+				val.insert( val.struct( next ), null )
 			)
 			
 			return next

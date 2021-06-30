@@ -59,4 +59,5 @@ $hyoo_studio $mol_book2
 			html <= preview_html \
 	Prop!name $hyoo_studio_prop
 		tree?next <=> prop_tree!name?next $mol_tree2_empty
+		prop_name_list <= prop_name_list /string
 	Placeholder null

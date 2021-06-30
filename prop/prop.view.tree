@@ -20,3 +20,4 @@ $hyoo_studio_prop $mol_list
 					checked?next <=> next?next false
 		<= Value $hyoo_studio_value
 			tree?next <=> value?next $mol_tree2_empty
+			prop_name_list <= prop_name_list /string

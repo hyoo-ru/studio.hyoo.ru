@@ -18,6 +18,13 @@ namespace $.$$ {
 			},
 		},
 		
+		Prop_name: {
+			flex: {
+				grow: 1,
+				shrink: 1,
+			},
+		},
+		
 	} )
 	
 }

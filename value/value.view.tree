@@ -15,14 +15,26 @@ $hyoo_studio_value $mol_view
 				null \Null
 				false \Off
 				true \On
+		<= Prop_bind $mol_select
+			hint @ \Bind Direction
+			align_hor \right
+			Filter null
+			value?next <=> prop_bind?next \<=
+			options <= prop_bind_list /
+				\<=
+				\<=>
+				\=>
+		<= Prop_name $mol_select
+			hint @ \Bound Property
+			value?next <=> prop_name?next \
+			options <= prop_name_list /string
 		<= Type $mol_select
 			hint @ \Type
-			align \bottom_left
-			value?next <=> type?next \
+			align_hor \left
+			Filter null
+			value?next <=> type?next \unit
 			dictionary <= types *
 				unit \unit
-				get \get
-				put \alias
 				bind \bind
 				object \object
 				string \text
