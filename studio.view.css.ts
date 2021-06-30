@@ -6,10 +6,7 @@ namespace $.$$ {
 		
 		Edit: {
 			
-			flex: {
-				basis: rem(40),
-				shrink: 0,
-			},
+			minWidth: rem(20),
 			
 			Body: {
 				padding: 0,

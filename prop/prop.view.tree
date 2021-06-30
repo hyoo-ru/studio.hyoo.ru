@@ -11,7 +11,7 @@ $hyoo_studio_prop $mol_list
 						<= Drop_icon $mol_icon_cross
 					click?next <=> drop?next null
 				<= Key $mol_check_icon
-					hint @ \Keyed
+					hint @ \Multiple
 					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
 					checked?next <=> key?next false
 				<= Next $mol_check_icon

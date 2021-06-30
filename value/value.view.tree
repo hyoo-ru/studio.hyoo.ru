@@ -3,26 +3,29 @@ $hyoo_studio_value $mol_view
 	sub <= value /
 		<= Str $mol_textarea
 			value?next <=> str?next \
+		<= Locale $mol_check_icon
+			hint @ \Localizable
+			Icon <= Locale_icon $mol_icon_translate
+			checked?next <=> locale?next false
 		<= Numb $mol_number
 			value?next <=> numb?next NaN
-		<= Flag $mol_switch
-			value?next <=> flag?next \false
+		<= Unit $mol_switch
+			value?next <=> unit?next \null
 			options *
-				true \On
+				null \Null
 				false \Off
+				true \On
 		<= Type $mol_select
 			hint @ \Type
 			align \bottom_left
 			value?next <=> type?next \
 			dictionary <= types *
+				unit \unit
 				get \get
 				put \alias
 				bind \bind
 				object \object
 				string \text
-				locale \locale
 				number \number
-				bool \flag
 				list \list
 				dict \dict
-				null \null
