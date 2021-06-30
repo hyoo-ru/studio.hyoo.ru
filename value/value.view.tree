@@ -43,6 +43,9 @@ $hyoo_studio_value $mol_view
 				number \number
 				list \list
 				dict \dict
+				\
+					\drop
 	Value!index $hyoo_studio_value
 		tree?next <=> value!index?next $mol_tree2_empty
 		props_all <= props_all $mol_tree2_empty
+		Locale null

@@ -12,7 +12,13 @@ namespace $.$$ {
 		} ) {
 			
 			const tree = this.tree()
-			let meta = [ ... tree.type.matchAll( $mol_view_tree2_prop_signature ) ][0].groups!
+			const sign = tree?.type ?? ''
+			
+			let meta = [ ... sign.matchAll( $mol_view_tree2_prop_signature ) ][0]?.groups ?? {
+				name: '',
+				key: '',
+				next: '',
+			}
 			
 			if( next ) {
 				
@@ -75,13 +81,12 @@ namespace $.$$ {
 			
 			let val = this.tree()
 			if( next !== undefined ) {
-				val = this.tree( val.clone([ next ]) )
+				val = this.tree( next && val.clone([ next ]) )
 			}
 			
-			return val.kids[0]
+			return val?.kids[0]
 		}
 		
-		@ $mol_mem
 		drop() {
 			this.tree( null )
 		}

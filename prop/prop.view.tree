@@ -5,7 +5,7 @@ $hyoo_studio_prop $mol_list
 			sub /
 				<= Title $mol_string_button
 					value?next <=> title?next \
-				<= Drop $mol_button_minor
+				- <= Drop $mol_button_minor
 					hint @ \Drop
 					sub /
 						<= Drop_icon $mol_icon_cross

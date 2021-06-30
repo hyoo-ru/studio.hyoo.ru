@@ -41,9 +41,8 @@ namespace $.$$ {
 			alignSelf: 'stretch',
 		},
 		
-		Prop_filter: {
-			margin: $mol_gap.block,
-			alignSelf: 'stretch',
+		Props_controls: {
+			padding: $mol_gap.block,
 		},
 		
 		Prop: {

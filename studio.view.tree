@@ -41,9 +41,16 @@ $hyoo_studio $mol_book2
 												value?val <=> base?val \
 												options <= base_options /string
 												align \bottom_left
-								<= Prop_filter $mol_search
-									hint @ \Filter properties..
-									query?next <=> prop_filter?next \
+								<= Props_controls $mol_view
+									sub <= props_controls /
+										<= Prop_filter $mol_search
+											hint @ \Filter properties or Add one..
+											query?next <=> prop_filter?next \
+										<= Prop_add $mol_button_minor
+											hint @ \Add this property
+											click?next <=> prop_add?next null
+											sub /
+												<= Prop_add_icon $mol_icon_plus
 								<= Props $mol_list
 									rows <= props /$hyoo_studio_prop
 						<= Source_field $mol_form_field

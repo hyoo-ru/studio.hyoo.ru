@@ -1,6 +1,6 @@
 namespace $.$$ {
 	
-	type types = "unit" | "dict" | "string" | "bind" | "list" | "object" | "number" 
+	type types = "" | "unit" | "dict" | "string" | "bind" | "list" | "object" | "number" 
 	
 	export class $hyoo_studio_value extends $.$hyoo_studio_value {
 		
@@ -12,6 +12,7 @@ namespace $.$$ {
 			if( next !== undefined ) {
 				
 				switch( next ) {
+					case '' : val = null!; break
 					case 'unit' : val = val.struct( 'null' ); break
 					case 'number' : val = val.struct( val.text() || val.type ); break
 					case 'string' : val = val.data( val.text() || val.type ); break
@@ -24,6 +25,8 @@ namespace $.$$ {
 				
 				val = this.tree( val )
 			}
+			
+			if( !val ) return ''
 			
 			const type = this.$.$mol_view_tree2_value_type( val )
 			
@@ -137,8 +140,13 @@ namespace $.$$ {
 			return this.tree().kids.map( (_,i)=> this.Value( i ) )
 		}
 		
-		value( index: number ) {
-			return this.tree().kids[ index ]
+		@ $mol_mem_key
+		value( index: number, next?: $mol_tree2 ) {
+			let val = this.tree()
+			if( next !== undefined ) {
+				val = this.tree( val.insert( next, index ) )
+			}
+			return val.kids[ index ]
 		}
 		
 	}

@@ -165,6 +165,44 @@ namespace $.$$ {
 			return this.prop_filtered().map( prop => this.Prop( prop.type ) )
 		}
 		
+		@ $mol_mem
+		prop_add_allow() {
+			
+			const query = this.prop_filter()
+			if( !query.trim() ) return false
+			
+			const all = this.props_all()
+			return all.kids.every( prop => prop.type !== query )
+			
+		}
+		
+		prop_add() {
+			
+			const query = this.prop_filter()
+			const tree = this.tree()
+			
+			this.tree(
+				tree.insert(
+					tree.struct( query, [
+						tree.struct( 'null' ),
+					] ),
+					null,
+					query,
+				)
+			)
+			
+			this.prop_filter( '' )
+			
+		}
+		
+		@ $mol_mem
+		props_controls() {
+			return [
+				this.Prop_filter(),
+				... this.prop_add_allow() ? [ this.Prop_add() ] : [],
+			]
+		}
+		
 		@ $mol_mem_key
 		prop_tree( prop: string, next?: $mol_tree2 ) {
 			
@@ -172,7 +210,7 @@ namespace $.$$ {
 				this.tree( this.tree().insert( next, this.base(), prop ) )
 			}
 			
-			return this.props_all().select( prop ).kids[0]
+			return this.props_all().select( prop ).kids[0] ?? null
 		}
 		
 		@ $mol_mem
