@@ -38,6 +38,8 @@ namespace $.$$ {
 				case 'string': return [ this.Str(), this.Type() ]
 				case 'locale': return [ this.Str(), this.Type() ]
 				case 'number': return [ this.Numb(), this.Type() ]
+				case 'bool': return [ this.Flag(), this.Type() ]
+				case 'null': return [ this.Type() ]
 				default: return []
 			}
 		}
@@ -57,6 +59,17 @@ namespace $.$$ {
 		numb( next?: number ) {
 			
 			return Number( this.tree(
+				next === undefined
+				? undefined
+				: this.tree().struct( String( next ) )
+			).type )
+			
+		}
+		
+		@ $mol_mem
+		flag( next?: string ) {
+			
+			return String( 'true' === this.tree(
 				next === undefined
 				? undefined
 				: this.tree().struct( String( next ) )

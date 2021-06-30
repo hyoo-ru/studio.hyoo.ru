@@ -5,6 +5,11 @@ $hyoo_studio_value $mol_view
 			value?next <=> str?next \
 		<= Numb $mol_number
 			value?next <=> numb?next NaN
+		<= Flag $mol_switch
+			value?next <=> flag?next \false
+			options *
+				true \On
+				false \Off
 		<= Type $mol_select
 			hint @ \Type
 			align \bottom_left
