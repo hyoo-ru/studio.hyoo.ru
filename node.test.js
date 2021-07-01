@@ -24,6 +24,21 @@ module.exports = $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_offline(uri = 'web.js') { }
+    $.$mol_offline = $mol_offline;
+})($ || ($ = {}));
+//offline.node.js.map
+;
+"use strict";
+var $;
+(function ($) {
+    $.$mol_offline();
+})($ || ($ = {}));
+//install.js.map
+;
+"use strict";
+var $;
+(function ($) {
     class $mol_decor {
         constructor(value) {
             this.value = value;

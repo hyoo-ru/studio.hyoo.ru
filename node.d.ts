@@ -14,6 +14,13 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    function $mol_offline(uri?: string): void;
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_decor<Value> {
         readonly value: Value;
         constructor(value: Value);
