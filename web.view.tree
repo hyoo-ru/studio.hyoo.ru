@@ -559,6 +559,11 @@ $hyoo_studio_value $mol_view
 			hint @ \Bound Property
 			value?next <=> prop_name?next \
 			options <= prop_name_list /string
+		<= Obj $mol_select
+			hint @ \Class
+			align_hor \right
+			value?next <=> obj?next \$mol_view
+			options <= class_list /
 		<= List $mol_list
 			rows <= list /
 		<= Type $mol_select
@@ -569,9 +574,9 @@ $hyoo_studio_value $mol_view
 			dictionary <= types *
 				unit \unit
 				bind \bind
-				object \object
+				object \obj
 				string \text
-				number \number
+				number \numb
 				list \list
 				dict \dict
 				\
@@ -588,11 +593,6 @@ $hyoo_studio_prop $mol_list
 			sub /
 				<= Title $mol_string_button
 					value?next <=> title?next \
-				- <= Drop $mol_button_minor
-					hint @ \Drop
-					sub /
-						<= Drop_icon $mol_icon_cross
-					click?next <=> drop?next null
 				<= Key $mol_check_icon
 					hint @ \Multiple
 					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
@@ -604,6 +604,7 @@ $hyoo_studio_prop $mol_list
 		<= Value $hyoo_studio_value
 			tree?next <=> value?next $mol_tree2_empty
 			props_all <= props_all $mol_tree2_empty
+			class_list <= class_list /string
 
 $mol_theme_auto $mol_plugin
 	attr * mol_theme <= theme \
@@ -755,6 +756,7 @@ $hyoo_studio $mol_book2
 	Prop!name $hyoo_studio_prop
 		tree?next <=> prop_tree!name?next $mol_tree2_empty
 		props_all <= props_all $mol_tree2_empty
+		class_list <= class_list /string
 	Placeholder null
 
 $mol_row $mol_view

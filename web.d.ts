@@ -2728,6 +2728,9 @@ declare namespace $ {
         prop_name(next?: any): string;
         prop_name_list(): readonly string[];
         Prop_name(): $$.$mol_select;
+        obj(next?: any): string;
+        class_list(): readonly any[];
+        Obj(): $$.$mol_select;
         list(): readonly any[];
         List(): $$.$mol_list;
         type(next?: any): string;
@@ -2839,6 +2842,7 @@ declare namespace $.$$ {
         prop_name(next?: string): string;
         numb(next?: number): number;
         unit(next?: string): string;
+        obj(next?: string): string;
         list(): $hyoo_studio_value[];
         value(index: number, next?: $mol_tree2): $mol_tree2;
     }
@@ -2860,6 +2864,7 @@ declare namespace $ {
         Main(): $mol_view;
         value(next?: any): $mol_tree2_empty;
         props_all(): $mol_tree2_empty;
+        class_list(): readonly string[];
         Value(): $$.$hyoo_studio_value;
     }
 }
@@ -2910,7 +2915,6 @@ declare namespace $.$$ {
         key(next?: boolean): boolean;
         next(next?: boolean): boolean;
         value(next?: $mol_tree2): $mol_tree2;
-        drop(): void;
     }
 }
 
@@ -3148,6 +3152,7 @@ declare namespace $ {
         Preview(): $$.$mol_frame;
         prop_tree(name: any, next?: any): $mol_tree2_empty;
         props_all(): $mol_tree2_empty;
+        class_list(): readonly string[];
     }
 }
 
@@ -3224,6 +3229,7 @@ declare namespace $.$$ {
         preview_html(): string;
         self_code(): string;
         base_options(): string[];
+        class_list(): string[];
         props_all(): $mol_tree2;
         prop_filtered(): $mol_tree2[];
         props(): $hyoo_studio_prop[];

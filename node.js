@@ -8718,6 +8718,22 @@ var $;
             obj.options = () => this.prop_name_list();
             return obj;
         }
+        obj(next) {
+            if (next !== undefined)
+                return next;
+            return "$mol_view";
+        }
+        class_list() {
+            return [];
+        }
+        Obj() {
+            const obj = new this.$.$mol_select();
+            obj.hint = () => this.$.$mol_locale.text('$hyoo_studio_value_Obj_hint');
+            obj.align_hor = () => "right";
+            obj.value = (next) => this.obj(next);
+            obj.options = () => this.class_list();
+            return obj;
+        }
         list() {
             return [];
         }
@@ -8735,9 +8751,9 @@ var $;
             return {
                 unit: "unit",
                 bind: "bind",
-                object: "object",
+                object: "obj",
                 string: "text",
-                number: "number",
+                number: "numb",
                 list: "list",
                 dict: "dict",
                 "": "drop"
@@ -8760,6 +8776,7 @@ var $;
                 this.Unit(),
                 this.Prop_bind(),
                 this.Prop_name(),
+                this.Obj(),
                 this.List(),
                 this.Type()
             ];
@@ -8820,6 +8837,12 @@ var $;
     __decorate([
         $.$mol_mem
     ], $hyoo_studio_value.prototype, "Prop_name", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio_value.prototype, "obj", null);
+    __decorate([
+        $.$mol_mem
+    ], $hyoo_studio_value.prototype, "Obj", null);
     __decorate([
         $.$mol_mem
     ], $hyoo_studio_value.prototype, "List", null);
@@ -9119,6 +9142,12 @@ var $;
                     shrink: 1,
                 },
             },
+            Obj: {
+                flex: {
+                    grow: 1,
+                    shrink: 1,
+                },
+            },
             Prop_name: {
                 flex: {
                     grow: 1,
@@ -9209,6 +9238,7 @@ var $;
                     case 'unit': return [this.Unit(), this.Type()];
                     case 'bind': return [this.Prop_bind(), this.Prop_name(), this.Type()];
                     case 'list': return [this.List(), this.Type()];
+                    case 'object': return [this.Obj(), this.Type()];
                     default: return [];
                 }
             }
@@ -9255,6 +9285,11 @@ var $;
                     ? undefined
                     : this.tree().struct(next)).type;
             }
+            obj(next) {
+                return this.tree(next === undefined
+                    ? undefined
+                    : this.tree().struct(next)).type;
+            }
             list() {
                 return this.tree().kids.map((_, i) => this.Value(i));
             }
@@ -9293,6 +9328,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $hyoo_studio_value.prototype, "unit", null);
+        __decorate([
+            $.$mol_mem
+        ], $hyoo_studio_value.prototype, "obj", null);
         __decorate([
             $.$mol_mem
         ], $hyoo_studio_value.prototype, "list", null);
@@ -9381,10 +9419,14 @@ var $;
             const obj = new this.$.$mol_tree2_empty();
             return obj;
         }
+        class_list() {
+            return [];
+        }
         Value() {
             const obj = new this.$.$hyoo_studio_value();
             obj.tree = (next) => this.value(next);
             obj.props_all = () => this.props_all();
+            obj.class_list = () => this.class_list();
             return obj;
         }
     }
@@ -9580,9 +9622,6 @@ var $;
                     val = this.tree(next && val.clone([next]));
                 }
                 return val?.kids[0];
-            }
-            drop() {
-                this.tree(null);
             }
         }
         __decorate([
@@ -10389,6 +10428,7 @@ var $;
             const obj = new this.$.$hyoo_studio_prop();
             obj.tree = (next) => this.prop_tree(name, next);
             obj.props_all = () => this.props_all();
+            obj.class_list = () => this.class_list();
             return obj;
         }
         Placeholder() {
@@ -10619,6 +10659,9 @@ var $;
         props_all() {
             const obj = new this.$.$mol_tree2_empty();
             return obj;
+        }
+        class_list() {
+            return [];
         }
     }
     __decorate([
@@ -11744,6 +11787,9 @@ var $;
             base_options() {
                 return this.library().kids.map(cl => cl.type).reverse();
             }
+            class_list() {
+                return this.library().kids.map(cl => cl.type);
+            }
             props_all() {
                 const lib = this.library();
                 const all = new Map();
@@ -11836,6 +11882,9 @@ var $;
         __decorate([
             $.$mol_mem
         ], $hyoo_studio.prototype, "base_options", null);
+        __decorate([
+            $.$mol_mem
+        ], $hyoo_studio.prototype, "class_list", null);
         __decorate([
             $.$mol_mem
         ], $hyoo_studio.prototype, "props_all", null);
