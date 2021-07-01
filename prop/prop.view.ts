@@ -87,10 +87,6 @@ namespace $.$$ {
 			return val?.kids[0]
 		}
 		
-		drop() {
-			this.tree( null )
-		}
-		
 	}
 	
 }

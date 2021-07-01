@@ -20,6 +20,13 @@ namespace $.$$ {
 			},
 		},
 		
+		Obj: {
+			flex: {
+				grow: 1,
+				shrink: 1,
+			},
+		},
+		
 		Prop_name: {
 			flex: {
 				grow: 1,

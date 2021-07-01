@@ -47,6 +47,7 @@ namespace $.$$ {
 				case 'unit': return [ this.Unit(), this.Type() ]
 				case 'bind': return [ this.Prop_bind(), this.Prop_name(), this.Type() ]
 				case 'list': return [ this.List(), this.Type() ]
+				case 'object': return [ this.Obj(), this.Type() ]
 				default: return []
 			}
 		}
@@ -126,6 +127,17 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		unit( next?: string ) {
+			
+			return this.tree(
+				next === undefined
+					? undefined
+					: this.tree().struct( next )
+			).type
+			
+		}
+		
+		@ $mol_mem
+		obj( next?: string ) {
 			
 			return this.tree(
 				next === undefined

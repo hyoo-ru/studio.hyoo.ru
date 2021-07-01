@@ -122,6 +122,11 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		class_list() {
+			return this.library().kids.map( cl => cl.type )
+		}
+		
+		@ $mol_mem
 		props_all() {
 			
 			const lib = this.library()

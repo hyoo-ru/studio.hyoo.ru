@@ -28,6 +28,11 @@ $hyoo_studio_value $mol_view
 			hint @ \Bound Property
 			value?next <=> prop_name?next \
 			options <= prop_name_list /string
+		<= Obj $mol_select
+			hint @ \Class
+			align_hor \right
+			value?next <=> obj?next \$mol_view
+			options <= class_list /
 		<= List $mol_list
 			rows <= list /
 		<= Type $mol_select
@@ -38,9 +43,9 @@ $hyoo_studio_value $mol_view
 			dictionary <= types *
 				unit \unit
 				bind \bind
-				object \object
+				object \obj
 				string \text
-				number \number
+				number \numb
 				list \list
 				dict \dict
 				\

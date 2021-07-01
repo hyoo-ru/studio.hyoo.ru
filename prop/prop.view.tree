@@ -5,11 +5,6 @@ $hyoo_studio_prop $mol_list
 			sub /
 				<= Title $mol_string_button
 					value?next <=> title?next \
-				- <= Drop $mol_button_minor
-					hint @ \Drop
-					sub /
-						<= Drop_icon $mol_icon_cross
-					click?next <=> drop?next null
 				<= Key $mol_check_icon
 					hint @ \Multiple
 					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
@@ -21,3 +16,4 @@ $hyoo_studio_prop $mol_list
 		<= Value $hyoo_studio_value
 			tree?next <=> value?next $mol_tree2_empty
 			props_all <= props_all $mol_tree2_empty
+			class_list <= class_list /string
