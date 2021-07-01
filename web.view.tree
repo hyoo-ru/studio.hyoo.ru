@@ -763,6 +763,7 @@ $hyoo_studio $mol_book2
 									\$hyoo_studio_example $mol_view
 									\
 		<= Preview $mol_frame
+			title @ \Preview
 			uri <= pack
 			html <= preview_html \
 	Prop!name $hyoo_studio_prop

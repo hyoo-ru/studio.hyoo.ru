@@ -10750,6 +10750,7 @@ var $;
         }
         Preview() {
             const obj = new this.$.$mol_frame();
+            obj.title = () => this.$.$mol_locale.text('$hyoo_studio_Preview_title');
             obj.uri = () => this.pack();
             obj.html = () => this.preview_html();
             return obj;
@@ -11870,12 +11871,13 @@ var $;
             preview_html() {
                 const self = this.self();
                 const script = new URL('web.js', this.pack()).toString();
+                const theme = this.Theme().theme();
                 return `
 				<html style="height:100%;width:100%">
 					<body style="margin:0;height:100%;width:100%">
 						<script src="${script}"></script>
 						<script>${this.self_code()}</script>
-						<div mol_view_root="${self}" style="background:none"></div>
+						<div mol_view_root="${self}" mol_theme="${theme}" style="background:none"></div>
 						<script>setTimeout( ()=> $mol_view.autobind(), 1000 )</script>
 					</body>
 				</html>
