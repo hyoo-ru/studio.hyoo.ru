@@ -4,7 +4,15 @@ namespace $.$$ {
 	
 	$mol_style_define( $hyoo_studio_value, {
 		
-		justifyContent: 'flex-end',
+		Self: {
+			justifyContent: 'flex-end',
+		},
+		
+		Type: {
+			flex: {
+				basis: rem(4),
+			},
+		},
 		
 		Numb: {
 			flex: {

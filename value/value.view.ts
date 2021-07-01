@@ -40,14 +40,23 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		controls() {
+		self() {
 			switch( this.type() ) {
 				case 'string': return [ this.Str(), this.Locale(), this.Type() ]
 				case 'number': return [ this.Numb(), this.Type() ]
 				case 'unit': return [ this.Unit(), this.Type() ]
 				case 'bind': return [ this.Prop_bind(), this.Prop_name(), this.Type() ]
-				case 'list': return [ this.List(), this.Type() ]
+				case 'list': return [ this.Item_type(), this.List_add(), this.Type() ]
+				case 'dict': return [ this.Type() ]
 				case 'object': return [ this.Obj(), this.Type() ]
+				default: return []
+			}
+		}
+
+		@ $mol_mem
+		inner() {
+			switch( this.type() ) {
+				case 'list': return [ this.List() ]
 				default: return []
 			}
 		}
@@ -150,6 +159,31 @@ namespace $.$$ {
 		@ $mol_mem
 		list() {
 			return this.tree().kids.map( (_,i)=> this.Value( i ) )
+		}
+		
+		@ $mol_mem
+		item_type( next?: string ) {
+			
+			if( next && /\s/.test( next ) ) {
+				$mol_fail( new SyntaxError( `Item type mustn't have any space chars` ) )
+			}
+			
+			return this.tree(
+				next === undefined
+					? undefined
+					: this.tree().struct( '/' + next, this.tree().kids )
+			).type.slice( 1 )
+			
+		}
+		
+		list_add() {
+			const tree = this.tree()
+			this.tree(
+				tree.clone([
+					... tree.kids,
+					tree.struct( 'null' ),
+				])
+			)
 		}
 		
 		@ $mol_mem_key
