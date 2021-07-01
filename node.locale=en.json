@@ -10,6 +10,8 @@
 	"$hyoo_studio_Source_field_name": "View.Tree Source",
 	"$hyoo_studio_prop_Key_hint": "Multiple",
 	"$hyoo_studio_prop_Next_hint": "Changable",
+	"$hyoo_studio_value_Item_type_hint": "Item Type",
+	"$hyoo_studio_value_List_add_hint": "Add Item",
 	"$hyoo_studio_value_Locale_hint": "Localizable",
 	"$hyoo_studio_value_Obj_hint": "Class",
 	"$hyoo_studio_value_Prop_bind_hint": "Bind Direction",

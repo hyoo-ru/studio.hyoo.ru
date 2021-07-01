@@ -2709,9 +2709,9 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $hyoo_studio_value extends $mol_view {
+    class $hyoo_studio_value extends $mol_list {
         tree(next?: any): $mol_tree2_empty;
-        sub(): readonly any[];
+        rows(): readonly any[];
         Value(index: any): $$.$hyoo_studio_value;
         str(next?: any): string;
         Str(): $$.$mol_textarea;
@@ -2731,8 +2731,11 @@ declare namespace $ {
         obj(next?: any): string;
         class_list(): readonly any[];
         Obj(): $$.$mol_select;
-        list(): readonly any[];
-        List(): $$.$mol_list;
+        item_type(next?: any): string;
+        Item_type(): $mol_string_button;
+        List_add_icon(): $mol_icon_plus;
+        list_add(next?: any): any;
+        List_add(): $mol_button_minor;
         type(next?: any): string;
         types(): {
             unit: string;
@@ -2745,7 +2748,12 @@ declare namespace $ {
             "": string;
         };
         Type(): $$.$mol_select;
-        controls(): readonly any[];
+        self(): readonly any[];
+        Self(): $mol_view;
+        list(): readonly any[];
+        List(): $$.$mol_list;
+        inner(): readonly any[];
+        Inner(): $mol_view;
         value(index: any, next?: any): $mol_tree2_empty;
         props_all(): $mol_tree2_empty;
     }
@@ -2834,7 +2842,8 @@ declare namespace $.$$ {
     type types = "" | "unit" | "dict" | "string" | "bind" | "list" | "object" | "number";
     export class $hyoo_studio_value extends $.$hyoo_studio_value {
         type(next?: types): types;
-        controls(): ($mol_textarea | $mol_select | $mol_check_icon)[] | ($mol_number | $mol_select)[] | ($mol_switch | $mol_select)[] | ($mol_list | $mol_select)[];
+        self(): ($mol_textarea | $mol_select | $mol_check_icon)[] | ($mol_number | $mol_select)[] | ($mol_switch | $mol_select)[] | ($mol_button_minor | $mol_select | $mol_string_button)[];
+        inner(): $mol_list[];
         str(next?: string): string;
         locale(next?: boolean): boolean;
         prop_bind(next?: '<=' | '<=>' | '=>'): string;
@@ -2844,6 +2853,8 @@ declare namespace $.$$ {
         unit(next?: string): string;
         obj(next?: string): string;
         list(): $hyoo_studio_value[];
+        item_type(next?: string): string;
+        list_add(): void;
         value(index: number, next?: $mol_tree2): $mol_tree2;
     }
     export {};
