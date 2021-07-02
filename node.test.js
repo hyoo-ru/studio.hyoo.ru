@@ -10780,11 +10780,11 @@ var $;
         pack(val) {
             if (val !== undefined)
                 return val;
-            return "http://mol.hyoo.ru";
+            return "https://mol.hyoo.ru";
         }
         Pack() {
             const obj = new this.$.$mol_string_button();
-            obj.hint = () => "https://mol.hyoo.ru";
+            obj.hint = () => this.pack();
             obj.value = (val) => this.pack(val);
             return obj;
         }
