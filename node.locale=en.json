@@ -15,6 +15,8 @@
 	"$hyoo_studio_value_List_add_hint": "Add Item",
 	"$hyoo_studio_value_Locale_hint": "Localizable",
 	"$hyoo_studio_value_Obj_hint": "Class",
+	"$hyoo_studio_value_Over_add_hint": "Add Override",
+	"$hyoo_studio_value_Over_prop_hint": "Overrided property",
 	"$hyoo_studio_value_Prop_bind_hint": "Bind Direction",
 	"$hyoo_studio_value_Prop_name_hint": "Bound Property",
 	"$hyoo_studio_value_Type_hint": "Type",

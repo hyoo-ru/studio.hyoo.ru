@@ -43,46 +43,11 @@ $mol_book2 $mol_scroll
 	minimal_width 0
 	Placeholder $mol_view
 
-$mol_hotkey $mol_plugin
-	event *
-		^
-		keydown?event <=> keydown?event null
-	key *
-	mod_ctrl false
-	mod_alt false
-	mod_shift false
-
-$mol_string $mol_view
-	dom_name \input
-	enabled true
-	minimal_height 40
-	autocomplete false
-	selection?val /number
-	auto /
-		<= selection_watcher null
-	field *
-		^
-		disabled <= disabled false
-		value <= value_changed?val <=> value?val \
-		placeholder <= hint \
-		spellcheck <= spellcheck false
-		autocomplete <= autocomplete_native \
-		selectionEnd <= selection_end 0
-		selectionStart <= selection_start 0
-	attr *
-		^
-		maxlength <= length_max Infinity
-		type <= type?val \text
-	event *
-		^
-		input?event <=> event_change?event null
-		keydown?event <=> event_key_press?event null
-	plugins /
-		<= Submit $mol_hotkey
-			key * enter?event <=> submit?event null
-
-$mol_string_button $mol_string
-	hint \ 
+$mol_paragraph $mol_view
+	line_height 24
+	letter_width 8
+	width_limit Infinity
+	sub / <= title
 
 $mol_svg $mol_view
 	dom_name \svg
@@ -168,6 +133,44 @@ $mol_check_icon $mol_check
 
 $mol_icon_cached $mol_icon path \M19,8L15,12H18C18,15.31 15.31,18 12,18C11,18 10.03,17.75 9.2,17.3L7.74,18.76C8.97,19.54 10.43,20 12,20C16.42,20 20,16.42 20,12H23M6,12C6,8.69 8.69,6 12,6C13,6 13.97,6.25 14.8,6.7L16.26,5.24C15.03,4.46 13.57,4 12,4C7.58,4 4,7.58 4,12H1L5,16L9,12
 
+$mol_hotkey $mol_plugin
+	event *
+		^
+		keydown?event <=> keydown?event null
+	key *
+	mod_ctrl false
+	mod_alt false
+	mod_shift false
+
+$mol_string $mol_view
+	dom_name \input
+	enabled true
+	minimal_height 40
+	autocomplete false
+	selection?val /number
+	auto /
+		<= selection_watcher null
+	field *
+		^
+		disabled <= disabled false
+		value <= value_changed?val <=> value?val \
+		placeholder <= hint \
+		spellcheck <= spellcheck false
+		autocomplete <= autocomplete_native \
+		selectionEnd <= selection_end 0
+		selectionStart <= selection_start 0
+	attr *
+		^
+		maxlength <= length_max Infinity
+		type <= type?val \text
+	event *
+		^
+		input?event <=> event_change?event null
+		keydown?event <=> event_key_press?event null
+	plugins /
+		<= Submit $mol_hotkey
+			key * enter?event <=> submit?event null
+
 $mol_float $mol_view
 	style *
 		^
@@ -184,12 +187,6 @@ $mol_check_expand $mol_check
 		paddingLeft <= level_style \0px
 	checked?val <=> expanded?val false
 	enabled <= expandable false
-
-$mol_paragraph $mol_view
-	line_height 24
-	letter_width 8
-	width_limit Infinity
-	sub / <= title
 
 $mol_dimmer $mol_paragraph
 	haystack \
@@ -529,6 +526,13 @@ $mol_select $mol_pick
 		enabled <= enabled true
 	Trigger_icon $mol_icon_dots_vertical
 
+$mol_string_button $mol_string
+	hint \ 
+
+$mol_icon_wrench $mol_icon path \M22.7,19L13.6,9.9C14.5,7.6 14,4.9 12.1,3C10.1,1 7.1,0.6 4.7,1.7L9,6L6,9L1.6,4.7C0.4,7.1 0.9,10.1 2.9,12.1C4.8,14 7.5,14.5 9.8,13.6L18.9,22.7C19.3,23.1 19.9,23.1 20.3,22.7L22.6,20.4C23.1,20 23.1,19.3 22.7,19Z
+
+$mol_icon_wrench_outline $mol_icon path \M22.61,19L13.53,9.91C14.46,7.57 14,4.81 12.09,2.91C9.79,0.61 6.21,0.4 3.66,2.26L7.5,6.11L6.08,7.5L2.25,3.69C0.39,6.23 0.6,9.82 2.9,12.11C4.76,13.97 7.47,14.46 9.79,13.59L18.9,22.7C19.29,23.09 19.92,23.09 20.31,22.7L22.61,20.4C23,20 23,19.39 22.61,19M19.61,20.59L10.15,11.13C9.54,11.58 8.86,11.85 8.15,11.95C6.79,12.15 5.36,11.74 4.32,10.7C3.37,9.76 2.93,8.5 3,7.26L6.09,10.35L10.33,6.11L7.24,3C8.5,2.95 9.73,3.39 10.68,4.33C11.76,5.41 12.17,6.9 11.92,8.29C11.8,9 11.5,9.66 11.04,10.25L20.5,19.7L19.61,20.59Z
+
 $hyoo_studio_value $mol_list
 	tree?next $mol_tree2_empty
 	rows /
@@ -574,6 +578,12 @@ $hyoo_studio_value $mol_list
 					sub /
 						<= List_add_icon $mol_icon_plus
 					click?next <=> list_add?next null
+				<= Over_add $mol_select
+					hint @ \Add Override
+					align_hor \left
+					Trigger_icon <= Over_add_icon $mol_icon_wrench_outline
+					value?next <=> over_add?next \
+					options <= over_prop_options /string
 				<= Type $mol_select
 					hint @ \Type
 					align_hor \left
@@ -593,18 +603,31 @@ $hyoo_studio_value $mol_list
 			sub <= inner /
 				<= List $mol_list
 					rows <= list /
-	Value!index $hyoo_studio_value
-		tree?next <=> value!index?next $mol_tree2_empty
-		props_all <= props_all $mol_tree2_empty
+				<= Overs $mol_list
+					rows <= overs /
+	List_value!index $hyoo_studio_value
+		tree?next <=> list_value!index?next $mol_tree2_empty
+		props_of!klass <= props_of!klass $mol_tree2_empty
+		props_bindable <= props_bindable $mol_tree2_empty
 		Locale null
+	Over!index $mol_list
+		rows /
+			<= Over_prop!index $mol_select
+				hint @ \Overrided property
+				value?next <=> over_prop!index?next \
+				options <= over_prop_options /string
+			<= Over_value!index $hyoo_studio_value
+				tree?next <=> over_value!index?next $mol_tree2_empty
+				props_of!klass <= props_of!klass $mol_tree2_empty
+				props_bindable <= props_bindable $mol_tree2_empty
 
 $hyoo_studio_prop $mol_list
 	tree?val $mol_tree2_empty
 	rows /
 		<= Main $mol_view
 			sub /
-				<= Title $mol_string_button
-					value?next <=> title?next \
+				<= Title $mol_paragraph
+					title <= title?next \
 				<= Key $mol_check_icon
 					hint @ \Multiple
 					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
@@ -615,7 +638,8 @@ $hyoo_studio_prop $mol_list
 					checked?next <=> next?next false
 		<= Value $hyoo_studio_value
 			tree?next <=> value?next $mol_tree2_empty
-			props_all <= props_all $mol_tree2_empty
+			props_of!klass <= props_of!klass $mol_tree2_empty
+			props_bindable <= props_bindable $mol_tree2_empty
 			class_list <= class_list /string
 
 $mol_theme_auto $mol_plugin
@@ -768,7 +792,8 @@ $hyoo_studio $mol_book2
 			html <= preview_html \
 	Prop!name $hyoo_studio_prop
 		tree?next <=> prop_tree!name?next $mol_tree2_empty
-		props_all <= props_all $mol_tree2_empty
+		props_of!klass <= props_of!klass $mol_tree2_empty
+		props_bindable <= props_all $mol_tree2_empty
 		class_list <= class_list /string
 	Placeholder null
 
