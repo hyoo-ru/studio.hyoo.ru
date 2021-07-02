@@ -82,6 +82,7 @@ namespace $.$$ {
 			let val = this.tree()
 			if( next !== undefined ) {
 				val = this.tree( next && val.clone([ next ]) )
+				return next
 			}
 			
 			return val?.kids[0]

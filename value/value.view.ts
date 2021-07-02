@@ -42,14 +42,14 @@ namespace $.$$ {
 		@ $mol_mem
 		self() {
 			switch( this.type() ) {
-				case 'string': return [ this.Str(), this.Locale(), this.Type() ]
+				case 'string': return [ this.Str(), this.Type(), this.Locale() ]
 				case 'number': return [ this.Numb(), this.Type() ]
 				case 'unit': return [ this.Unit(), this.Type() ]
 				case 'bind': return [ this.Prop_bind(), this.Prop_name(), this.Type() ]
-				case 'list': return [ this.Item_type(), this.List_add(), this.Type() ]
+				case 'list': return [ this.Item_type(), this.Type(), this.List_add() ]
 				case 'dict': return [ this.Type() ]
-				case 'object': return [ this.Obj(), this.Type() ]
-				default: return []
+				case 'object': return [ this.Obj(), this.Type(), this.Over_add() ]
+				default: return [ this.Type() ]
 			}
 		}
 
@@ -57,6 +57,7 @@ namespace $.$$ {
 		inner() {
 			switch( this.type() ) {
 				case 'list': return [ this.List() ]
+				case 'object': return [ this.Overs() ]
 				default: return []
 			}
 		}
@@ -106,7 +107,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		prop_name_list() {
-			return this.props_all().kids.map( prop => prop.type )
+			return this.props_bindable().kids.map( prop => prop.type )
 		}
 				
 		@ $mol_mem
@@ -158,7 +159,12 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		list() {
-			return this.tree().kids.map( (_,i)=> this.Value( i ) )
+			return this.tree().kids.map( (_,i)=> this.List_value( i ) )
+		}
+		
+		@ $mol_mem
+		overs() {
+			return this.tree().kids.map( (_,i)=> this.Over( i ) )
 		}
 		
 		@ $mol_mem
@@ -187,12 +193,57 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
-		value( index: number, next?: $mol_tree2 ) {
+		list_value( index: number, next?: $mol_tree2 ) {
 			let val = this.tree()
 			if( next !== undefined ) {
 				val = this.tree( val.insert( next, index ) )
 			}
 			return val.kids[ index ]
+		}
+		
+		@ $mol_mem
+		over_prop_options() {
+			return this.props_of( this.obj() ).kids.map( prop => prop.type )
+		}
+		
+		@ $mol_mem_key
+		over_prop( index: number, next?: string ) {
+			let val = this.tree()
+			if( next !== undefined ) {
+				val = this.tree(
+					val.insert( val.struct( next, val.kids[ index ].kids ), index )
+				)
+			}
+			return val.kids[ index ].type
+		}
+		
+		over_add( next: string ) {
+			
+			if( !next ) return ''
+			
+			const tree = this.tree()
+			
+			this.tree(
+				tree.clone([
+					... tree.kids,
+					tree.struct( next, [
+						tree.struct( 'null' ),
+					] ),
+				])
+			)
+			
+			return next
+		}
+		
+		@ $mol_mem_key
+		over_value( index: number, next?: $mol_tree2 ) {
+			let val = this.tree()
+			if( next !== undefined ) {
+				val = this.tree(
+					val.insert( next && val.kids[ index ].clone([ next ]), index )
+				)
+			}
+			return val.kids[ index ]?.kids[0]
 		}
 		
 	}

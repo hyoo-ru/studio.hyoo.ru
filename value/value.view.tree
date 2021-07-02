@@ -43,6 +43,12 @@ $hyoo_studio_value $mol_list
 					sub /
 						<= List_add_icon $mol_icon_plus
 					click?next <=> list_add?next null
+				<= Over_add $mol_select
+					hint @ \Add Override
+					align_hor \left
+					Trigger_icon <= Over_add_icon $mol_icon_wrench_outline
+					value?next <=> over_add?next \
+					options <= over_prop_options /string
 				<= Type $mol_select
 					hint @ \Type
 					align_hor \left
@@ -62,7 +68,20 @@ $hyoo_studio_value $mol_list
 			sub <= inner /
 				<= List $mol_list
 					rows <= list /
-	Value!index $hyoo_studio_value
-		tree?next <=> value!index?next $mol_tree2_empty
-		props_all <= props_all $mol_tree2_empty
+				<= Overs $mol_list
+					rows <= overs /
+	List_value!index $hyoo_studio_value
+		tree?next <=> list_value!index?next $mol_tree2_empty
+		props_of!klass <= props_of!klass $mol_tree2_empty
+		props_bindable <= props_bindable $mol_tree2_empty
 		Locale null
+	Over!index $mol_list
+		rows /
+			<= Over_prop!index $mol_select
+				hint @ \Overrided property
+				value?next <=> over_prop!index?next \
+				options <= over_prop_options /string
+			<= Over_value!index $hyoo_studio_value
+				tree?next <=> over_value!index?next $mol_tree2_empty
+				props_of!klass <= props_of!klass $mol_tree2_empty
+				props_bindable <= props_bindable $mol_tree2_empty

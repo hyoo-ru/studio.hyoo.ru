@@ -3,8 +3,8 @@ $hyoo_studio_prop $mol_list
 	rows /
 		<= Main $mol_view
 			sub /
-				<= Title $mol_string_button
-					value?next <=> title?next \
+				<= Title $mol_paragraph
+					title <= title?next \
 				<= Key $mol_check_icon
 					hint @ \Multiple
 					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
@@ -15,5 +15,6 @@ $hyoo_studio_prop $mol_list
 					checked?next <=> next?next false
 		<= Value $hyoo_studio_value
 			tree?next <=> value?next $mol_tree2_empty
-			props_all <= props_all $mol_tree2_empty
+			props_of!klass <= props_of!klass $mol_tree2_empty
+			props_bindable <= props_bindable $mol_tree2_empty
 			class_list <= class_list /string

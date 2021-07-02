@@ -4,7 +4,10 @@ namespace $.$$ {
 		
 		Title: {
 			padding: $mol_gap.text,
-			textShadow: '0 0',
+			flex: {
+				grow: 1,
+				shrink: 1,
+			},
 		},
 		
 	} )

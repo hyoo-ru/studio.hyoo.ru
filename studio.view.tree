@@ -67,6 +67,7 @@ $hyoo_studio $mol_book2
 			html <= preview_html \
 	Prop!name $hyoo_studio_prop
 		tree?next <=> prop_tree!name?next $mol_tree2_empty
-		props_all <= props_all $mol_tree2_empty
+		props_of!klass <= props_of!klass $mol_tree2_empty
+		props_bindable <= props_all $mol_tree2_empty
 		class_list <= class_list /string
 	Placeholder null

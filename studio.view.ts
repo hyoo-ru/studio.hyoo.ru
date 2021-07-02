@@ -32,7 +32,7 @@ namespace $.$$ {
 		library() {
 			const uri = new URL( 'web.view.tree', this.pack() ).toString()
 			const str = this.$.$mol_fetch.text( uri )
-			const predef = '$mol_view $mol_object\n\ttitle \\\n\tsub /\n\tstyle *\n\tattr *\n\tevent *\n\tfield *\n\tdom_name \\\n\n'
+			const predef = '$mol_view $mol_object\n\tdom_name \\\n\tstyle *\n\tevent *\n\tfield *\n\tattr *\n\tsub /\n\ttitle \\\n'
 			const tree = this.$.$mol_tree2_from_string( predef + str )
 			const norm = this.$.$mol_view_tree2_normalize( tree )
 			return norm
@@ -48,6 +48,15 @@ namespace $.$$ {
 			).kids[0]
 			
 			return tree
+		}
+		
+		@ $mol_mem
+		united() {
+			const lib = this.library()
+			return lib.clone([
+				... lib.kids,
+				this.tree(),
+			])
 		}
 		
 		@ $mol_mem
@@ -127,14 +136,14 @@ namespace $.$$ {
 			return this.library().kids.map( cl => cl.type )
 		}
 		
-		@ $mol_mem
-		props_all() {
+		@ $mol_mem_key
+		props_of( base: string ) {
 			
-			const lib = this.library()
+			const lib = this.united()
 			const all = new Map< string, $mol_tree2 >()
 			
 			const add = ( prop: $mol_tree2 )=> {
-				const name = [ ... prop.type.matchAll( this.$.$mol_view_tree2_prop_signature ) ][0].groups!.name
+				const name = this.$.$mol_view_tree2_prop_split( prop ).name.text()
 				all.set( name, prop )
 			}
 
@@ -149,11 +158,13 @@ namespace $.$$ {
 				
 			}
 
-			collect( this.base() )
-			
-			for( const prop of this.$.$mol_view_tree2_class_props( this.tree() ) ) add( prop )
+			collect( base )
 			
 			return lib.list( [ ... all.values() ].reverse() )
+		}
+		
+		props_all() {
+			return this.props_of( this.self() )
 		}
 		
 		@ $mol_mem
@@ -214,6 +225,7 @@ namespace $.$$ {
 			
 			if( next !== undefined ) {
 				this.tree( this.tree().insert( next, this.base(), prop ) )
+				return next
 			}
 			
 			return this.props_all().select( prop ).kids[0] ?? null

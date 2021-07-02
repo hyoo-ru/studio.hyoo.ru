@@ -8,12 +8,6 @@ namespace $.$$ {
 			justifyContent: 'flex-end',
 		},
 		
-		Type: {
-			flex: {
-				basis: rem(4),
-			},
-		},
-		
 		Numb: {
 			flex: {
 				grow: 1,
@@ -60,6 +54,38 @@ namespace $.$$ {
 					color: $mol_theme.line,
 				}],
 			}
+		},
+		
+		Item_type: {
+			width: rem(10),
+		},
+		
+		Overs: {
+			flex: {
+				grow: 1,
+				shrink: 1,
+			},
+			padding: rem(.75),
+			border: {
+				radius: $mol_gap.round,
+			},
+			box: {
+				shadow: [{
+					x: 0,
+					y: 0,
+					blur: 0,
+					spread: px(1),
+					color: $mol_theme.line,
+				}],
+			}
+		},
+		
+		Over: {
+			padding: $mol_gap.block,
+		},
+		
+		Over_prop: {
+			textShadow: '0 0',
 		},
 		
 	} )
