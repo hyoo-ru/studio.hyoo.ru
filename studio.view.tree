@@ -24,8 +24,8 @@ $hyoo_studio $mol_book2
 						<= Pack_field $mol_form_field
 							name @ \Components Donor App
 							control <= Pack $mol_string_button
-								hint \https://mol.hyoo.ru
-								value?val <=> pack?val \http://mol.hyoo.ru
+								hint <= pack
+								value?val <=> pack?val \https://mol.hyoo.ru
 						<= Config $mol_list
 							rows /
 								<= Classes $mol_view
