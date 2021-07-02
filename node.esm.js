@@ -10792,7 +10792,7 @@ var $;
         }
         Pack() {
             const obj = new this.$.$mol_string_button();
-            obj.hint = () => "http://mol.hyoo.ru";
+            obj.hint = () => "https://mol.hyoo.ru";
             obj.value = (val) => this.pack(val);
             return obj;
         }

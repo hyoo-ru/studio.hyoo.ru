@@ -749,7 +749,7 @@ $hyoo_studio $mol_book2
 						<= Pack_field $mol_form_field
 							name @ \Components Donor App
 							control <= Pack $mol_string_button
-								hint \http://mol.hyoo.ru
+								hint \https://mol.hyoo.ru
 								value?val <=> pack?val \http://mol.hyoo.ru
 						<= Config $mol_list
 							rows /
