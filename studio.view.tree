@@ -23,7 +23,7 @@ $hyoo_studio $mol_book2
 					rows <= form_sections /
 						<= Pack_field $mol_form_field
 							name @ \Components Donor App
-							control <= Pack $mol_string_button
+							control <= Pack $mol_string
 								hint <= pack
 								value?val <=> pack?val \https://mol.hyoo.ru
 						<= Config $mol_list
@@ -32,7 +32,7 @@ $hyoo_studio $mol_book2
 									sub /
 										<= Self_field $mol_form_field
 											name @ \Custom Component
-											control <= Self $mol_string_button
+											control <= Self $mol_string
 												hint \$hyoo_studio_example
 												value?val <=> self?val \
 										<= Base_field $mol_form_field

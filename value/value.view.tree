@@ -35,7 +35,7 @@ $hyoo_studio_value $mol_list
 					align_hor \right
 					value?next <=> obj?next \$mol_view
 					options <= class_list /
-				<= Item_type $mol_string_button
+				<= Item_type $mol_string
 					hint @ \Item Type
 					value?next <=> item_type?next \any
 				<= List_add $mol_button_minor
