@@ -2517,15 +2517,6 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_string_button extends $mol_string {
-        hint(): string;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
     class $mol_icon_wrench extends $mol_icon {
         path(): string;
     }
@@ -2562,7 +2553,7 @@ declare namespace $ {
         class_list(): readonly any[];
         Obj(): $$.$mol_select;
         item_type(next?: any): string;
-        Item_type(): $mol_string_button;
+        Item_type(): $$.$mol_string;
         List_add_icon(): $mol_icon_plus;
         list_add(next?: any): any;
         List_add(): $mol_button_minor;
@@ -2683,7 +2674,7 @@ declare namespace $.$$ {
     type types = "" | "unit" | "dict" | "string" | "bind" | "list" | "object" | "number";
     export class $hyoo_studio_value extends $.$hyoo_studio_value {
         type(next?: types): types;
-        self(): ($mol_textarea | $mol_select | $mol_check_icon)[] | ($mol_number | $mol_select)[] | ($mol_switch | $mol_select)[] | ($mol_button_minor | $mol_select | $mol_string_button)[];
+        self(): ($mol_textarea | $mol_select | $mol_check_icon)[] | ($mol_number | $mol_select)[] | ($mol_switch | $mol_select)[] | ($mol_button_minor | $mol_string | $mol_select)[];
         inner(): $mol_list[];
         str(next?: string): string;
         locale(next?: boolean): boolean;
@@ -2986,10 +2977,10 @@ declare namespace $ {
         Preview_open_icon(): $mol_icon_play_circle;
         Preview_open(): $$.$mol_link;
         pack(val?: any): string;
-        Pack(): $mol_string_button;
+        Pack(): $$.$mol_string;
         Pack_field(): $mol_form_field;
         self(val?: any): string;
-        Self(): $mol_string_button;
+        Self(): $$.$mol_string;
         Self_field(): $mol_form_field;
         base(val?: any): string;
         base_options(): readonly string[];

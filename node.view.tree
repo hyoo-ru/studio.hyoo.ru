@@ -154,7 +154,7 @@ $mol_string $mol_view
 		^
 		disabled <= disabled false
 		value <= value_changed?val <=> value?val \
-		placeholder <= hint \
+		placeholder <= hint \ 
 		spellcheck <= spellcheck false
 		autocomplete <= autocomplete_native \
 		selectionEnd <= selection_end 0
@@ -421,7 +421,7 @@ $mol_number $mol_view
 		<= String $mol_string
 			type \tel
 			value?val <=> value_string?val \
-			hint <= hint \
+			hint <= hint \ 
 			enabled <= string_enabled <= enabled true
 		<= Dec $mol_button_minor
 			event_click?val <=> event_dec?val null
@@ -526,9 +526,6 @@ $mol_select $mol_pick
 		enabled <= enabled true
 	Trigger_icon $mol_icon_dots_vertical
 
-$mol_string_button $mol_string
-	hint \ 
-
 $mol_icon_wrench $mol_icon path \M22.7,19L13.6,9.9C14.5,7.6 14,4.9 12.1,3C10.1,1 7.1,0.6 4.7,1.7L9,6L6,9L1.6,4.7C0.4,7.1 0.9,10.1 2.9,12.1C4.8,14 7.5,14.5 9.8,13.6L18.9,22.7C19.3,23.1 19.9,23.1 20.3,22.7L22.6,20.4C23.1,20 23.1,19.3 22.7,19Z
 
 $mol_icon_wrench_outline $mol_icon path \M22.61,19L13.53,9.91C14.46,7.57 14,4.81 12.09,2.91C9.79,0.61 6.21,0.4 3.66,2.26L7.5,6.11L6.08,7.5L2.25,3.69C0.39,6.23 0.6,9.82 2.9,12.11C4.76,13.97 7.47,14.46 9.79,13.59L18.9,22.7C19.29,23.09 19.92,23.09 20.31,22.7L22.61,20.4C23,20 23,19.39 22.61,19M19.61,20.59L10.15,11.13C9.54,11.58 8.86,11.85 8.15,11.95C6.79,12.15 5.36,11.74 4.32,10.7C3.37,9.76 2.93,8.5 3,7.26L6.09,10.35L10.33,6.11L7.24,3C8.5,2.95 9.73,3.39 10.68,4.33C11.76,5.41 12.17,6.9 11.92,8.29C11.8,9 11.5,9.66 11.04,10.25L20.5,19.7L19.61,20.59Z
@@ -570,7 +567,7 @@ $hyoo_studio_value $mol_list
 					align_hor \right
 					value?next <=> obj?next \$mol_view
 					options <= class_list /
-				<= Item_type $mol_string_button
+				<= Item_type $mol_string
 					hint @ \Item Type
 					value?next <=> item_type?next \any
 				<= List_add $mol_button_minor
@@ -748,7 +745,7 @@ $hyoo_studio $mol_book2
 					rows <= form_sections /
 						<= Pack_field $mol_form_field
 							name @ \Components Donor App
-							control <= Pack $mol_string_button
+							control <= Pack $mol_string
 								hint <= pack
 								value?val <=> pack?val \https://mol.hyoo.ru
 						<= Config $mol_list
@@ -757,7 +754,7 @@ $hyoo_studio $mol_book2
 									sub /
 										<= Self_field $mol_form_field
 											name @ \Custom Component
-											control <= Self $mol_string_button
+											control <= Self $mol_string
 												hint \$hyoo_studio_example
 												value?val <=> self?val \
 										<= Base_field $mol_form_field
