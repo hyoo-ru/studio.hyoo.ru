@@ -10319,7 +10319,6 @@ var $;
     var $$;
     (function ($$) {
         class $mol_frame extends $.$mol_frame {
-            dom_node;
             window() {
                 const node = this.dom_node();
                 this.uri_resource();
