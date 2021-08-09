@@ -1,6 +1,6 @@
 namespace $.$$ {
 	
-	const { rem } = $mol_style_unit
+	const { rem, per } = $mol_style_unit
 	
 	$mol_style_define( $hyoo_studio, {
 		
@@ -54,6 +54,7 @@ namespace $.$$ {
 				basis: rem(40),
 				shrink: 0,
 			},
+			minWidth: per(50),
 		},
 		
 	} )
