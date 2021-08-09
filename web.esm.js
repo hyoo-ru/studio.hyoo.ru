@@ -11501,7 +11501,7 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
-        const { rem } = $.$mol_style_unit;
+        const { rem, per } = $.$mol_style_unit;
         $.$mol_style_define($$.$hyoo_studio, {
             Edit: {
                 minWidth: rem(20),
@@ -11539,6 +11539,7 @@ var $;
                     basis: rem(40),
                     shrink: 0,
                 },
+                minWidth: per(50),
             },
         });
     })($$ = $.$$ || ($.$$ = {}));
