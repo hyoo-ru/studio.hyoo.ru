@@ -62,7 +62,7 @@ namespace $.$$ {
 					y: 0,
 					blur: 0,
 					spread: px(1),
-					color: $mol_theme.linne,
+					color: $mol_theme.line,
 				}],
 			}
 		},
