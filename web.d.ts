@@ -2642,7 +2642,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_frame extends $mol_view {
+    class $mol_frame extends $mol_scroll {
         dom_name(): string;
         attr(): {
             src: string;
