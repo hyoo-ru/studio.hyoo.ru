@@ -1713,8 +1713,8 @@ declare namespace $ {
         static end: $mol_regexp<{}>;
         static or: $mol_regexp<{}>;
         static line_end: $mol_regexp<{
-            readonly mac_end: string;
             readonly win_end: string;
+            readonly mac_end: string;
         }>;
     }
     export {};
@@ -2290,7 +2290,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_value_type(this: $, val: $mol_tree2): "number" | "locale" | "null" | "dict" | "string" | "bind" | "list" | "object" | "bool" | "get" | "put";
+    function $mol_view_tree2_value_type(this: $, val: $mol_tree2): "number" | "locale" | "null" | "dict" | "string" | "bind" | "list" | "object" | "get" | "bool" | "put";
 }
 
 declare namespace $ {
