@@ -6288,6 +6288,7 @@ var $;
             obj.checked = (val) => this.option_checked(id, val);
             obj.label = () => this.option_label(id);
             obj.enabled = () => this.option_enabled(id);
+            obj.hint = () => this.option_hint(id);
             obj.minimal_height = () => 24;
             return obj;
         }
@@ -6323,6 +6324,9 @@ var $;
         }
         option_enabled(id) {
             return this.enabled();
+        }
+        option_hint(id) {
+            return "";
         }
         items() {
             return [];
