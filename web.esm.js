@@ -6080,7 +6080,7 @@ var $;
     (function ($$) {
         class $mol_number extends $.$mol_number {
             event_dec(next) {
-                this.value((this.value() || 0) - this.precision_change());
+                this.value((Number(this.value()) || 0) - this.precision_change());
             }
             event_inc(next) {
                 this.value((Number(this.value()) || 0) + this.precision_change());
@@ -6099,7 +6099,7 @@ var $;
                     return (value / precisionView).toFixed();
                 }
                 else {
-                    const fixedNumber = Math.log(1 / precisionView) / Math.log(10);
+                    const fixedNumber = Math.log10(1 / precisionView);
                     return value.toFixed(fixedNumber);
                 }
             }
@@ -10798,7 +10798,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $.$mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: .375rem;\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n\tgrid-gap: 0 .75rem;\n}\n\n[mol_row] > * {\n\tmargin: .375rem;\n\tmax-width: 100%;\n}\n");
+    $.$mol_style_attach("mol/row/row.view.css", "[mol_row] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\talign-items: flex-start;\n\talign-content: flex-start;\n\tjustify-content: flex-start;\n\tpadding: .375rem;\n\tflex: 0 0 auto;\n\tbox-sizing: border-box;\n\tmax-width: 100%;\n}\n\n[mol_row] > * {\n\tmargin: .375rem;\n\tmax-width: 100%;\n}\n");
 })($ || ($ = {}));
 //row.view.css.js.map
 ;
