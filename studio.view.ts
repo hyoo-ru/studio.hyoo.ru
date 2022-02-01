@@ -101,7 +101,7 @@ namespace $.$$ {
 						<script src="${ script }"></script>
 						<script>${ this.self_code() }</script>
 						<div mol_view_root="${ self }" mol_theme="${ theme }" style="background:none"></div>
-						<script>setTimeout( ()=> $mol_view.autobind(), 1000 )</script>
+						<script>$mol_view.autobind(null)</script>
 					</body>
 				</html>
 			`
