@@ -9568,10 +9568,9 @@ var $;
     (function ($$) {
         class $mol_embed_native extends $.$mol_embed_native {
             window() {
-                this.uri();
-                return $mol_wire_sync(this).load(this.dom_node(), this.uri_resource());
+                return $mol_wire_sync(this).load(this.dom_node_actual());
             }
-            load(frame, uri) {
+            load(frame) {
                 return new Promise((done, fail) => {
                     frame.onload = () => {
                         try {
@@ -9698,6 +9697,11 @@ var $;
     var $$;
     (function ($$) {
         class $mol_frame extends $.$mol_frame {
+            window() {
+                if (this.html())
+                    return this.dom_node().contentWindow;
+                return super.window();
+            }
             allow() {
                 return [
                     ...this.fullscreen() ? ['fullscreen'] : [],
@@ -11104,7 +11108,7 @@ var $;
 						<script src="${script}"></script>
 						<script>${this.self_code()}</script>
 						<div mol_view_root="${self}" mol_theme="${theme}" style="background:none"></div>
-						<script>$mol_view.autobind(null)</script>
+						<script>setTimeout( ()=> $mol_view.autobind(null), 500 )</script>
 					</body>
 				</html>
 			`;
