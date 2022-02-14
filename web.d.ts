@@ -201,10 +201,10 @@ declare namespace $ {
 
 declare namespace $ {
     enum $mol_wire_cursor {
-        stale,
-        doubt,
-        fresh,
-        final
+        stale = -1,
+        doubt = -2,
+        fresh = -3,
+        final = -4
     }
 }
 
@@ -220,9 +220,8 @@ declare namespace $ {
         promote(): void;
         up(): void;
         down(): void;
-        emit(): void;
-        stale(): boolean;
-        affect(quant: number): boolean;
+        emit(quant?: $mol_wire_cursor): void;
+        absorb(quant?: $mol_wire_cursor): boolean;
         peer_move(from_pos: number, to_pos: number): void;
         peer_repos(peer_pos: number, self_pos: number): void;
     }
@@ -284,7 +283,7 @@ declare namespace $ {
         pub_off(sub_pos: number): void;
         destructor(): void;
         track_cut(): void;
-        affect(quant: number): boolean;
+        absorb(quant?: $mol_wire_cursor): boolean;
         get pub_empty(): boolean;
     }
 }
@@ -332,7 +331,7 @@ declare namespace $ {
         readonly host: Host;
         readonly task: (this: Host, ...args: Args) => Result;
         static temp<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result, ...args: Args): $mol_wire_fiber<Host, [...Args], Result>;
-        static persist<Host, Args extends readonly unknown[], Result>(host: Host, task: (this: Host, ...args: Args) => Result, ...args: Args): $mol_wire_fiber<Host, [...Args], Result>;
+        static persist<Host, Args extends readonly unknown[], Result>(task: (this: Host, ...args: Args) => Result, keys: number): (host: Host, args: Args) => $mol_wire_fiber<Host, [...Args], Result>;
         static warm: boolean;
         static planning: $mol_wire_fiber<any, any, any>[];
         static reaping: $mol_wire_fiber<any, any, any>[];
@@ -351,7 +350,7 @@ declare namespace $ {
         toString(): any;
         toJSON(): any;
         get $(): any;
-        affect(quant: number): boolean;
+        absorb(quant?: $mol_wire_cursor): boolean;
         down(): void;
         up(): void;
         put(next: Result | Error | Promise<Result | Error>): Result | Error | Promise<Result | Error>;
@@ -378,7 +377,7 @@ declare namespace $ {
         get?: (() => Prop) | undefined;
         set?: ((value: Prop) => void) | undefined;
     };
-    function $mol_wire_mem_func<Keys extends number>(keys: Keys): <Result, Args extends readonly unknown[], Func extends (...args: Args) => Result>(func: Func) => Func;
+    function $mol_wire_mem_func<Keys extends number>(keys: Keys): <Result, Host, Args extends unknown[], Func extends (this: Host, ...args: Args) => Result>(func: Func) => Func;
 }
 
 declare namespace $ {
