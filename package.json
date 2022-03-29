@@ -335,8 +335,8 @@
     "$mol_guard"
   ],
   "dependencies": {
-    "jsdom": "*",
     "colorette": "*",
+    "jsdom": "*",
     "chokidar": "*",
     "node-fetch": "*"
   }
