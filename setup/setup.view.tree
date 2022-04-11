@@ -1,0 +1,8 @@
+$hyoo_studio_setup $mol_page
+	title @ \Setup
+	body /
+		<= Pack_field $mol_form_field
+			name @ \Components Donor App
+			control <= Pack $mol_string
+				hint <= pack
+				value?val <=> pack?val \https://mol.hyoo.ru

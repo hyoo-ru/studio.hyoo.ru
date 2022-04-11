@@ -1,0 +1,33 @@
+$hyoo_studio_home $mol_page
+	title @ \$mol Studio
+	tools /
+		<= Source_link $mol_link_source
+			uri \https://github.com/hyoo-ru/studio.hyoo.ru
+		<= Lights $mol_lights_toggle
+		<= Setup_open $mol_link
+			hint @ \Setup
+			arg * setup \
+			sub /
+				<= Setup_open_icon $mol_icon_settings
+	class_list /
+	class_add!id null
+	body /
+		<= Body_list $mol_list
+			rows /
+				<= Class_controls $mol_view
+					sub <= class_controls /
+						<= Class_filter $mol_search
+							hint @ \Filter or Add one class
+							query?next <=> class_filter?next \
+						<= Class_add $mol_button_minor
+							hint @ \Add this class
+							click?next <=> class_add_event?next null
+							sub /
+								<= Class_add_icon $mol_icon_plus
+				<= Class_list $mol_list
+					rows <= class_list_rows /
+	Class_link!id $mol_link
+		arg * view <= class_name!id \
+		sub / <= Class_name!id $mol_dimmer
+			haystack <= class_name!id
+			needle <= class_filter

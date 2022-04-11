@@ -1,33 +1,47 @@
 namespace $.$$ {
 	
 	export class $hyoo_studio extends $.$hyoo_studio {
-		
-		preview_show() {
-			return this.$.$mol_state_arg.value( 'preview' ) !== null
-		}
-		
-		editor_raw() {
-			return this.$.$mol_state_arg.value( 'raw' ) !== null
+
+		arg( id: 'setup' | 'view' | 'preview' | 'source', value?: string ) {
+			return this.$.$mol_state_arg.value( id , value )
 		}
 		
 		@ $mol_mem
 		pages() {
 			return [
-				this.Edit(),
-				... this.preview_show() ? [ this.Preview() ] : [],
+				this.Home(),
+				... this.arg( 'setup' ) !== null ? [ this.Setup() ] : [],
+				... this.arg( 'view' ) ? [ this.View( this.arg( 'view' ) ) ] : [],
+				... this.arg( 'preview' ) ? [ this.Preview( this.arg( 'view' ) ) ] : [],
 			]
 		}
-		
+
 		@ $mol_mem
 		pack( next?: string ) {
 			return this.$.$mol_state_arg.value( 'pack', next ) ?? super.pack()
 		}
-		
+
 		@ $mol_mem
-		source( next?: string ): string {
-			return this.$.$mol_state_arg.value( 'source', next ) ?? super.source()
+		source( next?: string ) {
+			return this.arg( 'source' , next ) ?? super.source()
 		}
-		
+
+		@ $mol_mem_key
+		source_class( id: string, next?: string ) {
+
+			if ( next !== undefined ) {
+				const source = next.replace( /\n?$/, '\n' )
+				
+				const tree = this.$.$mol_view_tree2_normalize(
+					this.$.$mol_tree2_from_string( source )
+				).kids[0]
+
+				return this.tree_class( id , tree ).toString()
+			}
+
+			return this.tree_class( id ).toString()
+		}
+
 		@ $mol_mem
 		library() {
 			const uri = new URL( 'web.view.tree', this.pack() ).toString()
@@ -37,7 +51,7 @@ namespace $.$$ {
 			const norm = this.$.$mol_view_tree2_normalize( tree )
 			return norm
 		}
-		
+
 		@ $mol_mem
 		tree( next?: $mol_tree2 ) {
 			
@@ -45,53 +59,44 @@ namespace $.$$ {
 			
 			const tree = this.$.$mol_view_tree2_normalize(
 				this.$.$mol_tree2_from_string( source )
-			).kids[0]
+			)
 			
 			return tree
 		}
-		
+
+		@ $mol_mem
+		tree_class_list() {
+			return this.tree().kids.map( cl => cl.type )
+		}
+
+		@ $mol_mem_key
+		tree_class( id: string , next?: $mol_tree2 ) {
+
+			if( next !== undefined ) {
+				this.tree( this.tree().insert( next, id ) )
+				return next
+			}
+			
+			return this.tree().select( id ).kids[0] ?? null
+		}
+
+		class_add( id: string ) {
+			const tree = this.$.$mol_tree2_from_string( `${id} $mol_view\n` )
+			this.tree_class( id , tree.kids[0] )
+		}
+
 		@ $mol_mem
 		united() {
 			const lib = this.library()
 			return lib.clone([
 				... lib.kids,
-				this.tree(),
+				... this.tree().kids,
 			])
 		}
 		
-		@ $mol_mem
-		self( next?: string ) {
+		@ $mol_mem_key
+		preview_html( id: string ) {
 			
-			const tree = this.tree()
-			if( !next ) return tree.type
-			
-			this.tree(
-				tree.struct( next, tree.kids )
-			)
-			
-			return next
-		}
-		
-		@ $mol_mem
-		base( next?: string ) {
-			
-			const self = this.tree()
-			const base = this.$.$mol_view_tree2_class_super( self )
-			if( !next ) return base.type
-			
-			this.tree(
-				self.clone([
-					base.struct( next, base.kids )
-				])
-			)
-			
-			return next
-		}
-		
-		@ $mol_mem
-		preview_html() {
-			
-			const self = this.self()
 			const script = new URL( 'web.js', this.pack() ).toString()
 			const theme = this.Theme().theme()
 			
@@ -99,8 +104,8 @@ namespace $.$$ {
 				<html style="height:100%;width:100%">
 					<body style="margin:0;height:100%;width:100%">
 						<script src="${ script }"></script>
-						<script>${ this.self_code() }</script>
-						<div mol_view_root="${ self }" mol_theme="${ theme }" style="background:none"></div>
+						<script>${ this.all_code() }</script>
+						<div mol_view_root="${ id }" mol_theme="${ theme }" style="background:none"></div>
 						<script>setTimeout( ()=> $mol_view.autobind(null), 500 )</script>
 					</body>
 				</html>
@@ -108,10 +113,10 @@ namespace $.$$ {
 			
 		}
 		
-		@ $mol_mem
-		self_code() {
+		@ $mol_mem_key
+		self_code( id: string ) {
 			
-			const tree = this.tree()
+			const tree = this.tree_class( id )
 			
 			const code = this.$.$mol_tree2_text_to_string_mapped_js(
 				this.$.$mol_tree2_js_to_text(
@@ -122,18 +127,23 @@ namespace $.$$ {
 			)
 			
 			return `
-				$.${ this.self() } = ${ code }
+				$.${ id } = ${ code };
 			`
 		}
-		
+
+		@ $mol_mem
+		all_code() {
+			return this.tree_class_list().map( id => this.self_code( id ) ).join( '\n' )
+		}
+
 		@ $mol_mem
 		base_options() {
-			return this.library().kids.map( cl => cl.type ).reverse()
+			return this.united().kids.map( cl => cl.type ).reverse()
 		}
 		
 		@ $mol_mem
 		class_list() {
-			return this.library().kids.map( cl => cl.type )
+			return this.united().kids.map( cl => cl.type )
 		}
 		
 		@ $mol_mem_key
@@ -162,85 +172,7 @@ namespace $.$$ {
 			
 			return lib.list( [ ... all.values() ].reverse() )
 		}
-		
-		props_all() {
-			return this.props_of( this.self() )
-		}
-		
-		@ $mol_mem
-		prop_filtered() {
-			return this.props_all().kids.filter(
-				$mol_match_text(
-					this.prop_filter(),
-					prop => [ prop.type ],
-				)
-			)
-		}
-		
-		@ $mol_mem
-		props() {
-			return this.prop_filtered().map( prop => this.Prop( prop.type ) )
-		}
-		
-		@ $mol_mem
-		prop_add_allow() {
 			
-			const query = this.prop_filter()
-			if( !query.trim() ) return false
-			
-			const all = this.props_all()
-			return all.kids.every( prop => prop.type !== query )
-			
-		}
-		
-		prop_add() {
-			
-			const query = this.prop_filter()
-			const tree = this.tree()
-			
-			this.tree(
-				tree.insert(
-					tree.struct( query, [
-						tree.struct( 'null' ),
-					] ),
-					null,
-					query,
-				)
-			)
-			
-			this.prop_filter( '' )
-			
-		}
-		
-		@ $mol_mem
-		props_controls() {
-			return [
-				this.Prop_filter(),
-				... this.prop_add_allow() ? [ this.Prop_add() ] : [],
-			]
-		}
-		
-		@ $mol_mem_key
-		prop_tree( prop: string, next?: $mol_tree2 ) {
-			
-			if( next !== undefined ) {
-				this.tree( this.tree().insert( next, this.base(), prop ) )
-				return next
-			}
-			
-			return this.props_all().select( prop ).kids[0] ?? null
-		}
-		
-		@ $mol_mem
-		form_sections() {
-			return [
-				this.Pack_field(),
-				... this.editor_raw()
-					? [ this.Source_field() ]
-					: [ this.Config() ],
-			]
-		}
-		
 	}
 	
 }

@@ -1,73 +1,24 @@
 $hyoo_studio $mol_book2
+	source?next \
+		\$hyoo_studio_example $mol_view
+		\$hyoo_studio_test $mol_view
+	tree?next $mol_tree2_empty
 	plugins /
 		<= Theme $mol_theme_auto
 	pages /
-		<= Edit $mol_page
-			title @ \$mol Studio
-			tools /
-				<= Source_link $mol_link_source
-					uri \https://github.com/hyoo-ru/studio.hyoo.ru
-				<= Lights $mol_lights_toggle
-				<= Editor_toggle $mol_link
-					hint @ \Change Editor
-					arg * raw \
-					sub /
-						<= Editor_toggle_icon $mol_icon_card_text
-				<= Preview_open $mol_link
-					hint @ \Show Preview
-					arg * preview \
-					sub /
-						<= Preview_open_icon $mol_icon_play_circle
-			body /
-				<= Edit_form $mol_list
-					rows <= form_sections /
-						<= Pack_field $mol_form_field
-							name @ \Components Donor App
-							control <= Pack $mol_string
-								hint <= pack
-								value?val <=> pack?val \https://mol.hyoo.ru
-						<= Config $mol_list
-							rows /
-								<= Classes $mol_view
-									sub /
-										<= Self_field $mol_form_field
-											name @ \Custom Component
-											control <= Self $mol_string
-												hint \$hyoo_studio_example
-												value?val <=> self?val \
-										<= Base_field $mol_form_field
-											name @ \Base Class
-											control <= Base $mol_select
-												value?val <=> base?val \
-												options <= base_options /string
-												align \bottom_left
-								<= Props_controls $mol_view
-									sub <= props_controls /
-										<= Prop_filter $mol_search
-											hint @ \Filter properties or Add one..
-											query?next <=> prop_filter?next \
-										<= Prop_add $mol_button_minor
-											hint @ \Add this property
-											click?next <=> prop_add?next null
-											sub /
-												<= Prop_add_icon $mol_icon_plus
-								<= Props $mol_list
-									rows <= props /$hyoo_studio_prop
-						<= Source_field $mol_form_field
-							name @ \View.Tree Source
-							control <= Source $mol_textarea
-								hint \$hyoo_studio_example $mol_view
-								sidebar_showed true
-								value?val <=> source?val \
-									\$hyoo_studio_example $mol_view
-									\
-		<= Preview $mol_frame
-			title @ \Preview
-			uri <= pack
-			html <= preview_html \
-	Prop!name $hyoo_studio_prop
-		tree?next <=> prop_tree!name?next $mol_tree2_empty
-		props_of!klass <= props_of!klass $mol_tree2_empty
-		props_bindable <= props_all $mol_tree2_empty
-		class_list <= class_list /string
+	Home $hyoo_studio_home
+		class_list <= tree_class_list /
+		class_add!id <= class_add!id null
+	Setup $hyoo_studio_setup
+		pack?val <=> pack?val \https://mol.hyoo.ru
+	Preview!id $mol_frame
+		title @ \Preview
+		uri <= pack
+		html <= preview_html!id \
+	View!id $hyoo_studio_view
+		tree?next <=> tree_class!id?next $mol_tree2_empty
+		source?next <=> source_class!id?next \
+		base_options <= base_options /
+		props_all <= props_of!id $mol_tree2_empty
+		class_list <= class_list /
 	Placeholder null
