@@ -3,24 +3,35 @@ namespace $.$$ {
 	export class $hyoo_studio_view extends $.$hyoo_studio_view {
 
 		@ $mol_mem
-		prop_filtered() {
-			return this.props_all().kids.filter(
-				$mol_match_text(
-					this.prop_filter(),
-					prop => [ prop.type ],
-				)
-			)
+		props_own() {
+			const tree = this.tree()
+			const props = this.$.$mol_view_tree2_class_props( tree )
+			return tree.list( props ).kids
 		}
-		
+
+		@ $mol_mem
+		prop_having_dict() {
+			return this.props_all().kids.reduce( ( dict , prop ) => {
+				dict[ prop.type ] = prop.type
+				return dict
+
+			} , {} )
+		}
+
+		@ $mol_mem
+		prop_displayed_list( next?: string[] ) {
+			return next ?? this.props_own().map( p => p.type )
+		}
+
 		@ $mol_mem
 		props() {
-			return this.prop_filtered().map( prop => this.Prop( prop.type ) )
+			return this.prop_displayed_list().map( prop => this.Prop( prop ) )
 		}
 		
 		@ $mol_mem
-		prop_add_allow() {
+		prop_custom_add_allow() {
 			
-			const query = this.prop_filter()
+			const query = this.prop_custom_name()
 			if( !query.trim() ) return false
 			
 			const all = this.props_all()
@@ -28,9 +39,9 @@ namespace $.$$ {
 			
 		}
 		
-		prop_add() {
+		prop_custom_add() {
 			
-			const query = this.prop_filter()
+			const query = this.prop_custom_name()
 			const tree = this.tree()
 			
 			this.tree(
@@ -43,16 +54,8 @@ namespace $.$$ {
 				)
 			)
 			
-			this.prop_filter( '' )
+			this.prop_custom_name( '' )
 			
-		}
-		
-		@ $mol_mem
-		props_controls() {
-			return [
-				this.Prop_filter(),
-				... this.prop_add_allow() ? [ this.Prop_add() ] : [],
-			]
 		}
 		
 		@ $mol_mem_key

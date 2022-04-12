@@ -36,13 +36,18 @@ namespace $.$$ {
 			Base: {
 				alignSelf: 'stretch',
 			},
-			
-			Props_controls: {
-				padding: $mol_gap.block,
+
+			Prop_custom: {
+				margin: $mol_gap.block,
 			},
 			
 			Prop: {
 				padding: $mol_gap.block,
+			},
+
+			Drop: {
+				margin: $mol_gap.block,
+				justifyContent: 'center',
 			},
 	} )
 
