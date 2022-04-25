@@ -12432,12 +12432,11 @@ var $;
                 const script = new URL('web.js', this.pack()).toString();
                 const theme = this.Theme().theme();
                 return `
-				<html style="height:100%;width:100%">
-					<body style="margin:0;height:100%;width:100%">
+				<html mol_view_root>
+					<body mol_view_root>
 						<script src="${script}"></script>
 						<script>${this.self_code()}</script>
 						<div mol_view_root="${self}" mol_theme="${theme}" style="background:none"></div>
-						<script>setTimeout( ()=> $mol_view.autobind(null), 500 )</script>
 					</body>
 				</html>
 			`;
