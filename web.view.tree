@@ -455,17 +455,20 @@ $mol_number $mol_view
 			enabled <= inc_enabled <= enabled true
 			sub / <= inc_icon $mol_icon_plus
 
-$mol_switch $mol_view
+$mol_check_list $mol_view
 	Option!id $mol_check
 		checked?val <=> option_checked!id?val false
-		label <= option_label!id / <= option_title!id \
+		label <= option_label!id /
+			<= option_title!id \
 		enabled <= option_enabled!id <= enabled true
 		hint <= option_hint!id \
 		minimal_height 24
-	value?val null
 	options *
 	keys /string
 	sub <= items /$mol_check
+
+$mol_switch $mol_check_list
+	value?val \
 
 $mol_pop $mol_view
 	showed?val false
@@ -852,14 +855,14 @@ $hyoo_studio $mol_book2
 
 $mol_row $mol_view
 
-$mol_form $mol_view
+$mol_form $mol_list
 	submit_blocked false
 	event *
 		^
 		keydown?event <=> keydown?event null
 	submit?event null
-	sub /
-		<= Bar_fields $mol_view
-			sub <= form_fields /$mol_form_field
-		<= Bar_buttons $mol_row
-			sub <= buttons /$mol_view
+	rows /
+		<= Body $mol_list
+			sub <= body <= form_fields /$mol_form_field
+		<= Foot $mol_row
+			sub <= foot <= buttons /$mol_view
