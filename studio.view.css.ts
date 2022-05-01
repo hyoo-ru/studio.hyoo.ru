@@ -6,7 +6,11 @@ namespace $.$$ {
 		
 		Edit: {
 			
-			minWidth: rem(20),
+			flex: {
+				grow: 0,
+				shrink: 0,
+				basis: rem(40),
+			},
 			
 			Body: {
 				padding: 0,
@@ -16,11 +20,6 @@ namespace $.$$ {
 		
 		Edit_form: {
 			display: 'flex',
-			
-			$mol_form_field: {
-				margin: $mol_gap.block,
-			},
-			
 		},
 		
 		Classes: {
@@ -53,6 +52,7 @@ namespace $.$$ {
 			flex: {
 				basis: rem(40),
 				shrink: 0,
+				grow: 10000,
 			},
 			minWidth: per(50),
 			zIndex: 2,
