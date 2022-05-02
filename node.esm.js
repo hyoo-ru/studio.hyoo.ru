@@ -949,7 +949,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/theme/theme.css", ":root {\n\t--mol_theme_hue: 210deg;\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n}\n\n[mol_theme] {\n\t\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n\t\n\t--mol_theme_back: hsl( var(--mol_theme_hue), 50% , calc( 54% + 44% * var(--mol_theme_luma) ) );\n\t--mol_theme_text: hsl( var(--mol_theme_hue), 0% , calc( 50% - 30% * var(--mol_theme_luma) ) );\n\t--mol_theme_field: hsl( var(--mol_theme_hue), 0%, calc( 50% + 50% * var(--mol_theme_luma) ), .2 );\n\t\n\t--mol_theme_card: hsl( var(--mol_theme_hue), 0%, 50%, .05 );\n\t--mol_theme_hover: hsl( var(--mol_theme_hue), 0%, 50%, .1 );\n\t--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .25 );\n\t--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 50%, 1 );\n\t\n\t--mol_theme_control: hsl( var(--mol_theme_hue), 50%, calc( 55% - 10% * var(--mol_theme_luma) ) );\n\t--mol_theme_current: hsl( calc( var(--mol_theme_hue) + 120deg ), 70%, calc( 60% - 10% * var(--mol_theme_luma) ) );\n\t--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 240deg ), 80%, calc( 50% - 10% * var(--mol_theme_luma) ) );\n\t\n}\n\n[mol_theme=\"$mol_theme_light\"] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n}\n\n[mol_theme=\"$mol_theme_dark\"] {\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate( 180deg );\n}\n\n[mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_luma: -2;\n\t--mol_theme_back: hsl( var(--mol_theme_hue), 50%, 40% );\n\t--mol_theme_hover: hsl( var(--mol_theme_hue), 60%, 30% );\n\t--mol_theme_current: hsl( var(--mol_theme_hue), 100%, 20% );\n}\n\n[mol_theme=\"$mol_theme_current\"] {\n\t--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 120deg ), 50%, calc( 55% + 15% * var(--mol_theme_luma) ) );\n}\n\n[mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_luma: -2;\n\t--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 240deg ), 50%, 40% );\n\t--mol_theme_hover: hsl( calc( var(--mol_theme_hue) + 240deg ), 50%, 35% );\n}\n\n[mol_theme=\"$mol_theme_accent\"] [mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: black;\n}\n");
+    $mol_style_attach("mol/theme/theme.css", ":root {\n\t--mol_theme_hue: 210deg;\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n}\n\n[mol_theme] {\n\t\n\tbackground-color: var(--mol_theme_back);\n\tcolor: var(--mol_theme_text);\n\tfill: var(--mol_theme_text);\n}\n\t\n:root, [mol_theme] {\n\t--mol_theme_back: hsl( var(--mol_theme_hue), 50% , calc( 54% + 44% * var(--mol_theme_luma) ) );\n\t--mol_theme_text: hsl( var(--mol_theme_hue), 0% , calc( 50% - 30% * var(--mol_theme_luma) ) );\n\t--mol_theme_field: hsl( var(--mol_theme_hue), 0%, calc( 50% + 50% * var(--mol_theme_luma) ), .2 );\n\t\n\t--mol_theme_card: hsl( var(--mol_theme_hue), 0%, 50%, .05 );\n\t--mol_theme_hover: hsl( var(--mol_theme_hue), 0%, 50%, .1 );\n\t--mol_theme_line: hsl( var(--mol_theme_hue), 0%, 50%, .25 );\n\t--mol_theme_shade: hsl( var(--mol_theme_hue), 0%, 50%, 1 );\n\t\n\t--mol_theme_control: hsl( var(--mol_theme_hue), 50%, calc( 55% - 10% * var(--mol_theme_luma) ) );\n\t--mol_theme_current: hsl( calc( var(--mol_theme_hue) + 120deg ), 70%, calc( 60% - 10% * var(--mol_theme_luma) ) );\n\t--mol_theme_focus: hsl( calc( var(--mol_theme_hue) + 240deg ), 80%, calc( 50% - 10% * var(--mol_theme_luma) ) );\n\t\n}\n\n[mol_theme=\"$mol_theme_light\"] {\n\t--mol_theme_luma: 1;\n\t--mol_theme_image: none;\n}\n\n[mol_theme=\"$mol_theme_dark\"] {\n\t--mol_theme_luma: -1;\n\t--mol_theme_image: invert(1) hue-rotate( 180deg );\n}\n\n[mol_theme=\"$mol_theme_base\"] {\n\t--mol_theme_luma: -2;\n\t--mol_theme_back: hsl( var(--mol_theme_hue), 50%, 40% );\n\t--mol_theme_hover: hsl( var(--mol_theme_hue), 60%, 30% );\n\t--mol_theme_current: hsl( var(--mol_theme_hue), 100%, 20% );\n}\n\n[mol_theme=\"$mol_theme_current\"] {\n\t--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 120deg ), 50%, calc( 55% + 15% * var(--mol_theme_luma) ) );\n}\n\n[mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_luma: -2;\n\t--mol_theme_back: hsl( calc( var(--mol_theme_hue) + 240deg ), 50%, 40% );\n\t--mol_theme_hover: hsl( calc( var(--mol_theme_hue) + 240deg ), 50%, 35% );\n}\n\n[mol_theme=\"$mol_theme_accent\"] [mol_theme=\"$mol_theme_accent\"] {\n\t--mol_theme_back: black;\n}\n");
 })($ || ($ = {}));
 //mol/theme/-css/theme.css.ts
 ;
@@ -3105,7 +3105,7 @@ var $;
         }
         Label() {
             const obj = new this.$.$mol_view();
-            obj.minimal_height = () => 16;
+            obj.minimal_height = () => 40;
             obj.sub = () => this.label();
             return obj;
         }
@@ -3153,7 +3153,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_label] {\n\tcolor: var(--mol_theme_shade);\n\tz-index: 1;\n\tpadding: var(--mol_gap_text);\n\tgap: 0 var(--mol_gap_block);\n\tflex-wrap: wrap;\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n}\n");
+    $mol_style_attach("mol/labeler/labeler.view.css", "[mol_labeler] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: stretch;\n\tcursor: inherit;\n}\n\n[mol_labeler_label] {\n\tmin-height: 2.5rem;\n\tcolor: var(--mol_theme_shade);\n\tz-index: 1;\n\tpadding: var(--mol_gap_text);\n\tgap: 0 var(--mol_gap_block);\n\tflex-wrap: wrap;\n}\n\n[mol_labeler_content] {\n\tdisplay: flex;\n}\n");
 })($ || ($ = {}));
 //mol/labeler/-css/labeler.view.css.ts
 ;
@@ -3161,6 +3161,9 @@ var $;
 var $;
 (function ($) {
     class $mol_form_field extends $mol_labeler {
+        bids() {
+            return [];
+        }
         label() {
             return [
                 this.name(),
@@ -3202,6 +3205,24 @@ var $;
     $mol_style_attach("mol/form/field/field.view.css", "[mol_form_field] {\n\talign-items: stretch;\n\tpadding: var(--mol_gap_block);\n}\n\n[mol_form_field_bid] {\n\tcolor: var(--mol_theme_focus);\n\tdisplay: inline-block;\n}\n\n[mol_form_field_content] {\n\tborder-radius: var(--mol_gap_round);\n}\n");
 })($ || ($ = {}));
 //mol/form/field/-css/field.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_form_field extends $.$mol_form_field {
+            bid() {
+                return this.bids().filter(Boolean)[0] ?? '';
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_form_field.prototype, "bid", null);
+        $$.$mol_form_field = $mol_form_field;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//mol/form/field/field.view.ts
 ;
 "use strict";
 var $;
@@ -6227,7 +6248,7 @@ var $;
         row_ids() {
             return [];
         }
-        row_id(index) {
+        row_id(id) {
             return null;
         }
         col_ids() {
@@ -7565,7 +7586,7 @@ var $;
             obj.selection = (val) => this.selection(val);
             return obj;
         }
-        row_numb(index) {
+        row_numb(id) {
             return 0;
         }
         highlight() {
@@ -7575,7 +7596,7 @@ var $;
             const obj = new this.$.$mol_text_code();
             obj.text = () => this.value();
             obj.render_visible_only = () => false;
-            obj.row_numb = (index) => this.row_numb(index);
+            obj.row_numb = (id) => this.row_numb(id);
             obj.sidebar_showed = () => this.sidebar_showed();
             obj.highlight = () => this.highlight();
             return obj;
@@ -8766,19 +8787,19 @@ var $;
                 this.Inner()
             ];
         }
-        List_value(index) {
+        List_value(id) {
             const obj = new this.$.$hyoo_studio_value();
-            obj.tree = (next) => this.list_value(index, next);
-            obj.props_of = (klass) => this.props_of(klass);
+            obj.tree = (next) => this.list_value(id, next);
+            obj.props_of = (id) => this.props_of(id);
             obj.props_bindable = () => this.props_bindable();
             obj.Locale = () => null;
             return obj;
         }
-        Over(index) {
+        Over(id) {
             const obj = new this.$.$mol_list();
             obj.rows = () => [
-                this.Over_prop(index),
-                this.Over_value(index)
+                this.Over_prop(id),
+                this.Over_value(id)
             ];
             return obj;
         }
@@ -9008,13 +9029,13 @@ var $;
             obj.sub = () => this.inner();
             return obj;
         }
-        list_value(index, next) {
+        list_value(id, next) {
             if (next !== undefined)
                 return next;
             const obj = new this.$.$mol_tree2_empty();
             return obj;
         }
-        props_of(klass) {
+        props_of(id) {
             const obj = new this.$.$mol_tree2_empty();
             return obj;
         }
@@ -9022,28 +9043,28 @@ var $;
             const obj = new this.$.$mol_tree2_empty();
             return obj;
         }
-        over_prop(index, next) {
+        over_prop(id, next) {
             if (next !== undefined)
                 return next;
             return "";
         }
-        Over_prop(index) {
+        Over_prop(id) {
             const obj = new this.$.$mol_select();
             obj.hint = () => this.$.$mol_locale.text('$hyoo_studio_value_Over_prop_hint');
-            obj.value = (next) => this.over_prop(index, next);
+            obj.value = (next) => this.over_prop(id, next);
             obj.options = () => this.over_prop_options();
             return obj;
         }
-        over_value(index, next) {
+        over_value(id, next) {
             if (next !== undefined)
                 return next;
             const obj = new this.$.$mol_tree2_empty();
             return obj;
         }
-        Over_value(index) {
+        Over_value(id) {
             const obj = new this.$.$hyoo_studio_value();
-            obj.tree = (next) => this.over_value(index, next);
-            obj.props_of = (klass) => this.props_of(klass);
+            obj.tree = (next) => this.over_value(id, next);
+            obj.props_of = (id) => this.props_of(id);
             obj.props_bindable = () => this.props_bindable();
             return obj;
         }
@@ -9311,13 +9332,9 @@ var $;
             const parents = this.parents;
             for (let i = 1; i < parents.length; i++) {
                 const parent = parents[i];
-                if (key && key.value === parent.key?.value)
-                    finded_key = parent.key;
-                if (next && next.value === parent.next?.value)
+                if (next && parent.next)
                     finded_next = parent.next;
             }
-            if (key && !finded_key)
-                return this.$.$mol_fail($mol_view_tree2_error_str `Key ${key.value} at ${key.span} not found at ${this.parents.map(parent => parent.src.span)}`);
             if (next && !finded_next)
                 return this.$.$mol_fail($mol_view_tree2_error_str `Next ${next.value} at ${next.span} not found at ${this.parents.map(parent => parent.src.span)}`);
             const first_method = parents.length > 1 ? parents[1] : undefined;
@@ -9381,25 +9398,25 @@ var $;
     const err = $mol_view_tree2_error_str;
     function $mol_view_tree2_prop_split(src) {
         const prop_name = src.type;
-        let key_pos = prop_name.indexOf('!');
+        let key_pos = prop_name.indexOf('*');
         let next_pos = prop_name.indexOf('?');
+        let next_pos_orig = next_pos;
         if (next_pos === -1)
             next_pos = prop_name.length;
-        if (key_pos === -1)
-            key_pos = next_pos;
+        const name_end = (key_pos === -1) ? next_pos : key_pos;
         if (key_pos > next_pos)
             return this.$mol_fail(err `Index argument must be before next argument at ${src.span}, use ${example1}`);
-        const name = prop_name.substring(0, key_pos);
-        const key = key_pos === next_pos ? '' : prop_name.substring(key_pos + 1, next_pos);
+        const name = prop_name.substring(0, name_end);
+        const key = key_pos < 0 ? '' : prop_name.substring(key_pos + 1, next_pos);
         const next = prop_name.substring(next_pos + 1);
         if ((key && !regular_regex.test(key))
-            || (next && !regular_regex.test(name)))
-            return this.$mol_fail(err `Only regular chars and digits allowed at ${src.span}, use ${example2}`);
+            || (next && !regular_regex.test(next)))
+            return this.$mol_fail(err `Only regular chars and digits allowed ${key} ${next} at ${src.span}, use ${example2}`);
         return {
             src,
             name: $mol_tree2.data(name, [], src.span.slice(0, name.length)),
-            key: key ? $mol_tree2.data(key, [], src.span.slice(key_pos, key_pos + key.length)) : undefined,
-            next: next ? $mol_tree2.data(next, [], src.span.slice(next_pos, next_pos + next.length)) : undefined
+            key: key_pos >= 0 ? $mol_tree2.data(key ? JSON.stringify(key) : 'id', [], src.span.slice(key_pos, key_pos + key.length)) : undefined,
+            next: next_pos_orig >= 0 ? $mol_tree2.data(next || 'next', [], src.span.slice(next_pos, next_pos + next.length)) : undefined
         };
     }
     $.$mol_view_tree2_prop_split = $mol_view_tree2_prop_split;
@@ -9408,8 +9425,9 @@ var $;
         'having!key?next <= owner!key?next'
     ]);
     const example2 = new $mol_view_tree2_error_suggestions([
-        'having!key',
-        'having!key?next',
+        'having#',
+        'having#key',
+        'having#key?next',
         'having',
     ]);
 })($ || ($ = {}));
@@ -9453,7 +9471,7 @@ var $;
     $.$mol_view_tree2_prop_signature = $mol_regexp.from([
         begin,
         { name: repeat_greedy(letter, 1) },
-        { key: optional(['!', repeat_greedy(letter, 0)]) },
+        { key: optional(['*', repeat_greedy(letter, 0)]) },
         { next: optional(['?', repeat_greedy(letter, 0)]) },
         end,
     ]);
@@ -9484,7 +9502,15 @@ var $;
 (function ($) {
     const err = $mol_view_tree2_error_str;
     function $mol_view_tree2_class_props(klass) {
-        const props = this.$mol_view_tree2_class_super(klass);
+        let props = this.$mol_view_tree2_class_super(klass);
+        props = props.clone(props.hack({
+            '': (node, belt) => {
+                const normal = node.type.replace(/!\w+/, '*');
+                if (node.type === normal)
+                    return [node.clone(node.hack(belt))];
+                return [node.struct(normal, node.hack(belt))];
+            }
+        }));
         const props_inner = [];
         const props_root = props.hack({
             '<=': (operator, belt) => {
@@ -9557,7 +9583,7 @@ var $;
             return value.data(type);
         if (Number(type).toString() === type)
             return value.data(type);
-        return this.$mol_fail(err `Value ${value.value} not allowed at ${value.span}, use ${example}`);
+        return this.$mol_fail(err `Value ${value.toString()} not allowed at ${value.span}, use ${example}`);
     }
     $.$mol_view_tree2_value = $mol_view_tree2_value;
     const example = new $mol_view_tree2_error_suggestions([
@@ -9966,7 +9992,7 @@ var $;
             const obj = new this.$.$mol_tree2_empty();
             return obj;
         }
-        props_of(klass) {
+        props_of(id) {
             const obj = new this.$.$mol_tree2_empty();
             return obj;
         }
@@ -9980,7 +10006,7 @@ var $;
         Value() {
             const obj = new this.$.$hyoo_studio_value();
             obj.tree = (next) => this.value(next);
-            obj.props_of = (klass) => this.props_of(klass);
+            obj.props_of = (id) => this.props_of(id);
             obj.props_bindable = () => this.props_bindable();
             obj.class_list = () => this.class_list();
             return obj;
@@ -11143,10 +11169,10 @@ var $;
                 this.Preview()
             ];
         }
-        Prop(name) {
+        Prop(id) {
             const obj = new this.$.$hyoo_studio_prop();
-            obj.tree = (next) => this.prop_tree(name, next);
-            obj.props_of = (klass) => this.props_of(klass);
+            obj.tree = (next) => this.prop_tree(id, next);
+            obj.props_of = (id) => this.props_of(id);
             obj.props_bindable = () => this.props_all();
             obj.class_list = () => this.class_list();
             return obj;
@@ -11370,13 +11396,13 @@ var $;
             obj.html = () => this.preview_html();
             return obj;
         }
-        prop_tree(name, next) {
+        prop_tree(id, next) {
             if (next !== undefined)
                 return next;
             const obj = new this.$.$mol_tree2_empty();
             return obj;
         }
-        props_of(klass) {
+        props_of(id) {
             const obj = new this.$.$mol_tree2_empty();
             return obj;
         }
@@ -12036,8 +12062,15 @@ var $;
     function params_of(prop) {
         const { key, next } = [...prop.type.matchAll($mol_view_tree2_prop_signature)][0].groups;
         return prop.struct('(,)', [
-            ...key ? [prop.struct(key.slice(1) || 'key')] : [],
-            ...next ? [prop.struct(next.slice(1) || 'next')] : [],
+            ...key ? [prop.struct('id')] : [],
+            ...next ? [prop.struct('next')] : [],
+        ]);
+    }
+    function args_of(prop) {
+        const { key, next } = [...prop.type.matchAll($mol_view_tree2_prop_signature)][0].groups;
+        return prop.struct('(,)', [
+            ...key ? [key.length > 1 ? prop.data(key.slice(1)) : prop.struct('id')] : [],
+            ...next ? [prop.struct('next')] : [],
         ]);
     }
     function $mol_view_tree2_to_js(descr) {
@@ -12058,17 +12091,14 @@ var $;
                             res.struct('[]', [
                                 res.data(name_of(res)),
                             ]),
-                            params_of(bind.kids[0]),
+                            args_of(bind.kids[0]),
                         ]),
                     ];
                 };
                 const decorate = () => {
                     return prop.struct('()', [
-                        prop.struct('__decorate'),
+                        prop.struct(key ? '$mol_mem_key' : '$mol_mem'),
                         prop.struct('(,)', [
-                            prop.struct('[,]', [
-                                prop.struct(key ? '$mol_mem_key' : '$mol_mem'),
-                            ]),
                             prop.struct('()', [
                                 klass.clone([]),
                                 prop.struct('[]', [
@@ -12076,7 +12106,6 @@ var $;
                                 ]),
                             ]),
                             prop.data(name),
-                            prop.struct('null'),
                         ]),
                     ]);
                 };
@@ -12159,7 +12188,7 @@ var $;
                                                     over.struct('[]', [
                                                         over.data(name),
                                                     ]),
-                                                    params_of(over),
+                                                    args_of(over),
                                                 ]),
                                             ])
                                         ]),
@@ -12328,8 +12357,15 @@ var $;
     var $$;
     (function ($$) {
         class $mol_form extends $.$mol_form {
+            form_fields() {
+                return [...this.view_find(view => view instanceof $mol_form_field)]
+                    .map(path => path[path.length - 1]);
+            }
+            submit_allowed() {
+                return this.form_fields().every(field => !field.bid());
+            }
             submit_blocked() {
-                return this.form_fields().some(field => field.bid());
+                return !this.submit_allowed();
             }
             keydown(next) {
                 if (next.ctrlKey && next.keyCode === $mol_keyboard_code.enter && !this.submit_blocked())
@@ -12338,7 +12374,10 @@ var $;
         }
         __decorate([
             $mol_mem
-        ], $mol_form.prototype, "submit_blocked", null);
+        ], $mol_form.prototype, "form_fields", null);
+        __decorate([
+            $mol_mem
+        ], $mol_form.prototype, "submit_allowed", null);
         $$.$mol_form = $mol_form;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

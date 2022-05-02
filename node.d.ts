@@ -917,6 +917,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_form_field extends $mol_labeler {
+        bids(): readonly string[];
         label(): readonly any[];
         content(): readonly any[];
         name(): string;
@@ -927,6 +928,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $mol_form_field extends $.$mol_form_field {
+        bid(): string;
+    }
 }
 
 declare namespace $ {
@@ -1974,7 +1981,7 @@ declare namespace $ {
     class $mol_grid extends $mol_view {
         row_height(): number;
         row_ids(): readonly string[][];
-        row_id(index: any): any;
+        row_id(id: any): any;
         col_ids(): readonly any[];
         records(): {};
         record(id: any): any;
@@ -2330,7 +2337,7 @@ declare namespace $ {
         length_max(): number;
         selection(val?: any): readonly number[];
         Edit(): $mol_textarea_edit;
-        row_numb(index: any): number;
+        row_numb(id: any): number;
         highlight(): string;
         View(): $$.$mol_text_code;
     }
@@ -2630,8 +2637,8 @@ declare namespace $ {
     class $hyoo_studio_value extends $mol_list {
         tree(next?: any): $mol_tree2_empty;
         rows(): readonly any[];
-        List_value(index: any): $$.$hyoo_studio_value;
-        Over(index: any): $$.$mol_list;
+        List_value(id: any): $$.$hyoo_studio_value;
+        Over(id: any): $$.$mol_list;
         str(next?: any): string;
         Str(): $$.$mol_textarea;
         Locale_icon(): $mol_icon_translate;
@@ -2679,13 +2686,13 @@ declare namespace $ {
         Overs(): $$.$mol_list;
         inner(): readonly any[];
         Inner(): $mol_view;
-        list_value(index: any, next?: any): $mol_tree2_empty;
-        props_of(klass: any): $mol_tree2_empty;
+        list_value(id: any, next?: any): $mol_tree2_empty;
+        props_of(id: any): $mol_tree2_empty;
         props_bindable(): $mol_tree2_empty;
-        over_prop(index: any, next?: any): string;
-        Over_prop(index: any): $$.$mol_select;
-        over_value(index: any, next?: any): $mol_tree2_empty;
-        Over_value(index: any): $$.$hyoo_studio_value;
+        over_prop(id: any, next?: any): string;
+        Over_prop(id: any): $$.$mol_select;
+        over_value(id: any, next?: any): $mol_tree2_empty;
+        Over_value(id: any): $$.$hyoo_studio_value;
     }
 }
 
@@ -2845,7 +2852,7 @@ declare namespace $ {
         Next(): $mol_check_icon;
         Main(): $mol_view;
         value(next?: any): $mol_tree2_empty;
-        props_of(klass: any): $mol_tree2_empty;
+        props_of(id: any): $mol_tree2_empty;
         props_bindable(): $mol_tree2_empty;
         class_list(): readonly string[];
         Value(): $$.$hyoo_studio_value;
@@ -3136,7 +3143,7 @@ declare namespace $ {
     class $hyoo_studio extends $mol_book2 {
         plugins(): readonly any[];
         pages(): readonly any[];
-        Prop(name: any): $$.$hyoo_studio_prop;
+        Prop(id: any): $$.$hyoo_studio_prop;
         Placeholder(): any;
         Theme(): $$.$mol_theme_auto;
         Source_link(): $mol_link_source;
@@ -3147,14 +3154,14 @@ declare namespace $ {
         Preview_open(): $$.$mol_link;
         pack(val?: any): string;
         Pack(): $$.$mol_string;
-        Pack_field(): $mol_form_field;
+        Pack_field(): $$.$mol_form_field;
         base(val?: any): string;
         base_options(): readonly string[];
         Base(): $$.$mol_select;
-        Base_field(): $mol_form_field;
+        Base_field(): $$.$mol_form_field;
         self(val?: any): string;
         Self(): $$.$mol_string;
-        Self_field(): $mol_form_field;
+        Self_field(): $$.$mol_form_field;
         Classes(): $mol_view;
         prop_filter(next?: any): string;
         Prop_filter(): $$.$mol_search;
@@ -3168,14 +3175,14 @@ declare namespace $ {
         Config(): $$.$mol_list;
         source(val?: any): string;
         Source(): $$.$mol_textarea;
-        Source_field(): $mol_form_field;
+        Source_field(): $$.$mol_form_field;
         form_sections(): readonly any[];
         Edit_form(): $$.$mol_list;
         Edit(): $mol_page;
         preview_html(): string;
         Preview(): $$.$mol_frame;
-        prop_tree(name: any, next?: any): $mol_tree2_empty;
-        props_of(klass: any): $mol_tree2_empty;
+        prop_tree(id: any, next?: any): $mol_tree2_empty;
+        props_of(id: any): $mol_tree2_empty;
         props_all(): $mol_tree2_empty;
         class_list(): readonly string[];
     }
@@ -3280,6 +3287,8 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_form extends $.$mol_form {
+        form_fields(): readonly $mol_form_field[];
+        submit_allowed(): boolean;
         submit_blocked(): boolean;
         keydown(next: KeyboardEvent): void;
     }
