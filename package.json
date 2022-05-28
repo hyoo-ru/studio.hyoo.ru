@@ -136,6 +136,7 @@
     "$mol_icon_cached",
     "$hyoo_studio_value",
     "$mol_textarea",
+    "$mol_stack",
     "$mol_text_code",
     "$mol_text",
     "$mol_grid",

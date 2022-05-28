@@ -96,8 +96,6 @@ $mol_speck $mol_view
 
 $mol_button $mol_view
 	enabled true
-	minimal_height 40
-	minimal_width 40
 	click?event null
 	event_click?event null
 	event *
@@ -116,6 +114,8 @@ $mol_button $mol_view
 		value <= error \
 
 $mol_button_typed $mol_button
+	minimal_height 40
+	minimal_width 40
 
 $mol_button_minor $mol_button_typed
 
@@ -135,6 +135,8 @@ $mol_check $mol_button_minor
 $mol_check_icon $mol_check
 
 $mol_icon_cached $mol_icon path \M19,8L15,12H18C18,15.31 15.31,18 12,18C11,18 10.03,17.75 9.2,17.3L7.74,18.76C8.97,19.54 10.43,20 12,20C16.42,20 20,16.42 20,12H23M6,12C6,8.69 8.69,6 12,6C13,6 13.97,6.25 14.8,6.7L16.26,5.24C15.03,4.46 13.57,4 12,4C7.58,4 4,7.58 4,12H1L5,16L9,12
+
+$mol_stack $mol_view
 
 $mol_dimmer $mol_paragraph
 	haystack \
@@ -174,6 +176,7 @@ $mol_text_code_row $mol_paragraph
 	Token_link* $mol_text_code_token_link
 		haystack <= token_text* \
 		needle <= highlight \
+	find_pos* null
 
 $mol_text_code $mol_list
 	attr *
@@ -181,6 +184,7 @@ $mol_text_code $mol_list
 		mol_text_code_sidebar_showed <= sidebar_showed false
 	text \
 	text_lines /string
+	find_pos* null
 	Row* $mol_text_code_row
 		numb_showed <= sidebar_showed
 		numb <= row_numb* 0
@@ -397,7 +401,7 @@ $mol_text_span $mol_paragraph
 		^
 		mol_text_type <= type \
 
-$mol_textarea $mol_view
+$mol_textarea $mol_stack
 	attr *
 		^
 		mol_textarea_clickable <= clickable?val false

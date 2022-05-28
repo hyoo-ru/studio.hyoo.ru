@@ -1174,8 +1174,6 @@ declare namespace $ {
 declare namespace $ {
     class $mol_button extends $mol_view {
         enabled(): boolean;
-        minimal_height(): number;
-        minimal_width(): number;
         click(event?: any): any;
         event_click(event?: any): any;
         event(): {
@@ -1321,6 +1319,8 @@ declare namespace $.$$ {
 
 declare namespace $ {
     class $mol_button_typed extends $mol_button {
+        minimal_height(): number;
+        minimal_width(): number;
     }
 }
 
@@ -1482,6 +1482,14 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_stack extends $mol_view {
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_dimmer extends $mol_paragraph {
         haystack(): string;
         needle(): string;
@@ -1632,6 +1640,7 @@ declare namespace $ {
         Numb(): $mol_view;
         Token(id: any): $mol_text_code_token;
         Token_link(id: any): $mol_text_code_token_link;
+        find_pos(id: any): any;
         numb(): number;
         token_type(id: any): string;
         token_text(id: any): string;
@@ -1713,6 +1722,14 @@ declare namespace $.$$ {
         token_content(path: number[]): (string | $mol_text_code_token)[];
         token_text(path: number[]): string;
         view_find(check: (path: $mol_view, text?: string) => boolean, path?: $mol_view[]): Generator<$mol_view[]>;
+        find_pos(offset: number): {
+            token: $mol_text_code_token;
+            offset: number;
+        } | null;
+        find_token_pos([offset, ...path]: number[]): {
+            token: $mol_text_code_token;
+            offset: number;
+        } | null;
     }
 }
 
@@ -1723,6 +1740,7 @@ declare namespace $ {
         };
         text(): string;
         text_lines(): readonly string[];
+        find_pos(id: any): any;
         Row(id: any): $$.$mol_text_code_row;
         sidebar_showed(): boolean;
         row_numb(id: any): number;
@@ -1740,6 +1758,10 @@ declare namespace $.$$ {
         rows(): $mol_text_code_row[];
         row_text(index: number): string;
         row_numb(index: number): number;
+        find_pos(offset: number): {
+            token: $mol_text_code_token;
+            offset: number;
+        } | null;
     }
 }
 
@@ -2331,7 +2353,7 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
-    class $mol_textarea extends $mol_view {
+    class $mol_textarea extends $mol_stack {
         attr(): {
             mol_textarea_clickable: boolean;
             mol_textarea_sidebar_showed: boolean;
