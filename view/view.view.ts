@@ -2,6 +2,10 @@ namespace $.$$ {
 
 	export class $hyoo_studio_view extends $.$hyoo_studio_view {
 
+		props_all() {
+			return this.props_of( this.self() )
+		}
+
 		@ $mol_mem
 		props_own() {
 			const tree = this.tree()
@@ -10,7 +14,7 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		prop_having_dict() {
+		prop_all_dict() {
 			return this.props_all().kids.reduce( ( dict , prop ) => {
 				dict[ prop.type ] = prop.type
 				return dict

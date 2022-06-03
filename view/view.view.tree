@@ -52,7 +52,7 @@ $hyoo_studio_view $mol_page
 									name @ \Displayed properties 
 									control <= Prop_displayed $mol_select_list
 										value?val <=> prop_displayed_list?val /
-										dictionary <= prop_having_dict *
+										dictionary <= prop_all_dict *
 						<= Props $mol_list
 							rows <= props /$hyoo_studio_prop
 				<= Source_field $mol_form_field

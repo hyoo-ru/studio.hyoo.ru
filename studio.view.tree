@@ -19,6 +19,6 @@ $hyoo_studio $mol_book2
 		tree?next <=> tree_class!id?next $mol_tree2_empty
 		source?next <=> source_class!id?next \
 		base_options <= base_options /
-		props_all <= props_of!id $mol_tree2_empty
+		props_of!name <= props_of!name $mol_tree2_empty
 		class_list <= class_list /
 	Placeholder null
