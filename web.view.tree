@@ -630,12 +630,13 @@ $mol_embed_native $mol_scroll
 $mol_frame $mol_embed_native
 	dom_name \iframe
 	attr *
+		^
 		data null
 		type null
 		src <= uri?val \
 		srcdoc <= html null
 		allow <= allow \
-	fullscreen true
+		allowFullscreen <= fullscreen true
 	accelerometer true
 	autoplay true
 	encription true

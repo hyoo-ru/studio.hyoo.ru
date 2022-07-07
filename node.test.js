@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 	return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 
-var globalThis = globalThis || ( typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : this )
 var $ = ( typeof module === 'object' ) ? ( module['export'+'s'] = globalThis ) : globalThis
 $.$$ = $
 
@@ -10185,15 +10184,14 @@ var $;
         }
         attr() {
             return {
+                ...super.attr(),
                 data: null,
                 type: null,
                 src: this.uri(),
                 srcdoc: this.html(),
-                allow: this.allow()
+                allow: this.allow(),
+                allowFullscreen: this.fullscreen()
             };
-        }
-        fullscreen() {
-            return true;
         }
         accelerometer() {
             return true;
@@ -10220,6 +10218,9 @@ var $;
         }
         allow() {
             return "";
+        }
+        fullscreen() {
+            return true;
         }
     }
     __decorate([
