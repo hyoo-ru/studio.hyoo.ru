@@ -10,7 +10,7 @@ $hyoo_studio_value $mol_list
 					Icon <= Locale_icon $mol_icon_translate
 					checked?next <=> locale?next false
 				<= Numb $mol_number
-					value?next <=> numb?next NaN
+					value?next <=> numb?next +NaN
 				<= Unit $mol_switch
 					value?next <=> unit?next \null
 					options *
