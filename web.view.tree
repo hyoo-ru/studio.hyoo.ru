@@ -45,7 +45,7 @@ $mol_book2 $mol_scroll
 $mol_paragraph $mol_view
 	line_height 24
 	letter_width 7
-	width_limit Infinity
+	width_limit +Infinity
 	sub / <= title
 
 $mol_svg $mol_view
@@ -236,7 +236,7 @@ $mol_string $mol_view
 		inputMode <= keyboard \text
 	attr *
 		^
-		maxlength <= length_max Infinity
+		maxlength <= length_max +Infinity
 		type <= type?val \text
 	event *
 		^
@@ -259,7 +259,7 @@ $mol_textarea $mol_stack
 			value?val <=> value?val \
 			hint <= hint \ 
 			enabled <= enabled true
-			length_max <= length_max Infinity
+			length_max <= length_max +Infinity
 			selection?val <=> selection?val /number
 		<= View $mol_text_code
 			text <= value
@@ -283,7 +283,7 @@ $mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
 $mol_number $mol_view
 	precision_view <= precision 1
 	precision_change <= precision 1
-	value?val NaN
+	value?val +NaN
 	sub /
 		<= String $mol_string
 			- \ we don't want native number controls in mobile devices
@@ -422,7 +422,7 @@ $hyoo_studio_value $mol_list
 					Icon <= Locale_icon $mol_icon_translate
 					checked?next <=> locale?next false
 				<= Numb $mol_number
-					value?next <=> numb?next NaN
+					value?next <=> numb?next +NaN
 				<= Unit $mol_switch
 					value?next <=> unit?next \null
 					options *
