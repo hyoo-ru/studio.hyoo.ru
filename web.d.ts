@@ -1980,6 +1980,7 @@ declare namespace $ {
         spellcheck(): boolean;
         length_max(): number;
         selection(val?: any): readonly number[];
+        bring(): void;
         Edit(): $mol_textarea_edit;
         row_numb(id: any): number;
         highlight(): string;
