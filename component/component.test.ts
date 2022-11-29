@@ -68,15 +68,14 @@ namespace $.$$ {
 		'property change'() {
 
 			const src = t`#mol_number #mol_view\n\tvalue? NaN\n\titems null\n`
-			const dest = t`#mol_number #mol_view\n\tvalue? null\n\titems null\n`
+			const dest = t`#mol_number #mol_view\n\tvalue? true\n\titems null\n`
 
 			const obj = $hyoo_studio_component.make({})
 			obj.source( src )
 
-			debugger
 			const val = obj.prop_tree( 'value?' )
 			const next = val?.struct( 'true' )!
-			obj.prop_tree( 'value', val?.clone([ next ]) )
+			obj.prop_tree( 'value?', val?.clone([ next ]) )
 
 			$mol_assert_equal( obj.source(), dest )
 
