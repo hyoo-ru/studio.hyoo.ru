@@ -4,6 +4,8 @@ namespace $.$$ {
 	
 	$mol_style_define( $hyoo_studio_value, {
 		
+		padding: $mol_gap.space,
+
 		Self: {
 			justifyContent: 'flex-end',
 		},

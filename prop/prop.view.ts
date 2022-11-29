@@ -1,7 +1,5 @@
 namespace $.$$ {
 	
-	type types = "" | "null" | "bool" | "dict" | "locale" | "string" | "get" | "bind" | "put" | "list" | "object" | "number" 
-	
 	export class $hyoo_studio_prop extends $.$hyoo_studio_prop {
 		
 		@ $mol_mem
@@ -31,7 +29,7 @@ namespace $.$$ {
 				this.tree( tree.struct( sign, tree.kids ) )
 				
 			}
-			
+
 			return meta
 		}
 		
@@ -75,10 +73,9 @@ namespace $.$$ {
 			)
 			
 		}
-		
+
 		@ $mol_mem
 		value( next?: $mol_tree2 ) {
-			
 			let val = this.tree()
 			if( next !== undefined ) {
 				val = this.tree( next && val.clone([ next ]) )
@@ -87,7 +84,56 @@ namespace $.$$ {
 			
 			return val?.kids[0]
 		}
-		
+
+		@ $mol_mem
+		localized( next?: boolean ) {
+			
+			const val = this.value()
+			
+			if( next === undefined ) return '@' === val.type 
+			
+			this.value(
+				next
+					? val.struct( '@', [
+						val.data( val.text() || val.type )
+					] )
+					: val.data( val.text() || val.type )
+			)
+			
+			return next
+		}
+
+		@ $mol_action
+		list_item_add() {
+			const value = this.value()
+			this.value(
+				value.clone([
+					... value.kids,
+					value.struct( 'null' ),
+				])
+			)
+		}
+
+		@ $mol_mem
+		config_sub() {
+			return [
+				... this.type() === 'list' || this.type() === 'dict' ? [ this.List_item_add() ] : [],
+				... this.type() === 'object' ? [ this.Over_add() ] : [],
+				... this.type() === 'text' ? [ this.Localized() ] : [],
+				this.Type(),
+			]
+		}
+
+		@ $mol_mem
+		rows() {
+			const have_value_types = ['number', 'text', 'list', 'dict'] as string[]
+
+			return [
+				this.Head(),
+				... have_value_types.findIndex( type => type === this.type() ) !== -1 ? [ this.Value() ] : []
+			]
+		}
+			
 	}
 	
 }

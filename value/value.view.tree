@@ -49,21 +49,10 @@ $hyoo_studio_value $mol_list
 					Trigger_icon <= Over_add_icon $mol_icon_wrench_outline
 					value?next <=> over_add?next \
 					options <= over_prop_options /string
-				<= Type $mol_select
-					hint @ \Type
-					align_hor \left
-					Filter null
-					value?next <=> type?next \unit
-					dictionary <= types *
-						unit \unit
-						bind \bind
-						object \obj
-						string \text
-						number \numb
-						list \list
-						dict \dict
-						\
-							\drop
+				<= Type $hyoo_studio_prop_type
+					tree? <=> tree?
+					value? <=> value? $mol_tree2_empty
+					type => type
 		<= Inner $mol_view
 			sub <= inner /
 				<= List $mol_list
@@ -72,6 +61,7 @@ $hyoo_studio_value $mol_list
 					rows <= overs /
 	List_value!index $hyoo_studio_value
 		tree?next <=> list_value!index?next $mol_tree2_empty
+		value?next <=> list_value!index?next
 		props_of!klass <= props_of!klass $mol_tree2_empty
 		props_bindable <= props_bindable $mol_tree2_empty
 		Locale null

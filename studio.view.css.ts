@@ -44,9 +44,9 @@ namespace $.$$ {
 			padding: $mol_gap.block,
 		},
 		
-		Prop: {
-			padding: $mol_gap.block,
-		},
+		// Prop: {
+		// 	padding: $mol_gap.block,
+		// },
 		
 		Preview: {
 			flex: {

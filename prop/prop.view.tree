@@ -1,10 +1,12 @@
 $hyoo_studio_prop $mol_list
 	tree?val $mol_tree2_empty
 	rows /
-		<= Main $mol_view
-			sub /
+		<= Head $mol_view sub /
+			<= Self $mol_view sub /
 				<= Title $mol_paragraph
-					title <= title?next \
+					sub /
+						<= Icon $mol_icon_atom 
+						<= title?next \
 				<= Key $mol_check_icon
 					hint @ \Multiple
 					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
@@ -13,6 +15,24 @@ $hyoo_studio_prop $mol_list
 					hint @ \Changable
 					Icon <= Next_icon $mol_icon_cached
 					checked?next <=> next?next false
+			<= Config $mol_view sub <= config_sub /
+				<= List_item_add $mol_button_minor
+					click? <=> list_item_add? null
+					sub / <= List_item_add_icon $mol_icon_plus
+				<= Localized $mol_check_icon
+					hint @ \Localizable
+					Icon <= Locale_icon $mol_icon_translate
+					checked?next <=> localized?next false
+				<= Over_add $mol_select
+					hint @ \Add Override
+					align_hor \left
+					Trigger_icon <= Over_add_icon $mol_icon_wrench_outline
+					value?next <=> over_add?next \
+					options <= over_prop_options /string
+				<= Type $hyoo_studio_prop_type
+					value? <=> value?
+					tree? <=> tree?
+					type? => type?
 		<= Value $hyoo_studio_value
 			tree?next <=> value?next $mol_tree2_empty
 			props_of!klass <= props_of!klass $mol_tree2_empty
