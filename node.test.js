@@ -8477,7 +8477,7 @@ var $;
         return superclass;
     }
     $.$mol_view_tree2_class_super = $mol_view_tree2_class_super;
-    const class_regex = /^\$\w+$/;
+    const class_regex = /^[$A-Z]\w+$/;
 })($ || ($ = {}));
 //mol/view/tree2/class/super.ts
 ;
@@ -11113,7 +11113,7 @@ var $;
                     visit(kid, prefix + 1, false);
                 }
                 if (inline)
-                    indent();
+                    next_line();
             }
             else if (text.type === 'line') {
                 if (!inline)
@@ -11181,151 +11181,168 @@ var $;
     function $mol_tree2_js_to_text(js) {
         function sequence(open, separator, close) {
             return (input, belt) => [
+                input.struct('line', [
+                    ...open ? [input.data(open)] : [],
+                    input.struct(separator && input.kids.length > 2 ? 'indent' : 'line', [].concat(...input.kids.map((kid, index) => [
+                        kid.struct('line', [
+                            ...kid.list([kid]).hack(belt),
+                            ...(separator && index < input.kids.length - 1) ? [input.data(separator)] : [],
+                        ]),
+                    ]))),
+                    ...close ? [input.data(close)] : [],
+                ]),
+            ];
+        }
+        function block(open, separator, close) {
+            return (input, belt) => [
                 ...open ? [input.data(open)] : [],
-                input.struct(separator && input.kids.length > 2 ? 'indent' : 'line', [].concat(...input.kids.map((kid, index) => [
-                    kid.struct('line', [
+                ...input.kids.length === 0 ? [] : [input.struct('indent', input.kids.map((kid, index) => kid.struct('line', [
                         ...kid.list([kid]).hack(belt),
-                        ...(separator && index < input.kids.length - 1) ? [input.data(separator)] : [],
-                    ]),
-                ]))),
+                        ...(separator) ? [input.data(separator)] : [],
+                    ])))],
                 ...close ? [input.data(close)] : [],
             ];
         }
         function duplet(open, separator, close) {
             return (input, belt) => [
-                ...open ? [input.data(open)] : [],
-                ...input.list(input.kids.slice(0, 1)).hack(belt),
-                ...(separator && input.kids.length > 1) ? [input.data(separator)] : [],
-                ...input.list(input.kids.slice(1, 2)).hack(belt),
-                ...close ? [input.data(close)] : [],
+                input.struct('line', [
+                    ...open ? [input.data(open)] : [],
+                    ...input.list(input.kids.slice(0, 1)).hack(belt),
+                    ...(separator && input.kids.length > 1) ? [input.data(separator)] : [],
+                    ...input.list(input.kids.slice(1, 2)).hack(belt),
+                    ...close ? [input.data(close)] : [],
+                ]),
             ];
         }
         function triplet(open, separator12, separator23, close) {
             return (input, belt) => [
-                ...open ? [input.data(open)] : [],
-                ...input.list(input.kids.slice(0, 1)).hack(belt),
-                ...(separator12 && input.kids.length > 1) ? [input.data(separator12)] : [],
-                ...input.list(input.kids.slice(1, 2)).hack(belt),
-                ...(separator23 && input.kids.length > 2) ? [input.data(separator23)] : [],
-                ...input.list(input.kids.slice(2, 3)).hack(belt),
-                ...close ? [input.data(close)] : [],
+                input.struct('line', [
+                    ...open ? [input.data(open)] : [],
+                    ...input.list(input.kids.slice(0, 1)).hack(belt),
+                    ...(separator12 && input.kids.length > 1) ? [input.data(separator12)] : [],
+                    ...input.list(input.kids.slice(1, 2)).hack(belt),
+                    ...(separator23 && input.kids.length > 2) ? [input.data(separator23)] : [],
+                    ...input.list(input.kids.slice(2, 3)).hack(belt),
+                    ...close ? [input.data(close)] : [],
+                ]),
             ];
         }
-        return js.list([js.struct('line', js.hack({
-                '+': sequence('+'),
-                '-': sequence('-'),
-                '!': sequence('!'),
-                '~': sequence('~'),
-                'return': sequence('return '),
-                'break': sequence('break '),
-                'continue': sequence('continue '),
-                'yield': sequence('yield '),
-                'yield*': sequence('yield* '),
-                'await': sequence('await '),
-                'void': sequence('void '),
-                'delete': sequence('delete '),
-                'typeof': sequence('typeof '),
-                'new': sequence('new '),
-                '...': sequence('...'),
-                '@++': sequence('', '', '++'),
-                '@--': sequence('', '', '--'),
-                '(in)': sequence('(', ' in ', ')'),
-                '(instanceof)': sequence('(', ' instanceof ', ')'),
-                '(+)': sequence('(', ' + ', ')'),
-                '(-)': sequence('(', ' - ', ')'),
-                '(*)': sequence('(', ' * ', ')'),
-                '(/)': sequence('(', ' / ', ')'),
-                '(%)': sequence('(', ' % ', ')'),
-                '(**)': sequence('(', ' ** ', ')'),
-                '(<)': sequence('(', ' < ', ')'),
-                '(<=)': sequence('(', ' <= ', ')'),
-                '(>)': sequence('(', ' > ', ')'),
-                '(>=)': sequence('(', ' >= ', ')'),
-                '(==)': sequence('(', ' == ', ')'),
-                '(!=)': sequence('(', ' != ', ')'),
-                '(===)': sequence('(', ' === ', ')'),
-                '(!==)': sequence('(', ' !== ', ')'),
-                '(<<)': sequence('(', ' << ', ')'),
-                '(>>)': sequence('(', ' >> ', ')'),
-                '(>>>)': sequence('(', ' >>> ', ')'),
-                '(&)': sequence('(', ' & ', ')'),
-                '(|)': sequence('(', ' | ', ')'),
-                '(^)': sequence('(', ' ^ ', ')'),
-                '(&&)': sequence('(', ' && ', ')'),
-                '(||)': sequence('(', ' || ', ')'),
-                '(,)': sequence('(', ', ', ')'),
-                '{;}': sequence('{', '; ', '}'),
-                ';': sequence('', ';', ''),
-                '[,]': sequence('[', ', ', ']'),
-                '{,}': sequence('{', ', ', '}'),
-                '()': sequence('(', '', ')'),
-                '{}': sequence('{', '', '}'),
-                '[]': (input, belt) => {
-                    const first = input.kids[0];
-                    if (first.type)
-                        return sequence('[', '', ']')(input, belt);
-                    else
-                        return [input.data('.' + first.text())];
-                },
-                ':': (input, belt) => {
-                    const first = input.kids[0];
-                    if (first.type)
-                        return duplet('[', ']: ')(input, belt);
-                    else
-                        return duplet('', ': ')(input, belt);
-                },
-                'let': duplet('let ', ' = '),
-                'const': duplet('const ', ' = '),
-                'var': duplet('var ', ' = '),
-                '=': duplet('', ' = '),
-                '+=': duplet('', ' += '),
-                '-=': duplet('', ' -= '),
-                '*=': duplet('', ' *= '),
-                '/=': duplet('', ' /= '),
-                '%=': duplet('', ' %= '),
-                '**=': duplet('', ' **= '),
-                '<<=': duplet('', ' <<= '),
-                '>>=': duplet('', ' >>= '),
-                '>>>=': duplet('', ' >>>= '),
-                '&=': duplet('', ' &= '),
-                '|=': duplet('', ' |= '),
-                '^=': duplet('', ' ^= '),
-                '&&=': duplet('', ' &&= '),
-                '||=': duplet('', ' ||= '),
-                '=>': duplet('', ' => '),
-                'async=>': duplet('async ', ' => '),
-                'function': triplet('function '),
-                'function*': triplet('function* '),
-                'async': triplet('async function '),
-                'async*': triplet('async function* '),
-                'class': triplet('class ', ' '),
-                'extends': sequence('extends ', '', ' '),
-                'if': triplet('if', ' ', 'else'),
-                '?:': triplet('', ' ? ', ' : '),
-                '.': (input, belt) => {
-                    const first = input.kids[0];
-                    if (first.type)
-                        return triplet('[', ']')(input, belt);
-                    else
-                        return [
-                            input.data(first.text()),
-                            ...input.list(input.kids.slice(1)).hack(belt),
-                        ];
-                },
-                'get': triplet('get [', ']'),
-                'set': triplet('set [', ']'),
-                'static': triplet('static [', ']'),
-                '/./': sequence(),
-                '.global': sequence('g'),
-                '.multiline': sequence('m'),
-                '.ignoreCase': sequence('i'),
-                '.source': (input, belt) => [
-                    input.data('/'),
-                    input.data(JSON.stringify(input.text()).slice(1, -1)),
-                    input.data('/'),
-                ],
-                '``': (input, belt) => {
+        return js.list(js.hack({
+            '+': sequence('+'),
+            '-': sequence('-'),
+            '!': sequence('!'),
+            '~': sequence('~'),
+            'return': sequence('return '),
+            'break': sequence('break '),
+            'continue': sequence('continue '),
+            'yield': sequence('yield '),
+            'yield*': sequence('yield* '),
+            'await': sequence('await '),
+            'void': sequence('void '),
+            'delete': sequence('delete '),
+            'typeof': sequence('typeof '),
+            'new': sequence('new '),
+            '...': sequence('...'),
+            '@++': sequence('', '', '++'),
+            '@--': sequence('', '', '--'),
+            '(in)': sequence('(', ' in ', ')'),
+            '(instanceof)': sequence('(', ' instanceof ', ')'),
+            '(+)': sequence('(', ' + ', ')'),
+            '(-)': sequence('(', ' - ', ')'),
+            '(*)': sequence('(', ' * ', ')'),
+            '(/)': sequence('(', ' / ', ')'),
+            '(%)': sequence('(', ' % ', ')'),
+            '(**)': sequence('(', ' ** ', ')'),
+            '(<)': sequence('(', ' < ', ')'),
+            '(<=)': sequence('(', ' <= ', ')'),
+            '(>)': sequence('(', ' > ', ')'),
+            '(>=)': sequence('(', ' >= ', ')'),
+            '(==)': sequence('(', ' == ', ')'),
+            '(!=)': sequence('(', ' != ', ')'),
+            '(===)': sequence('(', ' === ', ')'),
+            '(!==)': sequence('(', ' !== ', ')'),
+            '(<<)': sequence('(', ' << ', ')'),
+            '(>>)': sequence('(', ' >> ', ')'),
+            '(>>>)': sequence('(', ' >>> ', ')'),
+            '(&)': sequence('(', ' & ', ')'),
+            '(|)': sequence('(', ' | ', ')'),
+            '(^)': sequence('(', ' ^ ', ')'),
+            '(&&)': sequence('(', ' && ', ')'),
+            '(||)': sequence('(', ' || ', ')'),
+            '(,)': sequence('(', ', ', ')'),
+            '{;}': block('{', ';', '}'),
+            ';': block('', ';', ''),
+            '[,]': sequence('[', ', ', ']'),
+            '{,}': sequence('{', ', ', '}'),
+            '()': sequence('(', '', ')'),
+            '{}': block('{', '', '}'),
+            '[]': (input, belt) => {
+                const first = input.kids[0];
+                if (first.type)
+                    return sequence('[', '', ']')(input, belt);
+                else
+                    return [input.data('.' + first.text())];
+            },
+            ':': (input, belt) => {
+                const first = input.kids[0];
+                if (first.type)
+                    return duplet('[', ']: ')(input, belt);
+                else
+                    return duplet('', ': ')(input, belt);
+            },
+            'let': duplet('let ', ' = '),
+            'const': duplet('const ', ' = '),
+            'var': duplet('var ', ' = '),
+            '=': duplet('', ' = '),
+            '+=': duplet('', ' += '),
+            '-=': duplet('', ' -= '),
+            '*=': duplet('', ' *= '),
+            '/=': duplet('', ' /= '),
+            '%=': duplet('', ' %= '),
+            '**=': duplet('', ' **= '),
+            '<<=': duplet('', ' <<= '),
+            '>>=': duplet('', ' >>= '),
+            '>>>=': duplet('', ' >>>= '),
+            '&=': duplet('', ' &= '),
+            '|=': duplet('', ' |= '),
+            '^=': duplet('', ' ^= '),
+            '&&=': duplet('', ' &&= '),
+            '||=': duplet('', ' ||= '),
+            '=>': duplet('', ' => '),
+            'async=>': duplet('async ', ' => '),
+            'function': triplet('function '),
+            'function*': triplet('function* '),
+            'async': triplet('async function '),
+            'async*': triplet('async function* '),
+            'class': triplet('class ', ' '),
+            'extends': sequence('extends ', '', ' '),
+            'if': triplet('if', ' ', 'else'),
+            '?:': triplet('', ' ? ', ' : '),
+            '.': (input, belt) => {
+                const first = input.kids[0];
+                if (first.type)
+                    return triplet('[', ']')(input, belt);
+                else
                     return [
+                        input.data(first.text()),
+                        ...input.list(input.kids.slice(1)).hack(belt),
+                    ];
+            },
+            'get': triplet('get [', ']'),
+            'set': triplet('set [', ']'),
+            'static': triplet('static [', ']'),
+            '/./': sequence(),
+            '.global': sequence('g'),
+            '.multiline': sequence('m'),
+            '.ignoreCase': sequence('i'),
+            '.source': (input, belt) => [
+                input.data('/'),
+                input.data(JSON.stringify(input.text()).slice(1, -1)),
+                input.data('/'),
+            ],
+            '``': (input, belt) => {
+                return [
+                    input.struct('line', [
                         input.data('`'),
                         ...[].concat(...input.kids.map(kid => {
                             if (kid.type) {
@@ -11342,24 +11359,25 @@ var $;
                             }
                         })),
                         input.data('`'),
+                    ]),
+                ];
+            },
+            '': (input, belt) => {
+                if (!input.type)
+                    return [
+                        input.data(JSON.stringify(input.text())),
                     ];
-                },
-                '': (input, belt) => {
-                    if (!input.type)
-                        return [
-                            input.data(JSON.stringify(input.text())),
-                        ];
-                    if (/^[\w$#][\w0-9$]*$/i.test(input.type))
-                        return [
-                            input.data(input.type),
-                        ];
-                    if (input.type === 'NaN' || !Number.isNaN(Number(input.type)))
-                        return [
-                            input.data(input.type)
-                        ];
-                    $mol_fail(new SyntaxError(`Wrong node type`));
-                },
-            }))]);
+                if (/^[\w$#][\w0-9$]*$/i.test(input.type))
+                    return [
+                        input.data(input.type),
+                    ];
+                if (input.type === 'NaN' || !Number.isNaN(Number(input.type)))
+                    return [
+                        input.data(input.type)
+                    ];
+                $mol_fail(new SyntaxError(`Wrong node type`));
+            },
+        }));
     }
     $.$mol_tree2_js_to_text = $mol_tree2_js_to_text;
 })($ || ($ = {}));
@@ -11381,20 +11399,28 @@ var $;
     function name_of(prop) {
         return [...prop.type.matchAll($mol_view_tree2_prop_signature)][0].groups.name;
     }
-    function params_of(prop) {
+    function params_of(prop, bidi = true) {
         const { key, next } = [...prop.type.matchAll($mol_view_tree2_prop_signature)][0].groups;
         return prop.struct('(,)', [
             ...key ? [prop.struct('id')] : [],
-            ...next ? [prop.struct('next')] : [],
+            ...(bidi && next) ? [prop.struct('next')] : [],
         ]);
     }
-    function args_of(prop) {
+    function args_of(prop, bidi = true) {
         const { key, next } = [...prop.type.matchAll($mol_view_tree2_prop_signature)][0].groups;
         return prop.struct('(,)', [
             ...key ? [key.length > 1 ? prop.data(key.slice(1)) : prop.struct('id')] : [],
-            ...next ? [prop.struct('next')] : [],
+            ...(bidi && next) ? [prop.struct('next')] : [],
         ]);
     }
+    const localized_string = $$.$mol_tree2_from_string(`
+		()
+			this
+			[] \\$
+			[] \\$mol_locale
+			[] \\text
+			(,) #key
+	`, 'localized_string');
     function $mol_view_tree2_to_js(descr) {
         descr = $mol_view_tree2_classes(descr);
         const definitions = [];
@@ -11405,24 +11431,15 @@ var $;
             const members = [];
             for (const prop of props) {
                 const { name, key, next } = [...prop.type.matchAll($mol_view_tree2_prop_signature)][0].groups;
-                const bind_res = (bind) => {
-                    const res = bind.kids[0];
-                    return [
-                        bind.struct('()', [
-                            res.struct('this'),
-                            res.struct('[]', [
-                                res.data(name_of(res)),
-                            ]),
-                            args_of(bind.kids[0]),
-                        ]),
-                    ];
-                };
                 const decorate = () => {
                     return prop.struct('()', [
                         prop.struct(key ? '$mol_mem_key' : '$mol_mem'),
                         prop.struct('(,)', [
                             prop.struct('()', [
-                                klass.clone([]),
+                                klass.struct('$'),
+                                prop.struct('[]', [
+                                    klass.data(klass.type),
+                                ]),
                                 prop.struct('[]', [
                                     prop.data('prototype'),
                                 ]),
@@ -11431,28 +11448,31 @@ var $;
                         ]),
                     ]);
                 };
-                const localize = (suffix = '') => prop.struct('()', [
-                    prop.struct('this'),
-                    prop.struct('[]', [
-                        prop.data('$')
-                    ]),
-                    prop.struct('[]', [
-                        prop.data('$' + 'mol_locale')
-                    ]),
-                    prop.struct('[]', [
-                        prop.data('text')
-                    ]),
-                    prop.struct('(,)', [
-                        prop.data(`${klass.type}_${name}${suffix}`)
-                    ]),
-                ]);
                 if (next)
                     addons.push(decorate());
                 const val = prop.hack({
-                    '@': (locale, belt) => [localize()],
-                    '<=>': bind_res,
-                    '<=': bind_res,
-                    '=>': bind_res,
+                    '@': (locale, belt) => localized_string.hack({
+                        '#key': key => [locale.data(`${klass.type}_${name}`)],
+                    }),
+                    '<=': bind => [
+                        bind.struct('()', [
+                            bind.kids[0].struct('this'),
+                            bind.kids[0].struct('[]', [
+                                bind.kids[0].data(name_of(bind.kids[0])),
+                            ]),
+                            args_of(bind.kids[0], false),
+                        ]),
+                    ],
+                    '<=>': bind => [
+                        bind.struct('()', [
+                            bind.kids[0].struct('this'),
+                            bind.kids[0].struct('[]', [
+                                bind.kids[0].data(name_of(bind.kids[0])),
+                            ]),
+                            args_of(bind.kids[0], true),
+                        ]),
+                    ],
+                    '=>': bind => [],
                     '^': (ref) => [
                         ref.struct('...', [
                             ref.struct('()', [
@@ -11465,10 +11485,19 @@ var $;
                         ]),
                     ],
                     '*': (obj, belt) => [
-                        obj.struct('{,}', obj.kids.map(field => field.struct(':', [
-                            field.data(field.type),
-                            field.struct('()', field.hack(belt)),
-                        ])).filter(this.$mol_guard_defined)),
+                        obj.struct('{,}', obj.kids.map(field => {
+                            if (field.type === '^')
+                                return field.list([field]).hack(belt)[0];
+                            return field.struct(':', [
+                                field.data(name_of(field)),
+                                field.kids[0].type === '<=>'
+                                    ? field.struct('=>', [
+                                        params_of(field),
+                                        ...field.hack(belt),
+                                    ])
+                                    : field.hack(belt)[0],
+                            ]);
+                        }).filter(this.$mol_guard_defined)),
                     ],
                     '': (input, belt) => {
                         if (input.type[0] === '/')
@@ -11482,19 +11511,21 @@ var $;
                             for (const over of input.kids) {
                                 if (over.type === '/')
                                     continue;
-                                const name = name_of(over);
+                                const oname = name_of(over);
                                 const bind = over.kids[0];
                                 if (bind.type === '@') {
                                     overrides.push(over.struct('=', [
                                         over.struct('()', [
                                             over.struct('obj'),
                                             over.struct('[]', [
-                                                over.data(name),
+                                                over.data(oname),
                                             ]),
                                         ]),
                                         over.struct('=>', [
                                             params_of(over),
-                                            localize('_' + name),
+                                            ...localized_string.hack({
+                                                '#key': key => [bind.data(`${klass.type}_${name}_${oname}`)],
+                                            }),
                                         ]),
                                     ]));
                                 }
@@ -11508,7 +11539,7 @@ var $;
                                                 over.struct('()', [
                                                     over.struct('this'),
                                                     over.struct('[]', [
-                                                        over.data(name),
+                                                        over.data(oname),
                                                     ]),
                                                     args_of(over),
                                                 ]),
@@ -11521,13 +11552,10 @@ var $;
                                         over.struct('()', [
                                             over.struct('obj'),
                                             over.struct('[]', [
-                                                over.data(name),
+                                                over.data(oname),
                                             ]),
                                         ]),
-                                        over.struct('=>', [
-                                            params_of(over),
-                                            over.struct('()', over.hack(belt)),
-                                        ]),
+                                        over.struct('()', over.hack(belt)),
                                     ]));
                                 }
                             }
@@ -11566,12 +11594,25 @@ var $;
                     ]),
                 ]));
             }
-            definitions.push(klass.struct('class', [
-                klass.struct(klass.type),
-                parent.struct('extends', [
-                    parent.struct(parent.type),
+            definitions.push(klass.struct('=', [
+                klass.struct('()', [
+                    klass.struct('$'),
+                    klass.struct('[]', [
+                        klass.data(klass.type),
+                    ]),
                 ]),
-                klass.struct('{;}', members),
+                klass.struct('class', [
+                    klass.struct(klass.type),
+                    parent.struct('extends', [
+                        parent.struct('()', [
+                            parent.struct('$'),
+                            parent.struct('[]', [
+                                parent.data(parent.type),
+                            ]),
+                        ]),
+                    ]),
+                    klass.struct('{}', members),
+                ]),
             ]), ...addons);
         }
         return descr.list([
@@ -14447,6 +14488,27 @@ var $;
 ;
 "use strict";
 var $;
+(function ($_1) {
+    $mol_test_mocks.push($ => {
+        class $mol_locale_mock extends $mol_locale {
+            lang(next = 'en') { return next; }
+            static source(lang) {
+                return {};
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_locale_mock.prototype, "lang", null);
+        __decorate([
+            $mol_mem_key
+        ], $mol_locale_mock, "source", null);
+        $.$mol_locale = $mol_locale_mock;
+    });
+})($ || ($ = {}));
+//mol/locale/locale.test.ts
+;
+"use strict";
+var $;
 (function ($) {
     function $mol_view_tree_trim_remarks(def) {
         return def.transform(([node], sub) => (node.type === '-') ? null : node.clone({ sub: sub() }));
@@ -15642,7 +15704,7 @@ var $;
 					{;}
 						1
 						2
-				`), '{1; 2}\n');
+				`), '{\n\t1;\n\t2;\n}\n');
         },
         'object'() {
             $mol_assert_equal(convert(`
@@ -15731,7 +15793,7 @@ var $;
 					function
 						(,) foo
 						{;} debugger
-				`), 'function (foo){debugger}\n');
+				`), 'function (foo){\n\tdebugger;\n}\n');
             $mol_assert_equal(convert(`
 					function*
 						(,)
@@ -15746,7 +15808,7 @@ var $;
 					async*
 						(,) foo
 						{;} debugger
-				`), 'async function* (foo){debugger}\n');
+				`), 'async function* (foo){\n\tdebugger;\n}\n');
         },
         'class'() {
             $mol_assert_equal(convert(`
@@ -15766,28 +15828,28 @@ var $;
 							\\foo
 							(,)
 							{;}
-				`), 'class {foo(){}}\n');
+				`), 'class {\n\tfoo(){}\n}\n');
             $mol_assert_equal(convert(`
 					class {}
 						static
 							\\foo
 							(,)
 							{;}
-				`), 'class {static ["foo"](){}}\n');
+				`), 'class {\n\tstatic ["foo"](){}\n}\n');
             $mol_assert_equal(convert(`
 					class {}
 						get
 							\\foo
 							(,)
 							{;}
-				`), 'class {get ["foo"](){}}\n');
+				`), 'class {\n\tget ["foo"](){}\n}\n');
             $mol_assert_equal(convert(`
 					class {}
 						set
 							\\foo
 							(,) bar
 							{;}
-				`), 'class {set ["foo"](bar){}}\n');
+				`), 'class {\n\tset ["foo"](bar){}\n}\n');
         },
         'if'() {
             $mol_assert_equal(convert(`
@@ -15800,13 +15862,13 @@ var $;
 					if
 						() 1
 						{;} 2
-				`), 'if(1) {2}\n');
+				`), 'if(1) {\n\t2;\n}\n');
             $mol_assert_equal(convert(`
 					if
 						() 1
 						{;} 2
 						{;} 3
-				`), 'if(1) {2}else{3}\n');
+				`), 'if(1) {\n\t2;\n}else{\n\t3;\n}\n');
         },
         'assign'() {
             $mol_assert_equal(convert(`
@@ -15840,5 +15902,132 @@ var $;
     });
 })($ || ($ = {}));
 //mol/tree2/js/to/text/text.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    const compile = $mol_data_pipe($mol_tree2_from_string, $mol_view_tree2_to_js, $mol_tree2_js_to_text, $mol_tree2_text_to_string_mapped_js).bind($);
+    function run(tree) {
+        const $ = { $mol_object };
+        const src = compile(tree);
+        eval(src);
+        return $;
+    }
+    $mol_test({
+        'Empty class'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+			`);
+            Foo.make({ $ });
+        },
+        'Mutable and read only channels'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					readonly null
+					mutable? null
+			`);
+            const foo = Foo.make({ $ });
+            $mol_assert_like(foo.readonly(), foo.readonly(1), foo.readonly(), null);
+            $mol_assert_like(foo.mutable(), null);
+            $mol_assert_like(foo.mutable(2), foo.mutable(), 2);
+        },
+        'Boolean channel'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					bar /
+						false
+						true
+			`);
+            $mol_assert_like(Foo.make({ $ }).bar(), [false, true]);
+        },
+        'Number channel'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					bar /
+						- NaN
+						-Infinity
+						+Infinity
+						0
+			`);
+            $mol_assert_like(Foo.make({ $ }).bar(), [
+                Number.NEGATIVE_INFINITY,
+                Number.POSITIVE_INFINITY,
+                0,
+            ]);
+        },
+        'String channel'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					hardcoded \\
+						\\First
+						\\Second
+					localized @ \\
+			`);
+            $mol_assert_like(Foo.make({ $ }).hardcoded(), 'First\nSecond');
+            $mol_assert_like(Foo.make({ $ }).localized(), '<Foo_localized>');
+        },
+        'Read only bind'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					bar1 <= bar2? 1
+			`);
+            const foo = Foo.make({ $ });
+            $mol_assert_like(foo.bar1(), foo.bar1(2), foo.bar1(), foo.bar2(), 1);
+            $mol_assert_like(foo.bar2(2), foo.bar1(), 2);
+        },
+        'Fallback bind'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					bar1? <=> bar2? 1
+			`);
+            const foo = Foo.make({ $ });
+            $mol_assert_like(foo.bar1(), foo.bar2(), 1);
+            $mol_assert_like(foo.bar2(2), foo.bar1(), 2);
+            $mol_assert_like(foo.bar1(1), foo.bar1(), 1);
+            $mol_assert_like(foo.bar2(), 2);
+            $mol_assert_like(foo.bar2(3), foo.bar2(), foo.bar1(), 3);
+        },
+        'Structural channel'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					bar *
+						alpha 1
+						beta *
+						xxx <= lol 2
+			`);
+            $mol_assert_like(Foo.make({ $ }).bar(), {
+                alpha: 1,
+                beta: {},
+                xxx: 2,
+            });
+        },
+        'Structural bidi channel'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					event *
+						click? <=> run? null
+			`);
+            $mol_assert_like(Foo.make({ $ }).event().click({}), {});
+        },
+        'Structural channel with inheritance'($) {
+            const { Foo, Bar } = run(`
+				Foo $mol_object
+					field *
+						xxx 123
+				Bar Foo
+					field *
+						yyy 234
+						^
+						zzz 345
+			`);
+            $mol_assert_like(Bar.make({ $ }).field(), {
+                yyy: 234,
+                xxx: 123,
+                zzz: 345,
+            });
+        },
+    });
+})($ || ($ = {}));
+//mol/view/tree2/to/js/js.test.ts
 
 //# sourceMappingURL=node.test.js.map
