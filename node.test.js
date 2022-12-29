@@ -3460,7 +3460,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n\t/* transform: translateZ(0); */\n\ttransition: none;\n\toverflow: overlay;\n\tscroll-snap-type: x mandatory;\n}\n\n[mol_book2] > * {\n/* \tflex: none; */\n\tscroll-snap-stop: always;\n\tscroll-snap-align: end;\n\tposition: relative;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n\tflex-shrink: 0;\n}\n[mol_book2] > * + *:not([mol_book2_placeholder]):before {\n\tdisplay: block;\n\tcontent: '=';\n\topacity: .5;\n\tposition: absolute;\n\ttop: -.5rem;\n\tleft: -.325rem;\n}\n\n[mol_book2] > *:where( :nth-child(odd):not([mol_book2_placeholder]) ) {\n\tbackground-color: var(--mol_theme_card);\n}\n\n[mol_book2] > [mol_book2] {\n\tdisplay: contents;\n}\n\n[mol_book2] > *:first-child {\n\tscroll-snap-align: start;\n}\n\n[mol_book2] > [mol_view] {\n\ttransform: none; /* prevent content clipping */\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\t/* background: var(--mol_theme_back); */\n}\n");
+    $mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n\t/* transform: translateZ(0); */\n\ttransition: none;\n\toverflow: overlay;\n\tscroll-snap-type: x mandatory;\n}\n\n[mol_book2] > * {\n/* \tflex: none; */\n\tscroll-snap-stop: always;\n\tscroll-snap-align: end;\n\tposition: relative;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n\tflex-shrink: 0;\n}\n[mol_book2] > * + *:not([mol_book2_placeholder]):before {\n\tdisplay: block;\n\tcontent: '=';\n\topacity: .5;\n\tposition: absolute;\n\ttop: -.5rem;\n\tleft: -.325rem;\n}\n\n[mol_book2] > * {\n\tbackground-color: var(--mol_theme_card);\n\tbox-shadow: inset 0 0 0 1px var(--mol_theme_back);\n}\n\n[mol_book2] > [mol_book2] {\n\tdisplay: contents;\n}\n\n[mol_book2] > *:first-child {\n\tscroll-snap-align: start;\n}\n\n[mol_book2] > [mol_view] {\n\ttransform: none; /* prevent content clipping */\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\t/* background: var(--mol_theme_back); */\n}\n");
 })($ || ($ = {}));
 //mol/book2/-css/book2.view.css.ts
 ;
@@ -10172,7 +10172,6 @@ var $;
         const { calc } = $mol_style_func;
         $mol_style_define($mol_page, {
             display: 'flex',
-            margin: 0,
             flex: {
                 basis: 'auto',
                 direction: 'column',
@@ -11602,7 +11601,10 @@ var $;
                                         over.data(oname),
                                     ]),
                                 ]),
-                                over.struct('()', over.hack(belt)),
+                                over.struct('=>', [
+                                    over.struct('(,)'),
+                                    over.struct('()', over.hack(belt)),
+                                ]),
                             ]));
                         }
                     }
@@ -16118,6 +16120,46 @@ var $;
 (function ($_1) {
     const run = $mol_view_tree2_to_js_test_run;
     $mol_test({
+        'Structural channel'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					bar *
+						alpha 1
+						beta *
+						xxx <= lol 2
+			`);
+            $mol_assert_like(Foo.make({ $ }).bar(), {
+                alpha: 1,
+                beta: {},
+                xxx: 2,
+            });
+        },
+        'Structural channel with inheritance'($) {
+            const { Foo, Bar } = run(`
+				Foo $mol_object
+					field *
+						xxx 123
+				Bar Foo
+					field *
+						yyy 234
+						^
+						zzz 345
+			`);
+            $mol_assert_like(Bar.make({ $ }).field(), {
+                yyy: 234,
+                xxx: 123,
+                zzz: 345,
+            });
+        },
+    });
+})($ || ($ = {}));
+//mol/view/tree2/to/js/js.dict.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    const run = $mol_view_tree2_to_js_test_run;
+    $mol_test({
         'Read only bind'($) {
             const { Foo } = run(`
 				Foo $mol_object
@@ -16153,7 +16195,7 @@ var $;
             $mol_assert_like(foo.mutable(), null);
             $mol_assert_like(foo.mutable(2), foo.mutable(), 2);
         },
-        'Boolean channel'($) {
+        'Boolean channel array'($) {
             const { Foo } = run(`
 				Foo $mol_object
 					bar /
@@ -16162,7 +16204,7 @@ var $;
 			`);
             $mol_assert_like(Foo.make({ $ }).bar(), [false, true]);
         },
-        'Number channel'($) {
+        'Number channel array'($) {
             const { Foo } = run(`
 				Foo $mol_object
 					bar /
@@ -16210,36 +16252,44 @@ var $;
 				`);
             });
         },
-        'Structural channel'($) {
+        'two classes'($) {
+            const { A2, B2 } = run(`
+				A2 $mol_object
+					str \\some
+				
+				B2 A2
+					str \\some2
+			`);
+            const a = A2.make({ $ });
+            const b = B2.make({ $ });
+            $mol_assert_ok(b instanceof A2);
+            $mol_assert_ok(b instanceof B2);
+            $mol_assert_like(a.str(), 'some');
+            $mol_assert_like(b.str(), 'some2');
+        },
+        'commented node'($) {
+            const { A2, B2 } = run(`
+				A2 $mol_object
+					str \\some
+				- B2 A2
+					str \\some2
+			`);
+            const a = A2.make({ $ });
+            $mol_assert_ok(a instanceof A2);
+            $mol_assert_ok(B2 === undefined);
+        },
+        'factory props'($) {
             const { Foo } = run(`
 				Foo $mol_object
-					bar *
-						alpha 1
-						beta *
-						xxx <= lol 2
+					button $mol_object
+						some true
+						sub /
+							1
 			`);
-            $mol_assert_like(Foo.make({ $ }).bar(), {
-                alpha: 1,
-                beta: {},
-                xxx: 2,
-            });
-        },
-        'Structural channel with inheritance'($) {
-            const { Foo, Bar } = run(`
-				Foo $mol_object
-					field *
-						xxx 123
-				Bar Foo
-					field *
-						yyy 234
-						^
-						zzz 345
-			`);
-            $mol_assert_like(Bar.make({ $ }).field(), {
-                yyy: 234,
-                xxx: 123,
-                zzz: 345,
-            });
+            const foo = Foo.make({ $ });
+            $mol_assert_ok(typeof foo.button().sub === 'function');
+            $mol_assert_ok(typeof foo.button().some === 'function');
+            $mol_assert_like(foo.button().sub()[0], 1);
         },
     });
 })($ || ($ = {}));
