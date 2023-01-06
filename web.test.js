@@ -1845,6 +1845,9 @@ var $;
 //mol/key/key.test.tsx
 ;
 "use strict";
+//mol/type/foot/foot.test.ts
+;
+"use strict";
 var $;
 (function ($) {
     $mol_wire_log.active();
@@ -3974,12 +3977,6 @@ var $;
     $.$mol_func_is_class = $mol_func_is_class;
 })($ || ($ = {}));
 //mol/func/is/class/class.ts
-;
-"use strict";
-//mol/type/foot/foot.test.ts
-;
-"use strict";
-//mol/type/foot/foot.ts
 ;
 "use strict";
 var $;
