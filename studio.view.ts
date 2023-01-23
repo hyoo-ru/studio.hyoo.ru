@@ -179,7 +179,6 @@ namespace $.$$ {
 		@ $mol_mem
 		props() {
 			return this.prop_filtered().map( prop => {
-				console.log('111', prop.type)
 				return this.Prop( prop.type )
 			} )
 		}

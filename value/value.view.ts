@@ -4,8 +4,6 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		self() {
-			console.log('type', this.type())
-
 			switch( this.type() ) {
 				case 'text': return [ this.Str() ]
 				case 'number': return [ this.Numb() ]

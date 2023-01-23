@@ -65,6 +65,24 @@ namespace $.$$ {
 
 		},
 
+		'find property by name part'() {
+			const src = `
+				$hyoo_studio_example $mol_view
+					a null
+					b? null
+					c* null
+					d*? null
+			`
+
+			const obj = $hyoo_studio_component.make({})
+			obj.source( src )
+
+			$mol_assert_equal( obj.prop_fullname('a'), 'a' )
+			$mol_assert_equal( obj.prop_fullname('b'), 'b?' )
+			$mol_assert_equal( obj.prop_fullname('c'), 'c*' )
+			$mol_assert_equal( obj.prop_fullname('d'), 'd*?' )
+		},
+
 		'property change'() {
 
 			const src = t`#mol_number #mol_view\n\tvalue? NaN\n\titems null\n`
@@ -73,9 +91,9 @@ namespace $.$$ {
 			const obj = $hyoo_studio_component.make({})
 			obj.source( src )
 
-			const val = obj.prop_tree( 'value?' )
+			const val = obj.prop_tree( 'value' )
 			const next = val?.struct( 'true' )!
-			obj.prop_tree( 'value?', val?.clone([ next ]) )
+			obj.prop_tree( 'value', val?.clone([ next ]) )
 
 			$mol_assert_equal( obj.source(), dest )
 
