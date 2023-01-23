@@ -41,7 +41,7 @@ $mol_book2 $mol_scroll
 	sub <= pages /$mol_view
 	minimal_width 0
 	Placeholder $mol_view
-	Gap* $mol_view
+	Gap* $mol_view title \
 
 $mol_paragraph $mol_view
 	line_height 24
