@@ -28,12 +28,14 @@ namespace $.$$ {
 				wrap: 'wrap',
 			},
 			
-			$mol_form_field: {
-				flex: {
-					grow: 1,
-				},
-			},
 			
+		},
+		
+		$mol_form_field: {
+			flex: {
+				grow: 1,
+			},
+			padding: $mol_gap.block,
 		},
 		
 		Base: {

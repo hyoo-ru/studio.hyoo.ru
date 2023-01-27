@@ -65,7 +65,6 @@ namespace $.$$ {
 				grow: 1,
 				shrink: 1,
 			},
-			padding: rem(.75),
 			border: {
 				radius: $mol_gap.round,
 			},
