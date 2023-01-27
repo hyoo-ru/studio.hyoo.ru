@@ -8769,7 +8769,6 @@ var $;
                     grow: 1,
                     shrink: 1,
                 },
-                padding: rem(.75),
                 border: {
                     radius: $mol_gap.round,
                 },
@@ -15519,11 +15518,12 @@ var $;
                 flex: {
                     wrap: 'wrap',
                 },
-                $mol_form_field: {
-                    flex: {
-                        grow: 1,
-                    },
+            },
+            $mol_form_field: {
+                flex: {
+                    grow: 1,
                 },
+                padding: $mol_gap.block,
             },
             Base: {
                 alignSelf: 'stretch',
