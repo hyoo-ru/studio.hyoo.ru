@@ -67,7 +67,7 @@ $hyoo_studio $mol_book2
 									\
 		<= Preview $mol_frame
 			title @ \Preview
-			- uri <= pack
+			uri <= pack
 			html <= preview_html \
 			window => preview_window
 		<= Inspect $mol_page
