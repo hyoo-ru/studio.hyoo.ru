@@ -52,7 +52,7 @@ namespace $.$$ {
 			flex: {
 				basis: rem(40),
 				shrink: 0,
-				grow: 1,
+				grow: 10000,
 			},
 			minWidth: per(50),
 			zIndex: 2,
