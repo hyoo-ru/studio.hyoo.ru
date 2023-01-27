@@ -9,7 +9,7 @@ namespace $.$$ {
 			flex: {
 				grow: 0,
 				shrink: 0,
-				basis: rem(40),
+				basis: rem(30),
 			},
 			
 			Body: {
@@ -52,7 +52,7 @@ namespace $.$$ {
 			flex: {
 				basis: rem(40),
 				shrink: 0,
-				grow: 10000,
+				grow: 1,
 			},
 			minWidth: per(50),
 			zIndex: 2,
@@ -65,6 +65,14 @@ namespace $.$$ {
 					color: $mol_theme.line,
 				}],
 			}
+		},
+		
+		Inspect: {
+			flex: {
+				basis: rem(30),
+				shrink: 0,
+				grow: 1,
+			},
 		},
 		
 	} )

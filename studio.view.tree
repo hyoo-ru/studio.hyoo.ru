@@ -18,6 +18,11 @@ $hyoo_studio $mol_book2
 					arg * preview \
 					sub /
 						<= Preview_open_icon $mol_icon_play_circle
+				<= inspect_open $mol_link
+					hint @ \Show Inspector
+					arg * inspect \
+					sub /
+						<= Inspect_open_icon $mol_icon_chart_bar
 			body /
 				<= Edit_form $mol_list
 					rows <= form_sections /
@@ -62,8 +67,26 @@ $hyoo_studio $mol_book2
 									\
 		<= Preview $mol_frame
 			title @ \Preview
-			uri <= pack
+			- uri <= pack
 			html <= preview_html \
+			window => preview_window
+		<= Inspect $mol_page
+			body /
+				<= Inspect_stat $mol_chart
+					graphs /
+						<= Inspect_depth $mol_plot_bar
+							title \Min Depth
+							series_y <= inspect_stat /number
+						<= Inspect_stat_vert $mol_plot_ruler_vert
+							title \count
+						<= Inspect_stat_hor $mol_plot_mark_hor
+							title \depth
+							series_x <= inspect_stat_depth /number
+						<= Marker_cross $mol_plot_mark_cross
+							graphs /
+								<= Inspect_depth
+				<= Inspect_graph $mol_dump_value
+					value <= inspect_graph null
 	Prop!name $hyoo_studio_prop
 		tree?next <=> prop_tree!name?next $mol_tree2_empty
 		props_of!klass <= props_of!klass $mol_tree2_empty
