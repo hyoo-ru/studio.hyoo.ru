@@ -2216,6 +2216,7 @@ declare namespace $ {
         value(val?: any): number;
         sub(): readonly any[];
         precision(): number;
+        type(): string;
         value_string(val?: any): string;
         hint(): string;
         enabled(): boolean;
