@@ -1116,6 +1116,7 @@ $mol_dump_list $mol_view
 			value <= dump_value* null
 			expanded? <=> dump_expanded*? false
 			prototypes <= prototypes false
+			preview_show <= preview_show true
 
 $mol_expander $mol_list
 	rows /
@@ -1123,6 +1124,7 @@ $mol_expander $mol_list
 			sub /
 				<= Trigger $mol_check_expand
 					checked?val <=> expanded?val false
+					expandable <= expandable true
 					label <= label /
 						<= title
 				<= Tools null
@@ -1131,6 +1133,7 @@ $mol_expander $mol_list
 
 $mol_dump_value $mol_view
 	value null
+	preview_show true
 	sub /
 		<= Simple $mol_text_code
 			text <= simple \
@@ -1139,7 +1142,8 @@ $mol_dump_value $mol_view
 			Trigger <= Expand_head $mol_check_expand
 				minimal_height 24
 				minimal_width 24
-				checked? <=> expanded? false
+				expanded? <=> expanded? false
+				expandable <= expandable true
 				clicks? <=> expand_all? null
 				label /
 					<= Expand_title $mol_text_code
@@ -1152,6 +1156,7 @@ $mol_dump_value $mol_view
 				<= Row*0 $mol_dump_list
 					values <= row_values* /
 					prototypes <= prototypes false
+					preview_show <= preview_show
 
 $hyoo_studio $mol_book2
 	plugins /
