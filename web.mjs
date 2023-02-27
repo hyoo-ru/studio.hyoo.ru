@@ -3162,7 +3162,7 @@ var $;
             this.length = length;
             this[Symbol.toStringTag] = `${this.uri}#${this.row}:${this.col}/${this.length}`;
         }
-        static unknown = $mol_span.begin('unknown');
+        static unknown = $mol_span.begin('?');
         static begin(uri, source = '') {
             return new $mol_span(uri, source, 1, 1, 0);
         }
@@ -3232,7 +3232,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_tree2_from_string(str, uri = 'unknown') {
+    function $mol_tree2_from_string(str, uri = '?') {
         const span = $mol_span.entire(uri, str);
         var root = $mol_tree2.list([], span);
         var stack = [root];
@@ -9089,7 +9089,7 @@ var $;
             const cut = {};
             for (const key in dict) {
                 if (except.indexOf(key) >= 0)
-                    continue;
+                    break;
                 cut[key] = dict[key];
             }
             return cut;
@@ -10081,7 +10081,6 @@ var $;
                 justifyContent: 'space-between',
                 flex: 'none',
                 margin: 0,
-                overflow: 'hidden',
                 background: {
                     color: $mol_theme.card,
                 },

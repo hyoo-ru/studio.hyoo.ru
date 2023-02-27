@@ -4269,7 +4269,7 @@ var $;
         'wrong name'() {
             $mol_assert_fail(() => convert(`
 					foo+bar
-				`), 'Wrong node type\nfoo+bar\nunknown#2:6/7');
+				`), 'Wrong node type\nfoo+bar\n?#2:6/7');
         },
         'array'() {
             $mol_assert_equal(convert(`
