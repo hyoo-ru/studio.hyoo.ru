@@ -4495,11 +4495,18 @@ var $;
 "use strict";
 var $;
 (function ($_1) {
-    const compile = $mol_data_pipe($mol_tree2_from_string, $mol_view_tree2_to_js, $mol_tree2_js_to_text, $mol_tree2_text_to_string_mapped_js).bind($);
+    const compile = $mol_data_pipe($mol_tree2_from_string, $mol_view_tree2_to_js).bind($);
+    const compile2 = $mol_data_pipe($mol_tree2_js_to_text, $mol_tree2_text_to_string_mapped_js).bind($);
     function $mol_view_tree2_to_js_test_run(tree) {
-        const $ = { $mol_object };
-        const src = compile(tree);
-        eval(src);
+        class $mol_object3 extends $mol_object {
+        }
+        const $ = { $mol_object: $mol_object3, js: '', js_node: undefined };
+        $mol_object3[$mol_ambient_ref] = $;
+        const js_node = compile(tree);
+        const js = compile2(js_node);
+        eval(js);
+        $.js = js;
+        $.js_node = js_node;
         return $;
     }
     $_1.$mol_view_tree2_to_js_test_run = $mol_view_tree2_to_js_test_run;
@@ -4511,7 +4518,7 @@ var $;
 (function ($_1) {
     const run = $mol_view_tree2_to_js_test_run;
     $mol_test({
-        'Fallback bind'($) {
+        'Bidi bind fallback'($) {
             const { Foo } = run(`
 				Foo $mol_object
 					bar1? <=> bar2? 1
@@ -4523,7 +4530,7 @@ var $;
             $mol_assert_like(foo.bar2(), 2);
             $mol_assert_like(foo.bar2(3), foo.bar2(), foo.bar1(), 3);
         },
-        'legacy bind'($) {
+        'Bidi bind legacy value'($) {
             const { Foo } = run(`
 				Foo $mol_object
 					a?v <=> b?v 1
@@ -4532,15 +4539,7 @@ var $;
             $mol_assert_like(foo.a(), foo.b(), 1);
             $mol_assert_like(foo.b(2), foo.a(), 2);
         },
-        'localized default value'($) {
-            const { Foo } = run(`
-				Foo $mol_object
-					a? <=> b? @ \some1
-			`);
-            const foo = Foo.make({ $ });
-            $mol_assert_like(foo.b(), foo.a(), '<Foo_b>');
-        },
-        'Structural bidi channel'($) {
+        'Bidi bind in dictionary'($) {
             const { Foo } = run(`
 				Foo $mol_object
 					event *
@@ -4548,7 +4547,7 @@ var $;
 			`);
             $mol_assert_like(Foo.make({ $ }).event().click({}), {});
         },
-        'bind, chaining'($) {
+        'Bidi bind chaining'($) {
             const { Foo } = run(`
 				Foo $mol_object
 					a? <=> b? <=> c? null
@@ -4556,27 +4555,40 @@ var $;
             const foo = Foo.make({ $ });
             $mol_assert_like(foo.c(), foo.b(), foo.a());
         },
-        'bind, no default not throws error'($) {
+        'Bidi bind indexed'($) {
             const { Foo } = run(`
 				Foo $mol_object
-					a? <=> b?
+					indexed*? <=> owner*? null
 			`);
             const foo = Foo.make({ $ });
-            $mol_assert_fail(() => {
-                foo.a();
-            });
+            foo.owner(1, 'a');
+            foo.owner(2, 'b'),
+                $mol_assert_like(foo.owner(1), foo.indexed(1), 'a');
+            $mol_assert_like(foo.owner(1, 'a2'), foo.indexed(1), 'a2');
+            $mol_assert_like(foo.owner(2), foo.indexed(2), 'b');
         },
-        'bind, default no args not throws error'($) {
+        'Bidi bind indexed second level'($) {
             const { Foo } = run(`
 				Foo $mol_object
-					a? <=> b?
-					b null
+					indexed*? $mol_object
+						expanded <=> owner*? null
 			`);
             const foo = Foo.make({ $ });
-            $mol_assert_like(foo.b(1), null);
-            $mol_assert_like(foo.a(1), 1);
+            foo.owner(1, 'a');
+            foo.owner(2, 'b');
+            $mol_assert_like(foo.owner(1), foo.indexed(1).expanded(), 'a');
+            $mol_assert_like(foo.owner(2), foo.indexed(2).expanded(), 'b');
         },
-        'bind with separate default'($) {
+        'Bidi bind doubing right part with same default'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					a? <=> b? null
+					c? <=> b? null
+			`);
+            const foo = Foo.make({ $ });
+            $mol_assert_like(foo.b(), foo.c(), foo.a(), null);
+        },
+        'Bidi bind with separate default in right part'($) {
             const { Foo } = run(`
 				Foo $mol_object
 					a? <=> b?
@@ -4585,7 +4597,7 @@ var $;
             const foo = Foo.make({ $ });
             $mol_assert_like(foo.b(), foo.a());
         },
-        'bind, index from outer scope throws error'($) {
+        'Bidi bind index from outer scope throws error'($) {
             $mol_assert_fail(() => {
                 const { Foo } = run(`
 					Foo $mol_object
@@ -4594,39 +4606,32 @@ var $;
 				`);
             });
         },
-        'bind, method defined with another value error'($) {
-            $mol_assert_fail(() => {
-                const { Foo } = run(`
-					Foo $mol_object
-						arr /
-							*
-								loc?v <=> loc_outer?v @ \test1
-							*
-								loc?v <=> loc_outer?v @ \test2
-				`);
-            });
-        },
-        'bind, structural bidi localize'($) {
+        'Bidi bind with default object'($) {
             const { Foo } = run(`
 				Foo $mol_object
-					arr /
-						*
-							loc?v <=> loc_outer?v @ \\test1
-						*
-							loc?v <=> loc_outer?v @ \\test1
-			`);
-            const foo = Foo.make({ $ });
-            $mol_assert_like(foo.arr()[1].loc(), foo.arr()[0].loc(), '<Foo_loc_outer>');
-        },
-        'bind with default object'($) {
-            const { Foo } = run(`
-				Foo $mol_object
-					class?val <=> class_owner?val $mol_object
+					class?val <=> owner?val $mol_object
 			`);
             const foo = Foo.make({ $ });
             const view = new $mol_object;
-            foo.class_owner(view);
-            $mol_assert_like(foo.class_owner(), foo.class(), view);
+            foo.owner(view);
+            $mol_assert_like(foo.owner(), foo.class(), view);
+        },
+        'Bidi bind localized default value'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					a? <=> b? @ \\some1
+			`);
+            const foo = Foo.make({ $ });
+            $mol_assert_like(foo.b(), foo.a(), '<Foo_b>');
+        },
+        'Bidi bind localized in object'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					obj *
+						loc? <=> outer? @ \\test1
+			`);
+            const foo = Foo.make({ $ });
+            $mol_assert_like(foo.obj().loc(), foo.outer(), '<Foo_outer>');
         },
     });
 })($ || ($ = {}));
@@ -4668,6 +4673,46 @@ var $;
                 zzz: 345,
             });
         },
+        'Structural channel spread other channel'($) {
+            const { Bar } = run(`
+				Bar $mol_object
+					test *
+						aaa 123
+					field *
+						bbb 321
+						^ test
+			`);
+            $mol_assert_like(Bar.make({ $ }).field(), {
+                bbb: 321,
+                aaa: 123,
+            });
+        },
+        'Structural channel localized prop value'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					bar *
+						loc @ \\v1
+						baz *
+							loc2 @ \\v2
+			`);
+            const foo = Foo.make({ $ });
+            $mol_assert_like(foo.bar(), {
+                'loc': '<Foo_bar_loc>',
+                'baz': { 'loc2': '<Foo_bar_baz_loc2>' }
+            });
+        },
+        'Structural channel quoted props'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					bar *
+						$a 1
+						b-t *
+			`);
+            $mol_assert_like(Foo.make({ $ }).bar(), {
+                '$a': 1,
+                'b-t': {},
+            });
+        },
     });
 })($ || ($ = {}));
 //mol/view/tree2/to/js/js.dict.test.ts
@@ -4677,7 +4722,7 @@ var $;
 (function ($_1) {
     const run = $mol_view_tree2_to_js_test_run;
     $mol_test({
-        'Read only bind'($) {
+        'Left bind read only'($) {
             const { Foo } = run(`
 				Foo $mol_object
 					bar1 <= bar2? 1
@@ -4686,9 +4731,181 @@ var $;
             $mol_assert_like(foo.bar1(), foo.bar1(2), foo.bar1(), foo.bar2(), 1);
             $mol_assert_like(foo.bar2(2), foo.bar1(), 2);
         },
+        'Left bind second level index'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					cls* <= owner*? $mol_object
+						localized <= some*? @ \\v1
+			`);
+            const foo = Foo.make({ $ });
+            $mol_assert_ok(foo.owner() instanceof $mol_object);
+            $mol_assert_like(foo.some(), foo.some(1), '<Foo_some>');
+            $mol_assert_equal(foo.owner(1), foo.cls(1));
+            $mol_assert_equal(foo.owner().localized(), foo.some());
+            $mol_assert_equal(foo.cls(2), foo.owner(2));
+        },
+        'Left bind in array and object'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					obj *
+						prop <= Obj
+					arr /
+						<= Obj $mol_object
+							rows <= content /
+			`);
+            const foo = Foo.make({ $ });
+            $mol_assert_equal(foo.obj().prop, foo.arr()[0], foo.Obj());
+        },
+        'Left bind with separate default and comment'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					content 123
+					Obj $mol_object
+						rows <= content - 321
+			`);
+            const foo = Foo.make({ $ });
+            $mol_assert_equal(foo.Obj().rows(), 123);
+        },
+        'Left bind chaining'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					a? <= b? <= c? null
+			`);
+            const foo = Foo.make({ $ });
+            $mol_assert_like(foo.c(), foo.b(), foo.a(), null);
+            $mol_assert_like(foo.c(1), foo.b(), foo.a(), 1);
+            $mol_assert_unique(foo.a(2), foo.c());
+        },
     });
 })($ || ($ = {}));
 //mol/view/tree2/to/js/js.left.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    const run = $mol_view_tree2_to_js_test_run;
+    $mol_test({
+        'Array channel boolean'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					bar /
+						false
+						true
+			`);
+            $mol_assert_like(Foo.make({ $ }).bar(), [false, true]);
+        },
+        'Array channel number'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					bar /
+						- NaN
+						-Infinity
+						+Infinity
+						0
+			`);
+            $mol_assert_like(Foo.make({ $ }).bar(), [
+                Number.NEGATIVE_INFINITY,
+                Number.POSITIVE_INFINITY,
+                0,
+            ]);
+        },
+        'Array channel with types'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					arr /readonly(number)[]
+			`);
+            $mol_assert_like(Foo.make({ $ }).arr(), []);
+        },
+        'Array channel of array or object'($) {
+            const { Foo } = run(`
+				Foo $mol_object
+					complex /
+						/
+							\\test1
+						*
+							str \\some
+							nul null
+			`);
+            $mol_assert_like(Foo.make({ $ }).complex(), [['test1'], { str: 'some', nul: null }]);
+        },
+        'Array channel inheritance'($) {
+            const { Bar } = run(`
+				Foo $mol_object
+					arr /
+						\\v1
+				Bar Foo
+					arr /
+						\\v3
+						^
+						\\v4
+			`);
+            $mol_assert_like(Bar.make({ $ }).arr(), ['v3', 'v1', 'v4']);
+        },
+        'Array channel spread other channel'($) {
+            const { Bar } = run(`
+				Bar $mol_object
+					sup /
+						\\v1
+					arr /
+						\\v2
+						^ sup
+			`);
+            const bar = Bar.make({ $ });
+            $mol_assert_like(bar.arr(), ['v2', 'v1']);
+            $mol_assert_like(bar.arr()[1], bar.sup()[0]);
+        },
+    });
+})($ || ($ = {}));
+//mol/view/tree2/to/js/js.array.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    const run = $mol_view_tree2_to_js_test_run;
+    $mol_test({
+        'Right bind read only'($) {
+            const $2 = run(`
+				Foo $mol_object
+					a*? null
+				Bar $mol_object
+					Obj Foo
+						a*? => b*?
+			`);
+            const { Bar } = $2;
+            const bar = Bar.make({ $: $2 });
+            $mol_assert_like(bar.Obj().a(), bar.b());
+        },
+        'Right bind in left bind'($) {
+            const $2 = run(`
+				Foo $mol_object
+					a null
+				Bar $mol_object
+					foo <= Cls Foo
+						a => b
+			`);
+            const { Bar } = $2;
+            const bar = Bar.make({ $: $2 });
+            $mol_assert_like(bar.foo(), bar.Cls());
+            $mol_assert_like(bar.foo().a(), bar.Cls().a(), bar.b());
+        },
+        'Right bind indexed'($) {
+            const $2 = run(`
+				Foo $mol_object
+					a*? *
+						some 123
+				Bar $mol_object
+					Cls* Foo
+						a => b*
+			`);
+            const { Bar } = $2;
+            const bar = Bar.make({ $: $2 });
+            $mol_assert_equal(bar.Cls(1).a(), bar.b(1));
+            $mol_assert_like(bar.b(1), { some: 123 });
+            $mol_assert_unique(bar.Cls(1).a(), bar.b(2));
+        }
+    });
+})($ || ($ = {}));
+//mol/view/tree2/to/js/js.right.test.ts
 ;
 "use strict";
 var $;
@@ -4712,30 +4929,6 @@ var $;
             $mol_assert_like(foo.mutable(), null);
             $mol_assert_like(foo.mutable(2), foo.mutable(), 2);
         },
-        'Boolean channel array'($) {
-            const { Foo } = run(`
-				Foo $mol_object
-					bar /
-						false
-						true
-			`);
-            $mol_assert_like(Foo.make({ $ }).bar(), [false, true]);
-        },
-        'Number channel array'($) {
-            const { Foo } = run(`
-				Foo $mol_object
-					bar /
-						- NaN
-						-Infinity
-						+Infinity
-						0
-			`);
-            $mol_assert_like(Foo.make({ $ }).bar(), [
-                Number.NEGATIVE_INFINITY,
-                Number.POSITIVE_INFINITY,
-                0,
-            ]);
-        },
         'String channel'($) {
             const { Foo } = run(`
 				Foo $mol_object
@@ -4747,7 +4940,7 @@ var $;
             $mol_assert_like(Foo.make({ $ }).hardcoded(), 'First\nSecond');
             $mol_assert_like(Foo.make({ $ }).localized(), '<Foo_localized>');
         },
-        'default indexed channel'($) {
+        'Default indexed channel'($) {
             const { Foo } = run(`
 				Foo $mol_object
 					a*? null
@@ -4800,12 +4993,14 @@ var $;
 				Foo $mol_object
 					button $mol_object
 						some true
+						loc @ \\v1
 						sub /
 							1
 			`);
             const foo = Foo.make({ $ });
             $mol_assert_ok(typeof foo.button().sub === 'function');
             $mol_assert_ok(typeof foo.button().some === 'function');
+            $mol_assert_like(foo.button().loc(), '<Foo_button_loc>');
             $mol_assert_like(foo.button().sub()[0], 1);
         },
     });
