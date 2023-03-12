@@ -9,5 +9,6 @@
 	"$hyoo_studio_Prop_add_hint": "Добавить свойство",
 	"$hyoo_studio_Source_field_name": "View.Tree Исходник",
 	"$hyoo_studio_Edit_title": "$mol Студия",
-	"$hyoo_studio_Preview_title": "Предпросмотр"
+	"$hyoo_studio_Preview_title": "Предпросмотр",
+	"$hyoo_studio_All_props_title": "Все свойства компонента"
 }

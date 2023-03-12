@@ -35,7 +35,6 @@ namespace $.$$ {
 			flex: {
 				grow: 1,
 			},
-			padding: $mol_gap.block,
 		},
 		
 		Base: {
@@ -49,7 +48,11 @@ namespace $.$$ {
 		Prop: {
 			padding: $mol_gap.block,
 		},
-		
+
+		All_props: {
+			padding: $mol_gap.block,
+		},
+
 		Preview: {
 			flex: {
 				basis: rem(40),
