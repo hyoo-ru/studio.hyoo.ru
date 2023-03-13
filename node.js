@@ -13956,6 +13956,23 @@ var $;
             obj.control = () => this.Pack();
             return obj;
         }
+        self(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        Self() {
+            const obj = new this.$.$mol_string();
+            obj.hint = () => "$hyoo_studio_example";
+            obj.value = (val) => this.self(val);
+            return obj;
+        }
+        Self_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => this.$.$mol_locale.text('$hyoo_studio_Self_field_name');
+            obj.control = () => this.Self();
+            return obj;
+        }
         base(val) {
             if (val !== undefined)
                 return val;
@@ -13976,28 +13993,11 @@ var $;
             obj.control = () => this.Base();
             return obj;
         }
-        self(val) {
-            if (val !== undefined)
-                return val;
-            return "";
-        }
-        Self() {
-            const obj = new this.$.$mol_string();
-            obj.hint = () => "$hyoo_studio_example";
-            obj.value = (val) => this.self(val);
-            return obj;
-        }
-        Self_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => this.$.$mol_locale.text('$hyoo_studio_Self_field_name');
-            obj.control = () => this.Self();
-            return obj;
-        }
         Classes() {
             const obj = new this.$.$mol_view();
             obj.sub = () => [
-                this.Base_field(),
-                this.Self_field()
+                this.Self_field(),
+                this.Base_field()
             ];
             return obj;
         }
@@ -14244,15 +14244,6 @@ var $;
     ], $hyoo_studio.prototype, "Pack_field", null);
     __decorate([
         $mol_mem
-    ], $hyoo_studio.prototype, "base", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_studio.prototype, "Base", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_studio.prototype, "Base_field", null);
-    __decorate([
-        $mol_mem
     ], $hyoo_studio.prototype, "self", null);
     __decorate([
         $mol_mem
@@ -14260,6 +14251,15 @@ var $;
     __decorate([
         $mol_mem
     ], $hyoo_studio.prototype, "Self_field", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_studio.prototype, "base", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_studio.prototype, "Base", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_studio.prototype, "Base_field", null);
     __decorate([
         $mol_mem
     ], $hyoo_studio.prototype, "Classes", null);

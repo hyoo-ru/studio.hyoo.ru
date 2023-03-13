@@ -3870,13 +3870,13 @@ declare namespace $ {
         pack(val?: any): string;
         Pack(): $$.$mol_string;
         Pack_field(): $$.$mol_form_field;
+        self(val?: any): string;
+        Self(): $$.$mol_string;
+        Self_field(): $$.$mol_form_field;
         base(val?: any): string;
         base_options(): readonly string[];
         Base(): $$.$mol_select;
         Base_field(): $$.$mol_form_field;
-        self(val?: any): string;
-        Self(): $$.$mol_string;
-        Self_field(): $$.$mol_form_field;
         Classes(): $mol_view;
         All_props(): $$.$mol_paragraph;
         prop_filter(next?: any): string;
