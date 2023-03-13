@@ -1,0 +1,18 @@
+{
+	"$hyoo_studio_Editor_toggle_hint": "Переключить вид редактора",
+	"$hyoo_studio_Preview_open_hint": "Предпросмотр",
+	"$hyoo_studio_inspect_open_hint": "Инспектор",
+	"$hyoo_studio_Pack_field_name": "Источник компонентов приложения",
+	"$hyoo_studio_Base_field_name": "Базовый класс",
+	"$hyoo_studio_Self_field_name": "Ваш компонент",
+	"$hyoo_studio_Prop_filter_hint": "Отфильтровать или добавить свойство..",
+	"$hyoo_studio_Prop_add_hint": "Добавить свойство",
+	"$hyoo_studio_Source_field_name": "View.Tree Исходник",
+	"$hyoo_studio_Edit_title": "$mol Студия",
+	"$hyoo_studio_Preview_title": "Предпросмотр",
+	"$hyoo_studio_All_props_title": "Все свойства компонента",
+	"$hyoo_studio_Inspect_depth_title": "Мин. глубина",
+	"$hyoo_studio_Inspect_stat_vert_title": "кол-во",
+	"$hyoo_studio_Inspect_stat_hor_title": "глубина",
+	"$hyoo_studio_Inspect_title": "Инспектор"
+}
