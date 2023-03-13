@@ -1,0 +1,13 @@
+{
+	"$hyoo_studio_Editor_toggle_hint": "Переключить вид редактора",
+	"$hyoo_studio_Preview_open_hint": "Предпросмотр",
+	"$hyoo_studio_Pack_field_name": "Источник компонентов приложения",
+	"$hyoo_studio_Self_field_name": "Ваш компонент",
+	"$hyoo_studio_Base_field_name": "Базовый класс",
+	"$hyoo_studio_Props_inherited_field_name": "Отображение унаследованных свойств",
+	"$hyoo_studio_Prop_filter_hint": "Отфильтровать или добавить свойство..",
+	"$hyoo_studio_Prop_add_hint": "Добавить свойство",
+	"$hyoo_studio_Source_field_name": "View.Tree исходник",
+	"$hyoo_studio_Edit_title": "$mol Студия",
+	"$hyoo_studio_Preview_title": "Предпросмотр"
+}

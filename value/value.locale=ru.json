@@ -1,0 +1,10 @@
+{
+	"$hyoo_studio_value_Locale_hint": "Мультиязычное значение",
+	"$hyoo_studio_value_Prop_bind_hint": "Направление связывания свойства",
+	"$hyoo_studio_value_Prop_name_hint": "Связанное свойство",
+	"$hyoo_studio_value_Obj_hint": "Класс",
+	"$hyoo_studio_value_Item_type_hint": "Тип элемента списка",
+	"$hyoo_studio_value_List_add_hint": "Добавить элемент в список",
+	"$hyoo_studio_value_Over_add_hint": "Добавить переопределение",
+	"$hyoo_studio_value_Over_prop_hint": "Переопределённое свойство"
+}
