@@ -49,10 +49,6 @@ namespace $.$$ {
 			padding: $mol_gap.block,
 		},
 
-		All_props: {
-			padding: $mol_gap.block,
-		},
-
 		Source_page: {
 			flex: {
 				basis: rem(40),
