@@ -467,9 +467,9 @@ $hyoo_studio_value $mol_list
 				<= Unit $mol_switch
 					value?next <=> unit?next \null
 					options *
-						null \Null
-						false \Off
-						true \On
+						null \null
+						false \false
+						true \true
 				<= Prop_bind $mol_select
 					hint @ \Bind Direction
 					align_hor \right
@@ -508,13 +508,13 @@ $hyoo_studio_value $mol_list
 					Filter null
 					value?next <=> type?next \unit
 					dictionary <= types *
-						unit \unit
-						bind \bind
-						object \obj
-						string \text
-						number \numb
-						list \list
-						dict \dict
+						unit \boolean
+						bind \bind <=
+						object \object $
+						string \string \
+						number \number 0
+						list \list /
+						dict \dict *
 						\
 							\drop
 		<= Inner $mol_view
@@ -1242,30 +1242,33 @@ $hyoo_studio $mol_book2
 												<= Prop_add_icon $mol_icon_plus
 								<= Props $mol_list
 									rows <= props /$hyoo_studio_prop
-						<= Source_field $mol_form_field
-							name @ \View.Tree Source
-							control <= Source $mol_textarea
-								hint \$hyoo_studio_example $mol_view
-								sidebar_showed true
-								value?val <=> source?val \
-									\$hyoo_studio_example $mol_view
-									\
+		<= Source_page $mol_page
+			body /
+				<= Source_field $mol_form_field
+					name @ \View.Tree Source
+					control <= Source $mol_textarea
+						hint \$hyoo_studio_example $mol_view
+						sidebar_showed true
+						value?val <=> source?val \
+							\$hyoo_studio_example $mol_view
+							\
 		<= Preview $mol_frame
 			title @ \Preview
 			uri <= pack
 			html <= preview_html \
 			window => preview_window
 		<= Inspect $mol_page
+			title @ \Inspect
 			body /
 				<= Inspect_stat $mol_chart
 					graphs /
 						<= Inspect_depth $mol_plot_bar
-							title \Min Depth
+							title @ \Min Depth
 							series_y <= inspect_stat /number
 						<= Inspect_stat_vert $mol_plot_ruler_vert
-							title \count
+							title @ \count
 						<= Inspect_stat_hor $mol_plot_mark_hor
-							title \depth
+							title @ \depth
 							series_x <= inspect_stat_depth /number
 						<= Marker_cross $mol_plot_mark_cross
 							graphs /

@@ -2754,7 +2754,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n\t/* transform: translateZ(0); */\n\ttransition: none;\n\toverflow: overlay;\n\tscroll-snap-type: x mandatory;\n\tpadding: 0 1px;\n\tscroll-padding: 0 1px;\n\tgap: 1px;\n}\n\n[mol_book2] > * {\n/* \tflex: none; */\n\tscroll-snap-stop: always;\n\tscroll-snap-align: end;\n\tposition: relative;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n\tflex-shrink: 0;\n}\n\n:where([mol_book2]) > * {\n\tbackground-color: var(--mol_theme_card);\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_back); */\n}\n\n[mol_book2] > [mol_book2] {\n\tdisplay: contents;\n}\n\n[mol_book2] > *:first-child {\n\tscroll-snap-align: start;\n}\n\n[mol_book2] > [mol_view] {\n\ttransform: none; /* prevent content clipping */\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\tbackground: none;\n}\n\n[mol_book2_gap] {\n\tbackground: none;\n\tflex-grow: 1;\n\tscroll-snap-align: none;\n\tmargin-right: -1px;\n\tbox-shadow: none;\n}\n");
+    $mol_style_attach("mol/book2/book2.view.css", "[mol_book2] {\n\tdisplay: flex;\n\tflex-flow: row nowrap;\n\talign-items: stretch;\n\tflex: 1 1 auto;\n\talign-self: stretch;\n\tmargin: 0;\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_line); */\n\t/* transform: translateZ(0); */\n\ttransition: none;\n\toverflow: overlay;\n\tscroll-snap-type: x mandatory;\n\tpadding: 0 1px;\n\tscroll-padding: 0 1px;\n\tgap: 1px;\n}\n\n[mol_book2] > * {\n/* \tflex: none; */\n\tscroll-snap-stop: always;\n\tscroll-snap-align: end;\n\tposition: relative;\n\tmin-height: 100%;\n\tmax-height: 100%;\n\tmax-width: 100%;\n\tflex-shrink: 0;\n}\n\n[mol_book2] > *:not(:first-of-type):before {\n\tcontent: '';\n\twidth: 1px;\n\theight: 2rem;\n\ttop: 1rem;\n\tleft: -1px;\n\tposition: absolute;\n\tbackground: var(--mol_theme_line);\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_book2] > *:not(:last-of-type)::after {\n\tcontent: '';\n\twidth: 1px;\n\theight: 2rem;\n\ttop: 1rem;\n\tright: -1px;\n\tposition: absolute;\n\tbackground: var(--mol_theme_line);\n\tborder-radius: var(--mol_gap_round);\n}\n\n:where([mol_book2]) > * {\n\tbackground-color: var(--mol_theme_card);\n\t/* box-shadow: 0 0 0 1px var(--mol_theme_back); */\n}\n\n[mol_book2] > [mol_book2] {\n\tdisplay: contents;\n}\n\n[mol_book2] > *:first-child {\n\tscroll-snap-align: start;\n}\n\n[mol_book2] > [mol_view] {\n\ttransform: none; /* prevent content clipping */\n}\n\n[mol_book2_placeholder] {\n\tflex: 1 1 0;\n\tbackground: none;\n}\n\n[mol_book2_gap] {\n\tbackground: none;\n\tflex-grow: 1;\n\tscroll-snap-align: none;\n\tmargin-right: -1px;\n\tbox-shadow: none;\n}\n\n[mol_book2_gap]::before,\n[mol_book2_gap]::after {\n\tdisplay: none;\n}\n");
 })($ || ($ = {}));
 //mol/book2/-css/book2.view.css.ts
 ;
@@ -7615,9 +7615,9 @@ var $;
             const obj = new this.$.$mol_switch();
             obj.value = (next) => this.unit(next);
             obj.options = () => ({
-                null: "Null",
-                false: "Off",
-                true: "On"
+                null: "null",
+                false: "false",
+                true: "true"
             });
             return obj;
         }
@@ -7730,13 +7730,13 @@ var $;
         }
         types() {
             return {
-                unit: "unit",
-                bind: "bind",
-                object: "obj",
-                string: "text",
-                number: "numb",
-                list: "list",
-                dict: "dict",
+                unit: "boolean",
+                bind: "bind <=",
+                object: "object $",
+                string: "string \\",
+                number: "number 0",
+                list: "list /",
+                dict: "dict *",
                 "": "drop"
             };
         }
@@ -9792,46 +9792,6 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    function $mol_fiber_defer(calculate) {
-        const host = {};
-        const fiber = new $mol_wire_task(calculate.name, calculate, host, []);
-        fiber.plan();
-        return fiber;
-    }
-    $.$mol_fiber_defer = $mol_fiber_defer;
-    function $mol_fiber_root(calculate) {
-        const wrapper = function (...args) {
-            const fiber = new $mol_wire_task(this + '.' + calculate.name, calculate, this, args);
-            return fiber.async();
-        };
-        wrapper[Symbol.toStringTag] = calculate.name;
-        return wrapper;
-    }
-    $.$mol_fiber_root = $mol_fiber_root;
-    function $mol_fiber_sync(request) {
-        throw new Error('Use $mol_wire_sync instead');
-    }
-    $.$mol_fiber_sync = $mol_fiber_sync;
-    async function $mol_fiber_warp() {
-        $mol_wire_fiber.sync();
-    }
-    $.$mol_fiber_warp = $mol_fiber_warp;
-    class $mol_fiber_solid extends $mol_wrapper {
-        static func(task) {
-            return task;
-        }
-    }
-    $.$mol_fiber_solid = $mol_fiber_solid;
-    class $mol_fiber {
-        static method = $mol_action;
-    }
-    $.$mol_fiber = $mol_fiber;
-})($ || ($ = {}));
-//mol/fiber/fiber.ts
-;
-"use strict";
-var $;
-(function ($) {
     var $$;
     (function ($$) {
         class $mol_search extends $.$mol_search {
@@ -9851,9 +9811,7 @@ var $;
                 if (next === undefined)
                     return;
                 this.query(next);
-                $mol_fiber_defer(() => {
-                    this.Query().focused(true);
-                });
+                this.Query().focused(true);
             }
             nav_components() {
                 return [
@@ -13833,6 +13791,7 @@ var $;
         pages() {
             return [
                 this.Edit(),
+                this.Source_page(),
                 this.Preview(),
                 this.Inspect()
             ];
@@ -14025,29 +13984,10 @@ var $;
             ];
             return obj;
         }
-        source(val) {
-            if (val !== undefined)
-                return val;
-            return "$hyoo_studio_example $mol_view\n";
-        }
-        Source() {
-            const obj = new this.$.$mol_textarea();
-            obj.hint = () => "$hyoo_studio_example $mol_view";
-            obj.sidebar_showed = () => true;
-            obj.value = (val) => this.source(val);
-            return obj;
-        }
-        Source_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => this.$.$mol_locale.text('$hyoo_studio_Source_field_name');
-            obj.control = () => this.Source();
-            return obj;
-        }
         form_sections() {
             return [
                 this.Pack_field(),
-                this.Config(),
-                this.Source_field()
+                this.Config()
             ];
         }
         Edit_form() {
@@ -14070,6 +14010,31 @@ var $;
             ];
             return obj;
         }
+        source(val) {
+            if (val !== undefined)
+                return val;
+            return "$hyoo_studio_example $mol_view\n";
+        }
+        Source() {
+            const obj = new this.$.$mol_textarea();
+            obj.hint = () => "$hyoo_studio_example $mol_view";
+            obj.sidebar_showed = () => true;
+            obj.value = (val) => this.source(val);
+            return obj;
+        }
+        Source_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => this.$.$mol_locale.text('$hyoo_studio_Source_field_name');
+            obj.control = () => this.Source();
+            return obj;
+        }
+        Source_page() {
+            const obj = new this.$.$mol_page();
+            obj.body = () => [
+                this.Source_field()
+            ];
+            return obj;
+        }
         preview_html() {
             return "";
         }
@@ -14088,13 +14053,13 @@ var $;
         }
         Inspect_depth() {
             const obj = new this.$.$mol_plot_bar();
-            obj.title = () => "Min Depth";
+            obj.title = () => this.$.$mol_locale.text('$hyoo_studio_Inspect_depth_title');
             obj.series_y = () => this.inspect_stat();
             return obj;
         }
         Inspect_stat_vert() {
             const obj = new this.$.$mol_plot_ruler_vert();
-            obj.title = () => "count";
+            obj.title = () => this.$.$mol_locale.text('$hyoo_studio_Inspect_stat_vert_title');
             return obj;
         }
         inspect_stat_depth() {
@@ -14102,7 +14067,7 @@ var $;
         }
         Inspect_stat_hor() {
             const obj = new this.$.$mol_plot_mark_hor();
-            obj.title = () => "depth";
+            obj.title = () => this.$.$mol_locale.text('$hyoo_studio_Inspect_stat_hor_title');
             obj.series_x = () => this.inspect_stat_depth();
             return obj;
         }
@@ -14133,6 +14098,7 @@ var $;
         }
         Inspect() {
             const obj = new this.$.$mol_page();
+            obj.title = () => this.$.$mol_locale.text('$hyoo_studio_Inspect_title');
             obj.body = () => [
                 this.Inspect_stat(),
                 this.Inspect_graph()
@@ -14243,6 +14209,12 @@ var $;
     ], $hyoo_studio.prototype, "Config", null);
     __decorate([
         $mol_mem
+    ], $hyoo_studio.prototype, "Edit_form", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_studio.prototype, "Edit", null);
+    __decorate([
+        $mol_mem
     ], $hyoo_studio.prototype, "source", null);
     __decorate([
         $mol_mem
@@ -14252,10 +14224,7 @@ var $;
     ], $hyoo_studio.prototype, "Source_field", null);
     __decorate([
         $mol_mem
-    ], $hyoo_studio.prototype, "Edit_form", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_studio.prototype, "Edit", null);
+    ], $hyoo_studio.prototype, "Source_page", null);
     __decorate([
         $mol_mem
     ], $hyoo_studio.prototype, "Preview", null);
@@ -15242,12 +15211,13 @@ var $;
             inspect_show() {
                 return this.$.$mol_state_arg.value('inspect') !== null;
             }
-            editor_raw() {
+            editor_show() {
                 return this.$.$mol_state_arg.value('raw') !== null;
             }
             pages() {
                 return [
                     this.Edit(),
+                    ...this.editor_show() ? [this.Source_page()] : [],
                     ...this.inspect_show() ? [this.Inspect()] : [],
                     ...this.preview_show() ? [this.Preview()] : [],
                 ];
@@ -15402,14 +15372,6 @@ var $;
                 }
                 return this.props_all().select(prop).kids[0] ?? null;
             }
-            form_sections() {
-                return [
-                    this.Pack_field(),
-                    ...this.editor_raw()
-                        ? [this.Source_field()]
-                        : [this.Config()],
-                ];
-            }
         }
         __decorate([
             $mol_mem
@@ -15474,9 +15436,6 @@ var $;
         __decorate([
             $mol_mem_key
         ], $hyoo_studio.prototype, "prop_tree", null);
-        __decorate([
-            $mol_mem
-        ], $hyoo_studio.prototype, "form_sections", null);
         $$.$hyoo_studio = $hyoo_studio;
     })($$ = $.$$ || ($.$$ = {}));
 })($ || ($ = {}));

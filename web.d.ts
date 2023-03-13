@@ -2899,19 +2899,6 @@ declare namespace $ {
     }
 }
 
-declare namespace $ {
-    function $mol_fiber_defer<Value = void>(calculate: () => Value): $mol_wire_task<{}, [], Value>;
-    function $mol_fiber_root<Calculate extends (this: This, ...args: any[]) => Result, Result = void, This = void>(calculate: Calculate): Calculate;
-    function $mol_fiber_sync<Args extends any[], Value = void, This = void>(request: (this: This, ...args: Args) => PromiseLike<Value>): (...args: Args) => Value;
-    function $mol_fiber_warp(): Promise<void>;
-    class $mol_fiber_solid extends $mol_wrapper {
-        static func<This, Args extends any[], Result>(task: (this: This, ...args: Args) => Result): (this: This, ...args: Args) => Result;
-    }
-    class $mol_fiber {
-        static method: typeof $mol_wire_method;
-    }
-}
-
 declare namespace $.$$ {
     class $mol_search extends $.$mol_search {
         anchor_content(): ($mol_button_minor | $mol_string)[];
@@ -3885,12 +3872,13 @@ declare namespace $ {
         props(): readonly $hyoo_studio_prop[];
         Props(): $$.$mol_list;
         Config(): $$.$mol_list;
-        source(val?: any): string;
-        Source(): $$.$mol_textarea;
-        Source_field(): $$.$mol_form_field;
         form_sections(): readonly any[];
         Edit_form(): $$.$mol_list;
         Edit(): $mol_page;
+        source(val?: any): string;
+        Source(): $$.$mol_textarea;
+        Source_field(): $$.$mol_form_field;
+        Source_page(): $mol_page;
         preview_html(): string;
         preview_window(): any;
         Preview(): $$.$mol_frame;
@@ -3999,7 +3987,7 @@ declare namespace $.$$ {
     class $hyoo_studio extends $.$hyoo_studio {
         preview_show(): boolean;
         inspect_show(): boolean;
-        editor_raw(): boolean;
+        editor_show(): boolean;
         pages(): ($mol_frame | $mol_page)[];
         pack(next?: string): string;
         source(next?: string): string;
@@ -4024,7 +4012,6 @@ declare namespace $.$$ {
         prop_add(): void;
         props_controls(): ($mol_button_minor | $mol_search)[];
         prop_tree(prop: string, next?: $mol_tree2): $mol_tree2;
-        form_sections(): ($mol_list | $mol_form_field)[];
     }
 }
 
