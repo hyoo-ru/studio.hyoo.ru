@@ -53,6 +53,12 @@ namespace $.$$ {
 			padding: $mol_gap.block,
 		},
 
+		Source_page: {
+			flex: {
+				basis: rem(40),
+			},
+		},
+		
 		Preview: {
 			flex: {
 				basis: rem(40),

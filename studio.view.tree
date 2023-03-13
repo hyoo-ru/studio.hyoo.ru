@@ -8,21 +8,21 @@ $hyoo_studio $mol_book2
 				<= Source_link $mol_link_source
 					uri \https://github.com/hyoo-ru/studio.hyoo.ru
 				<= Lights $mol_lights_toggle
-				<= Editor_toggle $mol_link
-					hint @ \Change Editor
-					arg * raw \
+				<= Code_open $mol_check_icon
+					hint @ \Show Editor
+					checked? <=> code_show? false
 					sub /
 						<= Editor_toggle_icon $mol_icon_card_text
-				<= Preview_open $mol_link
-					hint @ \Show Preview
-					arg * preview \
-					sub /
-						<= Preview_open_icon $mol_icon_play_circle
-				<= inspect_open $mol_link
+				<= Inspector_open $mol_check_icon
 					hint @ \Show Inspector
-					arg * inspect \
+					checked? <=> inspector_show? false
 					sub /
 						<= Inspect_open_icon $mol_icon_chart_bar
+				<= Preview_open $mol_check_icon
+					hint @ \Show Preview
+					checked? <=> preview_show? false
+					sub /
+						<= Preview_open_icon $mol_icon_play_circle
 			body /
 				<= Edit_form $mol_list
 					rows <= form_sections /
@@ -50,7 +50,7 @@ $hyoo_studio $mol_book2
 								<= Props_controls $mol_view
 									sub <= props_controls /
 										<= Prop_filter $mol_search
-											hint @ \Filter properties or Add one..
+											hint @ \Search property or Add one..
 											query?next <=> prop_filter?next \
 										<= Prop_add $mol_button_minor
 											hint @ \Add this property

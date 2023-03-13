@@ -6,7 +6,7 @@ $hyoo_studio_value $mol_list
 				<= Str $mol_textarea
 					value?next <=> str?next \
 				<= Locale $mol_check_icon
-					hint @ \@ Localizable
+					hint @ \Multilingual
 					Icon <= Locale_icon $mol_icon_translate
 					checked?next <=> locale?next false
 				<= Numb $mol_number
@@ -18,7 +18,7 @@ $hyoo_studio_value $mol_list
 						false \false
 						true \true
 				<= Prop_bind $mol_select
-					hint @ \Bind Direction
+					hint @ \Dataflow Direction
 					align_hor \right
 					Filter null
 					value?next <=> prop_bind?next \<=
@@ -56,12 +56,12 @@ $hyoo_studio_value $mol_list
 					value?next <=> type?next \unit
 					dictionary <= types *
 						unit \boolean
-						bind \bind <=
-						object \object $
-						string \string \
-						number \number 0
-						list \list /
-						dict \dict *
+						bind \bind
+						object \object
+						string \text
+						number \number
+						list \list
+						dict \dict
 						\
 							\drop
 		<= Inner $mol_view

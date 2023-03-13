@@ -2,24 +2,24 @@ namespace $.$$ {
 	
 	export class $hyoo_studio extends $.$hyoo_studio {
 		
-		preview_show() {
-			return this.$.$mol_state_arg.value( 'preview' ) !== null
+		preview_show( next?: boolean ) {
+			return this.$.$mol_state_arg.value( 'preview', next?.valueOf && ( next ? '' : null ) ) !== null
 		}
 		
-		inspect_show() {
-			return this.$.$mol_state_arg.value( 'inspect' ) !== null
+		inspector_show( next?: boolean ) {
+			return this.$.$mol_state_arg.value( 'inspect', next?.valueOf && ( next ? '' : null ) ) !== null
 		}
 
-		editor_show() {
-			return this.$.$mol_state_arg.value( 'raw' ) !== null
+		code_show( next?: boolean ) {
+			return this.$.$mol_state_arg.value( 'raw', next?.valueOf && ( next ? '' : null ) ) !== null
 		}
 		
 		@ $mol_mem
 		pages() {
 			return [
 				this.Edit(),
-				... this.editor_show() ? [ this.Source_page() ] : [],
-				... this.inspect_show() ? [ this.Inspect() ] : [],
+				... this.code_show() ? [ this.Source_page() ] : [],
+				... this.inspector_show() ? [ this.Inspect() ] : [],
 				... this.preview_show() ? [ this.Preview() ] : [],
 			]
 		}

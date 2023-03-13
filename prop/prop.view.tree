@@ -6,11 +6,11 @@ $hyoo_studio_prop $mol_list
 				<= Title $mol_paragraph
 					title <= title?next \
 				<= Key $mol_check_icon
-					hint @ \Multiple values by key $mol_mem_key
+					hint @ \Multiple values by key
 					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
 					checked?next <=> key?next false
 				<= Next $mol_check_icon
-					hint @ \Changeable $mol_mem
+					hint @ \Changeable
 					Icon <= Next_icon $mol_icon_cached
 					checked?next <=> next?next false
 		<= Value $hyoo_studio_value
