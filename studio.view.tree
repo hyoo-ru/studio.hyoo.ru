@@ -58,15 +58,12 @@ $hyoo_studio $mol_book2
 								<= Props $mol_list
 									rows <= props /$hyoo_studio_prop
 		<= Source_page $mol_page
+			title @ \Raw Code
 			body /
-				<= Source_field $mol_form_field
-					name @ \View.Tree Source
-					control <= Source $mol_textarea
-						hint \$hyoo_studio_example $mol_view
-						sidebar_showed true
-						value?val <=> source?val \
-							\$hyoo_studio_example $mol_view
-							\
+				<= Source $mol_textarea
+					hint \$hyoo_studio_example $mol_view
+					sidebar_showed true
+					value?val <=> source?val \$hyoo_studio_example $mol_view
 		<= Preview $mol_frame
 			title @ \Preview
 			uri <= pack
