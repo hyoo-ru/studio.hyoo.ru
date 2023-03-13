@@ -55,15 +55,15 @@ $hyoo_studio_value $mol_list
 					Filter null
 					value?next <=> type?next \unit
 					dictionary <= types *
-						unit \const
-						bind \bind
-						object \object
-						string \text
-						number \number
-						list \list
-						dict \dict
+						unit @ \Const
+						bind @ \Bind
+						object @ \Object
+						string @ \Text
+						number @ \Number
+						list @ \List
+						dict @ \Dict
 						\
-							\drop
+							@ \Drop
 		<= Inner $mol_view
 			sub <= inner /
 				<= List $mol_list

@@ -7,5 +7,13 @@
 	"$hyoo_studio_value_List_add_hint": "Добавить элемент",
 	"$hyoo_studio_value_Over_add_hint": "Добавить перебитие",
 	"$hyoo_studio_value_Type_hint": "Тип",
+	"$hyoo_studio_value_types_unit": "Константа",
+	"$hyoo_studio_value_types_bind": "Связь",
+	"$hyoo_studio_value_types_object": "Объект",
+	"$hyoo_studio_value_types_string": "Текст",
+	"$hyoo_studio_value_types_number": "Число",
+	"$hyoo_studio_value_types_list": "Список",
+	"$hyoo_studio_value_types_dict": "Словарь",
+	"$hyoo_studio_value_types_": "Удалить",
 	"$hyoo_studio_value_Over_prop_hint": "Перебитое свойство"
 }
