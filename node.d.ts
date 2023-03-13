@@ -3873,15 +3873,14 @@ declare namespace $ {
         pack(val?: any): string;
         Pack(): $$.$mol_string;
         Pack_field(): $$.$mol_form_field;
-        self(val?: any): string;
-        Self(): $$.$mol_string;
-        Self_field(): $$.$mol_form_field;
         base(val?: any): string;
         base_options(): readonly string[];
         Base(): $$.$mol_select;
         Base_field(): $$.$mol_form_field;
+        self(val?: any): string;
+        Self(): $$.$mol_string;
+        Self_field(): $$.$mol_form_field;
         Classes(): $mol_view;
-        All_props(): $$.$mol_paragraph;
         prop_filter(next?: any): string;
         Prop_filter(): $$.$mol_search;
         prop_add(next?: any): any;
@@ -3897,7 +3896,6 @@ declare namespace $ {
         Edit(): $mol_page;
         source(val?: any): string;
         Source(): $$.$mol_textarea;
-        Source_field(): $$.$mol_form_field;
         Source_page(): $mol_page;
         preview_html(): string;
         preview_window(): any;

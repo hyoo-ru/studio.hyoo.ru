@@ -508,15 +508,15 @@ $hyoo_studio_value $mol_list
 					Filter null
 					value?next <=> type?next \unit
 					dictionary <= types *
-						unit \boolean
-						bind \bind
-						object \object
-						string \text
-						number \number
-						list \list
-						dict \dict
+						unit @ \Const
+						bind @ \Bind
+						object @ \Object
+						string @ \Text
+						number @ \Number
+						list @ \List
+						dict @ \Dict
 						\
-							\drop
+							@ \Drop
 		<= Inner $mol_view
 			sub <= inner /
 				<= List $mol_list
@@ -1220,18 +1220,16 @@ $hyoo_studio $mol_book2
 							rows /
 								<= Classes $mol_view
 									sub /
-										<= Self_field $mol_form_field
-											name @ \Custom Component
-											control <= Self $mol_string
-												hint \$hyoo_studio_example
-												value?val <=> self?val \
 										<= Base_field $mol_form_field
 											name @ \Base Class
 											control <= Base $mol_select
 												value?val <=> base?val \
 												options <= base_options /string
-								<= All_props $mol_paragraph
-									title @ \All Componnent Properties
+										<= Self_field $mol_form_field
+											name @ \Component Name
+											control <= Self $mol_string
+												hint \$hyoo_studio_example
+												value?val <=> self?val \
 								<= Props_controls $mol_view
 									sub <= props_controls /
 										<= Prop_filter $mol_search
@@ -1245,15 +1243,12 @@ $hyoo_studio $mol_book2
 								<= Props $mol_list
 									rows <= props /$hyoo_studio_prop
 		<= Source_page $mol_page
+			title @ \Raw Code
 			body /
-				<= Source_field $mol_form_field
-					name @ \View.Tree Source
-					control <= Source $mol_textarea
-						hint \$hyoo_studio_example $mol_view
-						sidebar_showed true
-						value?val <=> source?val \
-							\$hyoo_studio_example $mol_view
-							\
+				<= Source $mol_textarea
+					hint \$hyoo_studio_example $mol_view
+					sidebar_showed true
+					value?val <=> source?val \$hyoo_studio_example $mol_view
 		<= Preview $mol_frame
 			title @ \Preview
 			uri <= pack

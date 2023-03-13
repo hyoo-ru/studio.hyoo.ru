@@ -7730,14 +7730,14 @@ var $;
         }
         types() {
             return {
-                unit: "boolean",
-                bind: "bind",
-                object: "object",
-                string: "text",
-                number: "number",
-                list: "list",
-                dict: "dict",
-                "": "drop"
+                unit: this.$.$mol_locale.text('$hyoo_studio_value_types_unit'),
+                bind: this.$.$mol_locale.text('$hyoo_studio_value_types_bind'),
+                object: this.$.$mol_locale.text('$hyoo_studio_value_types_object'),
+                string: this.$.$mol_locale.text('$hyoo_studio_value_types_string'),
+                number: this.$.$mol_locale.text('$hyoo_studio_value_types_number'),
+                list: this.$.$mol_locale.text('$hyoo_studio_value_types_list'),
+                dict: this.$.$mol_locale.text('$hyoo_studio_value_types_dict'),
+                "": this.$.$mol_locale.text('$hyoo_studio_value_types_')
             };
         }
         Type() {
@@ -13891,23 +13891,6 @@ var $;
             obj.control = () => this.Pack();
             return obj;
         }
-        self(val) {
-            if (val !== undefined)
-                return val;
-            return "";
-        }
-        Self() {
-            const obj = new this.$.$mol_string();
-            obj.hint = () => "$hyoo_studio_example";
-            obj.value = (val) => this.self(val);
-            return obj;
-        }
-        Self_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => this.$.$mol_locale.text('$hyoo_studio_Self_field_name');
-            obj.control = () => this.Self();
-            return obj;
-        }
         base(val) {
             if (val !== undefined)
                 return val;
@@ -13928,17 +13911,29 @@ var $;
             obj.control = () => this.Base();
             return obj;
         }
+        self(val) {
+            if (val !== undefined)
+                return val;
+            return "";
+        }
+        Self() {
+            const obj = new this.$.$mol_string();
+            obj.hint = () => "$hyoo_studio_example";
+            obj.value = (val) => this.self(val);
+            return obj;
+        }
+        Self_field() {
+            const obj = new this.$.$mol_form_field();
+            obj.name = () => this.$.$mol_locale.text('$hyoo_studio_Self_field_name');
+            obj.control = () => this.Self();
+            return obj;
+        }
         Classes() {
             const obj = new this.$.$mol_view();
             obj.sub = () => [
-                this.Self_field(),
-                this.Base_field()
+                this.Base_field(),
+                this.Self_field()
             ];
-            return obj;
-        }
-        All_props() {
-            const obj = new this.$.$mol_paragraph();
-            obj.title = () => this.$.$mol_locale.text('$hyoo_studio_All_props_title');
             return obj;
         }
         prop_filter(next) {
@@ -13993,7 +13988,6 @@ var $;
             const obj = new this.$.$mol_list();
             obj.rows = () => [
                 this.Classes(),
-                this.All_props(),
                 this.Props_controls(),
                 this.Props()
             ];
@@ -14028,7 +14022,7 @@ var $;
         source(val) {
             if (val !== undefined)
                 return val;
-            return "$hyoo_studio_example $mol_view\n";
+            return "$hyoo_studio_example $mol_view";
         }
         Source() {
             const obj = new this.$.$mol_textarea();
@@ -14037,16 +14031,11 @@ var $;
             obj.value = (val) => this.source(val);
             return obj;
         }
-        Source_field() {
-            const obj = new this.$.$mol_form_field();
-            obj.name = () => this.$.$mol_locale.text('$hyoo_studio_Source_field_name');
-            obj.control = () => this.Source();
-            return obj;
-        }
         Source_page() {
             const obj = new this.$.$mol_page();
+            obj.title = () => this.$.$mol_locale.text('$hyoo_studio_Source_page_title');
             obj.body = () => [
-                this.Source_field()
+                this.Source()
             ];
             return obj;
         }
@@ -14188,15 +14177,6 @@ var $;
     ], $hyoo_studio.prototype, "Pack_field", null);
     __decorate([
         $mol_mem
-    ], $hyoo_studio.prototype, "self", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_studio.prototype, "Self", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_studio.prototype, "Self_field", null);
-    __decorate([
-        $mol_mem
     ], $hyoo_studio.prototype, "base", null);
     __decorate([
         $mol_mem
@@ -14206,10 +14186,16 @@ var $;
     ], $hyoo_studio.prototype, "Base_field", null);
     __decorate([
         $mol_mem
-    ], $hyoo_studio.prototype, "Classes", null);
+    ], $hyoo_studio.prototype, "self", null);
     __decorate([
         $mol_mem
-    ], $hyoo_studio.prototype, "All_props", null);
+    ], $hyoo_studio.prototype, "Self", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_studio.prototype, "Self_field", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_studio.prototype, "Classes", null);
     __decorate([
         $mol_mem
     ], $hyoo_studio.prototype, "prop_filter", null);
@@ -14246,9 +14232,6 @@ var $;
     __decorate([
         $mol_mem
     ], $hyoo_studio.prototype, "Source", null);
-    __decorate([
-        $mol_mem
-    ], $hyoo_studio.prototype, "Source_field", null);
     __decorate([
         $mol_mem
     ], $hyoo_studio.prototype, "Source_page", null);
@@ -15505,9 +15488,6 @@ var $;
                 padding: $mol_gap.block,
             },
             Prop: {
-                padding: $mol_gap.block,
-            },
-            All_props: {
                 padding: $mol_gap.block,
             },
             Source_page: {
