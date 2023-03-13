@@ -13993,6 +13993,11 @@ var $;
             ];
             return obj;
         }
+        All_props() {
+            const obj = new this.$.$mol_paragraph();
+            obj.title = () => this.$.$mol_locale.text('$hyoo_studio_All_props_title');
+            return obj;
+        }
         prop_filter(next) {
             if (next !== undefined)
                 return next;
@@ -14045,6 +14050,7 @@ var $;
             const obj = new this.$.$mol_list();
             obj.rows = () => [
                 this.Classes(),
+                this.All_props(),
                 this.Props_controls(),
                 this.Props()
             ];
@@ -14249,6 +14255,9 @@ var $;
     __decorate([
         $mol_mem
     ], $hyoo_studio.prototype, "Classes", null);
+    __decorate([
+        $mol_mem
+    ], $hyoo_studio.prototype, "All_props", null);
     __decorate([
         $mol_mem
     ], $hyoo_studio.prototype, "prop_filter", null);
@@ -15656,7 +15665,6 @@ var $;
                 flex: {
                     grow: 1,
                 },
-                padding: $mol_gap.block,
             },
             Base: {
                 alignSelf: 'stretch',
@@ -15665,6 +15673,9 @@ var $;
                 padding: $mol_gap.block,
             },
             Prop: {
+                padding: $mol_gap.block,
+            },
+            All_props: {
                 padding: $mol_gap.block,
             },
             Preview: {

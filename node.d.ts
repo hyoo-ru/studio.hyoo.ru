@@ -3878,6 +3878,7 @@ declare namespace $ {
         Self(): $$.$mol_string;
         Self_field(): $$.$mol_form_field;
         Classes(): $mol_view;
+        All_props(): $$.$mol_paragraph;
         prop_filter(next?: any): string;
         Prop_filter(): $$.$mol_search;
         prop_add(next?: any): any;
