@@ -459,7 +459,7 @@ $hyoo_studio_value $mol_list
 				<= Str $mol_textarea
 					value?next <=> str?next \
 				<= Locale $mol_check_icon
-					hint @ \@ Localizable
+					hint @ \Multilingual
 					Icon <= Locale_icon $mol_icon_translate
 					checked?next <=> locale?next false
 				<= Numb $mol_number
@@ -471,7 +471,7 @@ $hyoo_studio_value $mol_list
 						false \false
 						true \true
 				<= Prop_bind $mol_select
-					hint @ \Bind Direction
+					hint @ \Dataflow Direction
 					align_hor \right
 					Filter null
 					value?next <=> prop_bind?next \<=
@@ -509,12 +509,12 @@ $hyoo_studio_value $mol_list
 					value?next <=> type?next \unit
 					dictionary <= types *
 						unit \boolean
-						bind \bind <=
-						object \object $
-						string \string \
-						number \number 0
-						list \list /
-						dict \dict *
+						bind \bind
+						object \object
+						string \text
+						number \number
+						list \list
+						dict \dict
 						\
 							\drop
 		<= Inner $mol_view
@@ -547,11 +547,11 @@ $hyoo_studio_prop $mol_list
 				<= Title $mol_paragraph
 					title <= title?next \
 				<= Key $mol_check_icon
-					hint @ \Multiple values by key $mol_mem_key
+					hint @ \Multiple values by key
 					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
 					checked?next <=> key?next false
 				<= Next $mol_check_icon
-					hint @ \Changeable $mol_mem
+					hint @ \Changeable
 					Icon <= Next_icon $mol_icon_cached
 					checked?next <=> next?next false
 		<= Value $hyoo_studio_value
@@ -598,11 +598,11 @@ $mol_icon_card $mol_icon path \M20,20H4C2.9,20 2,19.1 2,18V6C2,4.9 2.9,4 4,4H20C
 
 $mol_icon_card_text $mol_icon path \M20,20H4C2.9,20 2,19.1 2,18V6C2,4.9 2.9,4 4,4H20C21.1,4 22,4.9 22,6V18C22,19.1 21.1,20 20,20M5,13V15H16V13H5M5,9V11H19V9H5Z
 
+$mol_icon_chart_bar $mol_icon path \M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z
+
 $mol_icon_play $mol_icon path \M8,5.14V19.14L19,12.14L8,5.14Z
 
 $mol_icon_play_circle $mol_icon path \M10,16.5V7.5L16,12M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2Z
-
-$mol_icon_chart_bar $mol_icon path \M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z
 
 $mol_labeler $mol_list
 	rows /
@@ -1193,21 +1193,21 @@ $hyoo_studio $mol_book2
 				<= Source_link $mol_link_source
 					uri \https://github.com/hyoo-ru/studio.hyoo.ru
 				<= Lights $mol_lights_toggle
-				<= Editor_toggle $mol_link
-					hint @ \Change Editor
-					arg * raw \
+				<= Code_open $mol_check_icon
+					hint @ \Show Editor
+					checked? <=> code_show? false
 					sub /
 						<= Editor_toggle_icon $mol_icon_card_text
-				<= Preview_open $mol_link
-					hint @ \Show Preview
-					arg * preview \
-					sub /
-						<= Preview_open_icon $mol_icon_play_circle
-				<= inspect_open $mol_link
+				<= Inspector_open $mol_check_icon
 					hint @ \Show Inspector
-					arg * inspect \
+					checked? <=> inspector_show? false
 					sub /
 						<= Inspect_open_icon $mol_icon_chart_bar
+				<= Preview_open $mol_check_icon
+					hint @ \Show Preview
+					checked? <=> preview_show? false
+					sub /
+						<= Preview_open_icon $mol_icon_play_circle
 			body /
 				<= Edit_form $mol_list
 					rows <= form_sections /
@@ -1235,7 +1235,7 @@ $hyoo_studio $mol_book2
 								<= Props_controls $mol_view
 									sub <= props_controls /
 										<= Prop_filter $mol_search
-											hint @ \Filter properties or Add one..
+											hint @ \Search property or Add one..
 											query?next <=> prop_filter?next \
 										<= Prop_add $mol_button_minor
 											hint @ \Add this property

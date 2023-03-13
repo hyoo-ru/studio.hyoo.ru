@@ -2807,6 +2807,12 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_chart_bar extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_icon_play extends $mol_icon {
         path(): string;
     }
@@ -2814,12 +2820,6 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_icon_play_circle extends $mol_icon {
-        path(): string;
-    }
-}
-
-declare namespace $ {
-    class $mol_icon_chart_bar extends $mol_icon {
         path(): string;
     }
 }
@@ -3845,12 +3845,15 @@ declare namespace $ {
         Theme(): $$.$mol_theme_auto;
         Source_link(): $mol_link_source;
         Lights(): $$.$mol_lights_toggle;
+        code_show(next?: any): boolean;
         Editor_toggle_icon(): $mol_icon_card_text;
-        Editor_toggle(): $$.$mol_link;
-        Preview_open_icon(): $mol_icon_play_circle;
-        Preview_open(): $$.$mol_link;
+        Code_open(): $mol_check_icon;
+        inspector_show(next?: any): boolean;
         Inspect_open_icon(): $mol_icon_chart_bar;
-        inspect_open(): $$.$mol_link;
+        Inspector_open(): $mol_check_icon;
+        preview_show(next?: any): boolean;
+        Preview_open_icon(): $mol_icon_play_circle;
+        Preview_open(): $mol_check_icon;
         pack(val?: any): string;
         Pack(): $$.$mol_string;
         Pack_field(): $$.$mol_form_field;
@@ -3986,9 +3989,9 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $hyoo_studio extends $.$hyoo_studio {
-        preview_show(): boolean;
-        inspect_show(): boolean;
-        editor_show(): boolean;
+        preview_show(next?: boolean): boolean;
+        inspector_show(next?: boolean): boolean;
+        code_show(next?: boolean): boolean;
         pages(): ($mol_frame | $mol_page)[];
         pack(next?: string): string;
         source(next?: string): string;
