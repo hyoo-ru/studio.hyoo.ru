@@ -35,18 +35,16 @@ $hyoo_studio $mol_book2
 							rows /
 								<= Classes $mol_view
 									sub /
-										<= Self_field $mol_form_field
-											name @ \Custom Component
-											control <= Self $mol_string
-												hint \$hyoo_studio_example
-												value?val <=> self?val \
 										<= Base_field $mol_form_field
 											name @ \Base Class
 											control <= Base $mol_select
 												value?val <=> base?val \
 												options <= base_options /string
-								<= All_props $mol_paragraph
-									title @ \All Componnent Properties
+										<= Self_field $mol_form_field
+											name @ \Component Name
+											control <= Self $mol_string
+												hint \$hyoo_studio_example
+												value?val <=> self?val \
 								<= Props_controls $mol_view
 									sub <= props_controls /
 										<= Prop_filter $mol_search

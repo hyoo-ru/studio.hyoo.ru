@@ -55,7 +55,7 @@ $hyoo_studio_value $mol_list
 					Filter null
 					value?next <=> type?next \unit
 					dictionary <= types *
-						unit \boolean
+						unit \const
 						bind \bind
 						object \object
 						string \text
