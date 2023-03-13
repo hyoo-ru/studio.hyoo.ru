@@ -9,8 +9,8 @@ namespace $.$$ {
 		inspect_show() {
 			return this.$.$mol_state_arg.value( 'inspect' ) !== null
 		}
-		
-		editor_raw() {
+
+		editor_show() {
 			return this.$.$mol_state_arg.value( 'raw' ) !== null
 		}
 		
@@ -18,6 +18,7 @@ namespace $.$$ {
 		pages() {
 			return [
 				this.Edit(),
+				... this.editor_show() ? [ this.Source_page() ] : [],
 				... this.inspect_show() ? [ this.Inspect() ] : [],
 				... this.preview_show() ? [ this.Preview() ] : [],
 			]
@@ -266,16 +267,6 @@ namespace $.$$ {
 			}
 			
 			return this.props_all().select( prop ).kids[0] ?? null
-		}
-		
-		@ $mol_mem
-		form_sections() {
-			return [
-				this.Pack_field(),
-				... this.editor_raw()
-					? [ this.Source_field() ]
-					: [ this.Config() ],
-			]
 		}
 		
 	}
