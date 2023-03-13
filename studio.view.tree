@@ -45,6 +45,8 @@ $hyoo_studio $mol_book2
 											control <= Self $mol_string
 												hint \$hyoo_studio_example
 												value?val <=> self?val \
+								<= All_props $mol_paragraph
+									title @ \All Componnent Properties
 								<= Props_controls $mol_view
 									sub <= props_controls /
 										<= Prop_filter $mol_search
