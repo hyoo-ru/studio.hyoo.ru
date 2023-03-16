@@ -117,20 +117,8 @@ namespace $.$$ {
 		@ $mol_mem
 		config_sub() {
 			return [
-				... this.type() === 'list' || this.type() === 'dict' ? [ this.List_item_add() ] : [],
-				... this.type() === 'object' ? [ this.Over_add() ] : [],
 				... this.type() === 'text' ? [ this.Localized() ] : [],
 				this.Type(),
-			]
-		}
-
-		@ $mol_mem
-		rows() {
-			const have_value_types = ['number', 'text', 'list', 'dict'] as string[]
-
-			return [
-				this.Head(),
-				... have_value_types.findIndex( type => type === this.type() ) !== -1 ? [ this.Value() ] : []
 			]
 		}
 			

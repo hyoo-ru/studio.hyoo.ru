@@ -9,7 +9,7 @@ namespace $.$$ {
 			flex: {
 				grow: 0,
 				shrink: 0,
-				basis: rem(40),
+				basis: rem(30),
 			},
 			
 			Body: {

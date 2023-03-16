@@ -16,25 +16,17 @@ $hyoo_studio_prop $mol_list
 					Icon <= Next_icon $mol_icon_cached
 					checked?next <=> next?next false
 			<= Config $mol_view sub <= config_sub /
-				<= List_item_add $mol_button_minor
-					click? <=> list_item_add? null
-					sub / <= List_item_add_icon $mol_icon_plus
 				<= Localized $mol_check_icon
 					hint @ \Localizable
 					Icon <= Locale_icon $mol_icon_translate
 					checked?next <=> localized?next false
-				<= Over_add $mol_select
-					hint @ \Add Override
-					align_hor \left
-					Trigger_icon <= Over_add_icon $mol_icon_wrench_outline
-					value?next <=> over_add?next \
-					options <= over_prop_options /string
 				<= Type $hyoo_studio_prop_type
-					value? <=> value?
-					tree? <=> tree?
+					tree? <=> value?
 					type? => type?
 		<= Value $hyoo_studio_value
-			tree?next <=> value?next $mol_tree2_empty
+			Type null
+			tree? <=> value? $mol_tree2_empty
+			type? <= type?
 			props_of!klass <= props_of!klass $mol_tree2_empty
 			props_bindable <= props_bindable $mol_tree2_empty
 			class_list <= class_list /string

@@ -1,8 +1,12 @@
 namespace $.$$ {
 
-	const { px } = $mol_style_unit
+	const { px, rem } = $mol_style_unit
 	
 	$mol_style_define( $hyoo_studio_prop, {
+
+		Value: {
+			padding: rem( 0.25 ),
+		},
 
 		border: {
 			radius: $mol_gap.round,
@@ -17,7 +21,7 @@ namespace $.$$ {
 				color: $mol_theme.card,
 			},
 			border: {
-				radiues: $mol_gap.round,
+				radius: $mol_gap.round,
 			},
 			justifyContent: 'space-between',
 		},

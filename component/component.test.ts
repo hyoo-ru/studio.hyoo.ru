@@ -66,13 +66,7 @@ namespace $.$$ {
 		},
 
 		'find property by name part'() {
-			const src = `
-				$hyoo_studio_example $mol_view
-					a null
-					b? null
-					c* null
-					d*? null
-			`
+			const src = `$hyoo_studio_example $mol_view\n\ta null\n\tb? null\n\tc* null\n\td*? null\n`
 
 			const obj = $hyoo_studio_component.make({})
 			obj.source( src )

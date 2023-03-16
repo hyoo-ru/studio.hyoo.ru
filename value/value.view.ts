@@ -5,35 +5,40 @@ namespace $.$$ {
 		@ $mol_mem
 		self() {
 			switch( this.type() ) {
-				case 'text': return [ this.Str() ]
-				case 'number': return [ this.Numb() ]
-				case 'unit': return [ this.Unit(), this.Type() ]
-				case 'bind': return [ this.Prop_bind(), this.Prop_name(), this.Type() ]
-				case 'list': return [ this.Item_type() ]
-				case 'dict': return [ ]
-				case 'object': return [ this.Obj(), this.Over_add() ]
+				case 'null' :  return [ this.Type() ]
+				case 'boolean_true' :  return [ this.Type() ]
+				case 'boolean_false' :  return [ this.Type() ]
+				case 'number_nan':  return [ this.Type() ]
+				case 'number_infinity_negative':  return [ this.Type() ]
+				case 'number_infinity_positive':  return [ this.Type() ]
+				case 'text': return [ this.Str(), this.Type() ]
+				case 'number': return [ this.Numb(), this.Type() ]
+				case 'bind': return [ this.Prop_name(), this.Type() ]
+				case 'hack': return [ this.Prop_name(), this.Type() ]
+				case 'alias': return [ this.Prop_name(), this.Type() ]
+				case 'list': return [ this.Item_type(), this.Type(), this.List_add() ]
+				case 'dict': return [ this.Type() ]
+				case 'object': return [ this.Obj(), this.Type(), this.Over_add() ]
 				default: return []
 			}
 		}
 
 		@ $mol_mem
-		inner() {
+		inner_rows() {
 			switch( this.type() ) {
-				case 'list': return [ this.List() ]
-				case 'object': return [ this.Overs() ]
+				case 'list': return this.list()
+				case 'object': return this.overs()
 				default: return []
 			}
 		}
 
 		@ $mol_mem
 		str( next?: string ) {
-			
-			return this.tree(
-				next === undefined
-					? undefined
-					: this.tree().data( next )
-			).text()
-			
+			if (next !== undefined){
+				this.tree(this.tree().data( next ))
+				return next
+			}
+			return this.tree().text()
 		}
 		
 		@ $mol_mem
@@ -127,7 +132,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		overs() {
-			return this.tree().kids.map( (_,i)=> this.Over( i ) )
+			return this.tree().kids.map( (_,i)=> this.Over_prop( i ) )
 		}
 		
 		@ $mol_mem
@@ -170,7 +175,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
-		over_prop( index: number, next?: string ) {
+		over_prop_name( index: number, next?: string ) {
 			let val = this.tree()
 			if( next !== undefined ) {
 				val = this.tree(

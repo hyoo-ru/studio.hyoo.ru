@@ -35,41 +35,31 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		value( next?: $mol_tree2 ) {
-			return this.tree(next)
-			// let val = this.tree()
-			// if( next !== undefined ) {
-			// 	val = this.tree( next && val.clone([ next ]) )
-			// 	return next
-			// }
-			
-			// return val?.kids[0]
-		}
-
-		@ $mol_mem
 		type( next? : string ): string {
 			
 			if( next !== undefined ) {
 				
 				switch( next ) {
 					case '' : this.tree(null); break
-					case 'null' : this.value( this.value().struct('null') ); break
-					case 'boolean_true' : this.value( this.value().struct('true') ); break
-					case 'boolean_false' : this.value( this.value().struct('false') ); break
-					case 'number': this.value( this.value().struct('0') ); break
-					case 'number_nan': this.value( this.value().struct('+NaN') ); break
-					case 'number_infinity_negative': this.value( this.value().struct('-Infinity') ); break
-					case 'number_infinity_positive': this.value( this.value().struct('+Infinity') ); break
-					case 'text': this.value( this.value().data('') ); break
-					case 'list': this.value( this.value().struct( '/' ) ); break
-					case 'dict': this.value( this.value().struct( '*' ) ); break
-					case 'object': this.value( this.value().struct( '$mol_view' ) ); break
-					// case 'bind' : val = val.struct( '<=' , [ val.data( '' ) ] ); break
+					case 'null' : this.tree( this.tree().struct('null') ); break
+					case 'boolean_true' : this.tree( this.tree().struct('true') ); break
+					case 'boolean_false' : this.tree( this.tree().struct('false') ); break
+					case 'number': this.tree( this.tree().struct('0') ); break
+					case 'number_nan': this.tree( this.tree().struct('+NaN') ); break
+					case 'number_infinity_negative': this.tree( this.tree().struct('-Infinity') ); break
+					case 'number_infinity_positive': this.tree( this.tree().struct('+Infinity') ); break
+					case 'text': this.tree( this.tree().data('') ); break
+					case 'list': this.tree( this.tree().struct( '/' ) ); break
+					case 'dict': this.tree( this.tree().struct( '*' ) ); break
+					case 'object': this.tree( this.tree().struct( '$mol_view' ) ); break
+					case 'bind': this.tree( this.tree().struct( '<=>', [ this.tree().data( '' ) ] ) ); break
+					case 'hack': this.tree( this.tree().struct( '<=', [ this.tree().data( '' ) ] ) ); break
+					case 'alias': this.tree( this.tree().struct( '=>', [ this.tree().data( '' ) ] ) ); break
 					default : $mol_fail( new TypeError( `Unsupported type: ${ next }` ) )
 				}
 			}
 
-			const val = this.value()
+			const val = this.tree()
 
 			if( !val ) return ''
 
