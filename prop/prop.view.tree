@@ -8,11 +8,11 @@ $hyoo_studio_prop $mol_list
 						<= Icon $mol_icon_atom 
 						<= title?next \
 				<= Key $mol_check_icon
-					hint @ \Multiple
+					hint @ \Multiple values by key
 					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
 					checked?next <=> key?next false
 				<= Next $mol_check_icon
-					hint @ \Changable
+					hint @ \Changeable
 					Icon <= Next_icon $mol_icon_cached
 					checked?next <=> next?next false
 			<= Config $mol_view sub <= config_sub /

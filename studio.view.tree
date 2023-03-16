@@ -9,14 +9,19 @@ $hyoo_studio $mol_book2
 				<= Source_link $mol_link_source
 					uri \https://github.com/hyoo-ru/studio.hyoo.ru
 				<= Lights $mol_lights_toggle
-				<= Editor_toggle $mol_link
-					hint @ \Change Editor
-					arg * raw \
+				<= Code_open $mol_check_icon
+					hint @ \Show Editor
+					checked? <=> code_show? false
 					sub /
 						<= Editor_toggle_icon $mol_icon_card_text
-				<= Preview_open $mol_link
+				<= Inspector_open $mol_check_icon
+					hint @ \Show Inspector
+					checked? <=> inspector_show? false
+					sub /
+						<= Inspect_open_icon $mol_icon_chart_bar
+				<= Preview_open $mol_check_icon
 					hint @ \Show Preview
-					arg * preview \
+					checked? <=> preview_show? false
 					sub /
 						<= Preview_open_icon $mol_icon_play_circle
 			body /
@@ -32,7 +37,7 @@ $hyoo_studio $mol_book2
 								<= Classes $mol_view
 									sub /
 										<= Self_field $mol_form_field
-											name @ \Custom Component
+											name @ \Component Name
 											control <= Self $mol_string
 												hint \$hyoo_studio_example
 												value?val <=> self?val \
@@ -41,7 +46,7 @@ $hyoo_studio $mol_book2
 											control <= Base $mol_select
 												value?val <=> base?val \
 												options <= base_options /string
-								<= Props_inherited_field $mol_form_field
+								- <= Props_inherited_field $mol_form_field
 									name @ \Display inherited properties
 									control <= Props_inherited_control $mol_check_list
 										option_checked*? <=> props_inherited_checked*? false
@@ -52,7 +57,7 @@ $hyoo_studio $mol_book2
 								<= Props_controls $mol_view
 									sub <= props_controls /
 										<= Prop_filter $mol_search
-											hint @ \Filter properties or Add one..
+											hint @ \Search property or Add one..
 											query?next <=> prop_filter?next \
 										<= Prop_add $mol_button_minor
 											hint @ \Add this property
@@ -61,18 +66,36 @@ $hyoo_studio $mol_book2
 												<= Prop_add_icon $mol_icon_plus
 								<= Props $mol_list
 									rows <= props /$hyoo_studio_prop
-						<= Source_field $mol_form_field
-							name @ \View.Tree Source
-							control <= Source $mol_textarea
-								hint \$hyoo_studio_example $mol_view
-								sidebar_showed true
-								value?val <=> source?val \
-									\$hyoo_studio_example $mol_view
-									\
+		<= Source_page $mol_page
+			title @ \Raw Code
+			body /
+				<= Source $mol_textarea
+					hint \$hyoo_studio_example $mol_view
+					sidebar_showed true
+					value?val <=> source?val \$hyoo_studio_example $mol_view
 		<= Preview $mol_frame
 			title @ \Preview
 			uri <= pack
 			html <= preview_html \
+			window => preview_window
+		<= Inspect $mol_page
+			title @ \Inspect
+			body /
+				<= Inspect_stat $mol_chart
+					graphs /
+						<= Inspect_depth $mol_plot_bar
+							title @ \Min Depth
+							series_y <= inspect_stat /number
+						<= Inspect_stat_vert $mol_plot_ruler_vert
+							title @ \count
+						<= Inspect_stat_hor $mol_plot_mark_hor
+							title @ \depth
+							series_x <= inspect_stat_depth /number
+						<= Marker_cross $mol_plot_mark_cross
+							graphs /
+								<= Inspect_depth
+				<= Inspect_graph $mol_dump_value
+					value <= inspect_graph null
 	Prop!name $hyoo_studio_prop
 		tree?next <=> prop_tree!name?next $mol_tree2_empty
 		props_of!klass <= props_of!klass $mol_tree2_empty

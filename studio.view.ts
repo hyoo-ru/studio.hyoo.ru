@@ -2,18 +2,24 @@ namespace $.$$ {
 	
 	export class $hyoo_studio extends $.$hyoo_studio {
 		
-		preview_show() {
-			return this.$.$mol_state_arg.value( 'preview' ) !== null
+		preview_show( next?: boolean ) {
+			return this.$.$mol_state_arg.value( 'preview', next?.valueOf && ( next ? '' : null ) ) !== null
 		}
 		
-		editor_raw() {
-			return this.$.$mol_state_arg.value( 'raw' ) !== null
+		inspector_show( next?: boolean ) {
+			return this.$.$mol_state_arg.value( 'inspect', next?.valueOf && ( next ? '' : null ) ) !== null
+		}
+
+		code_show( next?: boolean ) {
+			return this.$.$mol_state_arg.value( 'raw', next?.valueOf && ( next ? '' : null ) ) !== null
 		}
 		
 		@ $mol_mem
 		pages() {
 			return [
 				this.Edit(),
+				... this.code_show() ? [ this.Source_page() ] : [],
+				... this.inspector_show() ? [ this.Inspect() ] : [],
 				... this.preview_show() ? [ this.Preview() ] : [],
 			]
 		}
@@ -108,6 +114,38 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
+		preview_window() {
+			this.$.$mol_wait_rest()
+			this.preview_html()
+			this.preview_show()
+			return super.preview_window()
+		}
+		
+		@ $mol_mem
+		inspect_graph() {
+			
+			const win = this.preview_window()
+			
+			try {
+				win['$mol_view'].autobind()
+				return $mol_wire_graph( win['$mol_view']['autobind()'] )
+			} catch( error: any ) {
+				if( 'then' in error ) return $mol_fail_hidden( new Promise( ( done, fail )=> error.then( done, fail ) ) )
+				$mol_fail_hidden( new Error( error.message ) )
+			}
+			
+		}
+		
+		@ $mol_mem
+		inspect_stat() {
+			return this.inspect_graph().group_depth_min.map( nodes => nodes.length )
+		}
+		
+		inspect_stat_depth() {
+			return Object.keys( this.inspect_stat() ).map( Number )
+		}
+		
+		@ $mol_mem
 		self_code() {
 			
 			const tree = this.tree()
@@ -121,6 +159,7 @@ namespace $.$$ {
 			)
 			
 			return `
+				$.$mol_wire_auto = parent.$mol_wire_auto
 				$.${ this.self() } = ${ code }
 			`
 		}
@@ -230,16 +269,6 @@ namespace $.$$ {
 			}
 			
 			return this.props_all().select( prop ).kids[0] ?? null
-		}
-		
-		@ $mol_mem
-		form_sections() {
-			return [
-				this.Pack_field(),
-				... this.editor_raw()
-					? [ this.Source_field() ]
-					: [ this.Config() ],
-			]
 		}
 		
 	}
