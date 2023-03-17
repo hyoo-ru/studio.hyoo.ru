@@ -4,9 +4,7 @@ $hyoo_studio_prop $mol_list
 		<= Head $mol_view sub /
 			<= Self $mol_view sub /
 				<= Title $mol_paragraph
-					sub /
-						<= Icon $mol_icon_atom 
-						<= title?next \
+					title? <= title? \
 				<= Key $mol_check_icon
 					hint @ \Multiple values by key
 					Icon <= Key_icon $mol_icon_bookmark_multiple_outline

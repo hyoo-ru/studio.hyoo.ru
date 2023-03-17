@@ -2,7 +2,6 @@ $hyoo_studio_prop_type $mol_pick
 	tree?val $mol_tree2_empty
 	trigger_content /
 		<= Value $mol_paragraph title <= type_display \
-		<= Trigger_icon $mol_icon_dots_vertical
 	bubble_content /
 		<= Options_content $mol_list rows /
 			<= Menu_item_unit $mol_switch
@@ -28,9 +27,9 @@ $hyoo_studio_prop_type $mol_pick
 			<= Menu_item_bind $mol_switch
 				value? <=> bind? \
 				options <= bind_options *
-					bind \bind
-					hack \hack
-					alias \alias
+					bind \<=> bind
+					hack \<= bind
+					alias \=> bind
 			<= Menu_item_control $mol_view sub /
 				<= Menu_item_duplicate $mol_button_minor
 					event_click?val <=> menu_item_copy_click?val null

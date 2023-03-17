@@ -40,11 +40,24 @@ namespace $.$$ {
 		},
 
 		Inner: {
-			padding: {
+			margin: {
 				left: $mol_gap.block,
+				bottom: $mol_gap.block,
+			},
+			":empty": {
+				margin: 0,
 			},
 			border: {
 				radius: $mol_gap.round,
+			},
+			box: {
+				shadow: [ {
+					x: 0,
+					y: px( 1 ),
+					blur: 0,
+					spread: 0,
+					color: $mol_theme.line,
+				} ],
 			},
 		},
 
