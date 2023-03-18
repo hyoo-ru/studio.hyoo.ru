@@ -5684,13 +5684,13 @@ var $;
                             this.tree(this.tree().struct('$mol_view'));
                             break;
                         case 'bind':
-                            this.tree(this.tree().struct('<=>', [this.tree().kids[0]]));
+                            this.tree(this.tree().struct('<=>', [this.tree().kids[0] ?? this.tree().data('')]));
                             break;
                         case 'get':
-                            this.tree(this.tree().struct('<=', [this.tree().kids[0]]));
+                            this.tree(this.tree().struct('<=', [this.tree().kids[0] ?? this.tree().data('')]));
                             break;
                         case 'put':
-                            this.tree(this.tree().struct('=>', [this.tree().kids[0]]));
+                            this.tree(this.tree().struct('=>', [this.tree().kids[0] ?? this.tree().data('')]));
                             break;
                         default: $mol_fail(new TypeError(`Unsupported type: ${next}`));
                     }
