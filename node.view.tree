@@ -33,40 +33,29 @@ $mol_paragraph $mol_view
 	row_width 0
 	sub / <= title
 
-$mol_svg $mol_view
-	dom_name \svg
-	dom_name_space \http://www.w3.org/2000/svg
-	font_size 16
-	font_family \
-	style_size *
-
-$mol_svg_root $mol_svg
-	dom_name \svg
-	attr *
-		^
-		viewBox <= view_box \0 0 100 100
-		preserveAspectRatio <= aspect \xMidYMid
-
-$mol_svg_path $mol_svg
-	dom_name \path
-	attr *
-		^
-		d <= geometry \
-
-
-$mol_icon $mol_svg_root
-	view_box \0 0 24 24
-	minimal_width 16
-	minimal_height 16
+$mol_pop $mol_view
+	showed?val false
+	align_vert \
+	align_hor \
+	prefer \vert
 	sub /
-		<= Path $mol_svg_path
-			geometry <= path \
+		<= Anchor null
+	sub_visible /
+		<= Anchor
+		<= Bubble $mol_pop_bubble
+			align <= align \bottom_center
+			content <= bubble_content /$mol_view_content
+			height_max <= height_max 9999
 
-$mol_icon_bookmark $mol_icon path \M17,3H7C5.9,3 5,3.9 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z
-
-$mol_icon_bookmark_multiple $mol_icon path \M15,5C16.1,5 17,5.9 17,7V23L10,20L3,23V7C3,5.89 3.9,5 5,5H15M9,1H19C20.1,1 21,1.9 21,3V19L19,18.13V3H7C7,1.9 7.9,1 9,1Z
-
-$mol_icon_bookmark_multiple_outline $mol_icon path \M9,1H19C20.1,1 21,1.9 21,3V19L19,18.13V3H7C7,1.9 7.9,1 9,1M15,20V7H5V20L10,17.82L15,20M15,5C16.11,5 17,5.9 17,7V23L10,20L3,23V7C3,5.9 3.9,5 5,5H15Z
+$mol_pop_bubble $mol_view
+	sub <= content /$mol_view_content
+	style *
+		^
+		maxHeight <= height_max 9999
+	attr *
+		^
+		mol_pop_align <= align \
+		tabindex 0
 
 $mol_speck $mol_view
 	attr *
@@ -117,36 +106,6 @@ $mol_check $mol_button_minor
 				sub /
 					<= title \
 
-$mol_check_icon $mol_check
-
-$mol_icon_cached $mol_icon path \M19,8L15,12H18C18,15.31 15.31,18 12,18C11,18 10.03,17.75 9.2,17.3L7.74,18.76C8.97,19.54 10.43,20 12,20C16.42,20 20,16.42 20,12H23M6,12C6,8.69 8.69,6 12,6C13,6 13.97,6.25 14.8,6.7L16.26,5.24C15.03,4.46 13.57,4 12,4C7.58,4 4,7.58 4,12H1L5,16L9,12
-
-$mol_icon_translate $mol_icon path \M12.87,15.07L10.33,12.56L10.36,12.53C12.1,10.59 13.34,8.36 14.07,6H17V4H10V2H8V4H1V6H12.17C11.5,7.92 10.44,9.75 9,11.35C8.07,10.32 7.3,9.19 6.69,8H4.69C5.42,9.63 6.42,11.17 7.67,12.56L2.58,17.58L4,19L9,14L12.11,17.11L12.87,15.07M18.5,10H16.5L12,22H14L15.12,19H19.87L21,22H23L18.5,10M15.88,17L17.5,12.67L19.12,17H15.88Z
-
-$mol_pop $mol_view
-	showed?val false
-	align_vert \
-	align_hor \
-	prefer \vert
-	sub /
-		<= Anchor null
-	sub_visible /
-		<= Anchor
-		<= Bubble $mol_pop_bubble
-			align <= align \bottom_center
-			content <= bubble_content /$mol_view_content
-			height_max <= height_max 9999
-
-$mol_pop_bubble $mol_view
-	sub <= content /$mol_view_content
-	style *
-		^
-		maxHeight <= height_max 9999
-	attr *
-		^
-		mol_pop_align <= align \
-		tabindex 0
-
 $mol_pick $mol_pop
 	event *
 		^
@@ -174,6 +133,35 @@ $mol_check_list $mol_view
 
 $mol_switch $mol_check_list
 	value?val \
+
+$mol_svg $mol_view
+	dom_name \svg
+	dom_name_space \http://www.w3.org/2000/svg
+	font_size 16
+	font_family \
+	style_size *
+
+$mol_svg_root $mol_svg
+	dom_name \svg
+	attr *
+		^
+		viewBox <= view_box \0 0 100 100
+		preserveAspectRatio <= aspect \xMidYMid
+
+$mol_svg_path $mol_svg
+	dom_name \path
+	attr *
+		^
+		d <= geometry \
+
+
+$mol_icon $mol_svg_root
+	view_box \0 0 24 24
+	minimal_width 16
+	minimal_height 16
+	sub /
+		<= Path $mol_svg_path
+			geometry <= path \
 
 $mol_icon_content_copy $mol_icon path \M19,21H8V7H19M19,5H8C6.9,5 6,5.9 6,7V21C6,22.1 6.9,23 8,23H19C20.1,23 21,22.1 21,21V7C21,5.9 20.1,5 19,5M16,1H4C2.9,1 2,1.9 2,3V17H4V3H16V1Z
 
@@ -210,9 +198,9 @@ $hyoo_studio_prop_type $mol_pick
 			<= Menu_item_bind $mol_switch
 				value? <=> bind? \
 				options <= bind_options *
-					bind \<=> bind
-					hack \<= bind
-					alias \=> bind
+					bind \<=>
+					get \<=
+					put \=>
 			<= Menu_item_control $mol_view sub /
 				<= Menu_item_duplicate $mol_button_minor
 					event_click?val <=> menu_item_copy_click?val null
@@ -225,6 +213,16 @@ $hyoo_studio_prop_type $mol_pick
 					sub /
 						<= menu_item_delete_icon $mol_icon_trash_can_outline
 						<= menu_item_delete_label \Drop
+
+$mol_icon_bookmark $mol_icon path \M17,3H7C5.9,3 5,3.9 5,5V21L12,18L19,21V5C19,3.89 18.1,3 17,3Z
+
+$mol_icon_bookmark_multiple $mol_icon path \M15,5C16.1,5 17,5.9 17,7V23L10,20L3,23V7C3,5.89 3.9,5 5,5H15M9,1H19C20.1,1 21,1.9 21,3V19L19,18.13V3H7C7,1.9 7.9,1 9,1Z
+
+$mol_icon_bookmark_multiple_outline $mol_icon path \M9,1H19C20.1,1 21,1.9 21,3V19L19,18.13V3H7C7,1.9 7.9,1 9,1M15,20V7H5V20L10,17.82L15,20M15,5C16.11,5 17,5.9 17,7V23L10,20L3,23V7C3,5.9 3.9,5 5,5H15Z
+
+$mol_check_icon $mol_check
+
+$mol_icon_cached $mol_icon path \M19,8L15,12H18C18,15.31 15.31,18 12,18C11,18 10.03,17.75 9.2,17.3L7.74,18.76C8.97,19.54 10.43,20 12,20C16.42,20 20,16.42 20,12H23M6,12C6,8.69 8.69,6 12,6C13,6 13.97,6.25 14.8,6.7L16.26,5.24C15.03,4.46 13.57,4 12,4C7.58,4 4,7.58 4,12H1L5,16L9,12
 
 $mol_stack $mol_view
 
@@ -418,6 +416,8 @@ $mol_textarea_edit $mol_string
 		^
 		scrollTop 0
 
+$mol_icon_translate $mol_icon path \M12.87,15.07L10.33,12.56L10.36,12.53C12.1,10.59 13.34,8.36 14.07,6H17V4H10V2H8V4H1V6H12.17C11.5,7.92 10.44,9.75 9,11.35C8.07,10.32 7.3,9.19 6.69,8H4.69C5.42,9.63 6.42,11.17 7.67,12.56L2.58,17.58L4,19L9,14L12.11,17.11L12.87,15.07M18.5,10H16.5L12,22H14L15.12,19H19.87L21,22H23L18.5,10M15.88,17L17.5,12.67L19.12,17H15.88Z
+
 $mol_icon_minus $mol_icon path \M19,13H5V11H19V13Z
 
 $mol_icon_plus $mol_icon path \M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z
@@ -508,13 +508,15 @@ $mol_icon_wrench $mol_icon path \M22.7,19L13.6,9.9C14.5,7.6 14,4.9 12.1,3C10.1,1
 
 $mol_icon_wrench_outline $mol_icon path \M22.61,19L13.53,9.91C14.46,7.57 14,4.81 12.09,2.91C9.79,0.61 6.21,0.4 3.66,2.26L7.5,6.11L6.08,7.5L2.25,3.69C0.39,6.23 0.6,9.82 2.9,12.11C4.76,13.97 7.47,14.46 9.79,13.59L18.9,22.7C19.29,23.09 19.92,23.09 20.31,22.7L22.61,20.4C23,20 23,19.39 22.61,19M19.61,20.59L10.15,11.13C9.54,11.58 8.86,11.85 8.15,11.95C6.79,12.15 5.36,11.74 4.32,10.7C3.37,9.76 2.93,8.5 3,7.26L6.09,10.35L10.33,6.11L7.24,3C8.5,2.95 9.73,3.39 10.68,4.33C11.76,5.41 12.17,6.9 11.92,8.29C11.8,9 11.5,9.66 11.04,10.25L20.5,19.7L19.61,20.59Z
 
-$mol_row $mol_view
-
 $hyoo_studio_value $mol_list
 	tree? $mol_tree2_empty
+	parent_type \
 	rows /
 		<= Self $mol_view
 			sub <= self /
+				<= Type $hyoo_studio_prop_type
+					tree? <=> tree?
+					type => type
 				<= Str $mol_textarea
 					value?next <=> str?next \
 				<= Locale $mol_check_icon
@@ -523,9 +525,14 @@ $hyoo_studio_value $mol_list
 					checked?next <=> locale?next false
 				<= Numb $mol_number
 					value?next <=> numb?next +NaN
+				<= Over_prop_name $mol_select
+					hint @ \Overrided Property
+					value?next <=> name?next \
+					options <= prop_name_list
+					Trigger_icon null
 				<= Prop_name $mol_select
 					hint @ \Bound Property
-					value?next <=> prop_name?next \
+					value?next <=> prop_name?next null
 					options <= prop_name_list /string
 					Trigger_icon null
 				<= Obj $mol_select
@@ -537,9 +544,6 @@ $hyoo_studio_value $mol_list
 				<= Item_type $mol_string_button
 					hint @ \Item Type
 					value?next <=> item_type?next \any
-				<= Type $hyoo_studio_prop_type
-					tree? <=> tree?
-					type? => type?
 				<= List_add $mol_button_minor
 					hint @ \Add Item
 					sub /
@@ -554,26 +558,16 @@ $hyoo_studio_value $mol_list
 		<= Inner $mol_list
 			sub <= inner_rows /
 	List_value* $hyoo_studio_value
-		tree?next <=> list_value*?next $mol_tree2_empty
+		tree? <=> list_value*? $mol_tree2_empty
+		parent_type \list
 		props_of!klass <= props_of!klass $mol_tree2_empty
 		props_bindable <= props_bindable $mol_tree2_empty
-		Locale null
-	Over_prop* $mol_list
-		rows /
-			<= Prop* $mol_row sub /
-				<= Over_prop_name* $mol_select
-					hint @ \Overrided property
-					value? <=> over_prop_name*? \
-					options <= over_prop_options /string
-					Trigger_icon null
-				<= Over_self*
-			<= Over_inner*
-	Over_value* $hyoo_studio_value
+	Over_prop* $hyoo_studio_value
 		tree? <=> over_value*? $mol_tree2_empty
+		name? <= over_prop_name*?
+		parent_type \object
 		props_of!klass <= props_of!klass $mol_tree2_empty
 		props_bindable <= props_bindable $mol_tree2_empty
-		Self => Over_self*
-		Inner => Over_inner*
 
 $hyoo_studio_prop $mol_list
 	tree?val $mol_tree2_empty
@@ -581,7 +575,10 @@ $hyoo_studio_prop $mol_list
 		<= Head $mol_view sub /
 			<= Self $mol_view sub /
 				<= Title $mol_paragraph
-					title? <= title? \
+					title? <= title?
+				<= Type $hyoo_studio_prop_type
+					tree? <=> value?
+					type? => type?
 				<= Key $mol_check_icon
 					hint @ \Multiple values by key
 					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
@@ -590,14 +587,6 @@ $hyoo_studio_prop $mol_list
 					hint @ \Changeable
 					Icon <= Next_icon $mol_icon_cached
 					checked?next <=> next?next false
-			<= Config $mol_view sub <= config_sub /
-				<= Localized $mol_check_icon
-					hint @ \Localizable
-					Icon <= Locale_icon $mol_icon_translate
-					checked?next <=> localized?next false
-				<= Type $hyoo_studio_prop_type
-					tree? <=> value?
-					type? => type?
 		<= Value $hyoo_studio_value
 			Type null
 			tree? <=> value? $mol_tree2_empty
@@ -1216,6 +1205,8 @@ $mol_dump_value $mol_view
 					values <= row_values* /
 					prototypes <= prototypes false
 					preview_show <= preview_show
+
+$mol_row $mol_view
 
 $mol_form $mol_list
 	submit_allowed true
