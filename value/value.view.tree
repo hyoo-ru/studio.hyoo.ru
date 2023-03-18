@@ -1,5 +1,5 @@
 $hyoo_studio_value $mol_list
-	tree?next $mol_tree2_empty
+	tree? $mol_tree2_empty
 	rows /
 		<= Self $mol_view
 			sub <= self /
@@ -11,33 +11,23 @@ $hyoo_studio_value $mol_list
 					checked?next <=> locale?next false
 				<= Numb $mol_number
 					value?next <=> numb?next +NaN
-				<= Unit $mol_switch
-					value?next <=> unit?next \null
-					options *
-						null \null
-						false \false
-						true \true
-				<= Prop_bind $mol_select
-					hint @ \Dataflow Direction
-					align_hor \right
-					Filter null
-					value?next <=> prop_bind?next \<=
-					options <= prop_bind_list /
-						\<=
-						\<=>
-						\=>
 				<= Prop_name $mol_select
 					hint @ \Bound Property
 					value?next <=> prop_name?next \
 					options <= prop_name_list /string
+					Trigger_icon null
 				<= Obj $mol_select
 					hint @ \Class
 					align_hor \right
 					value?next <=> obj?next \$mol_view
 					options <= class_list /
-				<= Item_type $mol_string
+					Trigger_icon null
+				<= Item_type $mol_string_button
 					hint @ \Item Type
 					value?next <=> item_type?next \any
+				<= Type $hyoo_studio_prop_type
+					tree? <=> tree?
+					type? => type?
 				<= List_add $mol_button_minor
 					hint @ \Add Item
 					sub /
@@ -49,39 +39,26 @@ $hyoo_studio_value $mol_list
 					Trigger_icon <= Over_add_icon $mol_icon_wrench_outline
 					value?next <=> over_add?next \
 					options <= over_prop_options /string
-				<= Type $mol_select
-					hint @ \Type
-					align_hor \left
-					Filter null
-					value?next <=> type?next \unit
-					dictionary <= types *
-						unit @ \Const
-						bind @ \Bind
-						object @ \Object
-						string @ \Text
-						number @ \Number
-						list @ \List
-						dict @ \Dict
-						\
-							@ \Drop
-		<= Inner $mol_view
-			sub <= inner /
-				<= List $mol_list
-					rows <= list /
-				<= Overs $mol_list
-					rows <= overs /
-	List_value!index $hyoo_studio_value
-		tree?next <=> list_value!index?next $mol_tree2_empty
+		<= Inner $mol_list
+			sub <= inner_rows /
+	List_value* $hyoo_studio_value
+		tree?next <=> list_value*?next $mol_tree2_empty
 		props_of!klass <= props_of!klass $mol_tree2_empty
 		props_bindable <= props_bindable $mol_tree2_empty
 		Locale null
-	Over!index $mol_list
+	Over_prop* $mol_list
 		rows /
-			<= Over_prop!index $mol_select
-				hint @ \Overrided property
-				value?next <=> over_prop!index?next \
-				options <= over_prop_options /string
-			<= Over_value!index $hyoo_studio_value
-				tree?next <=> over_value!index?next $mol_tree2_empty
-				props_of!klass <= props_of!klass $mol_tree2_empty
-				props_bindable <= props_bindable $mol_tree2_empty
+			<= Prop* $mol_row sub /
+				<= Over_prop_name* $mol_select
+					hint @ \Overrided property
+					value? <=> over_prop_name*? \
+					options <= over_prop_options /string
+					Trigger_icon null
+				<= Over_self*
+			<= Over_inner*
+	Over_value* $hyoo_studio_value
+		tree? <=> over_value*? $mol_tree2_empty
+		props_of!klass <= props_of!klass $mol_tree2_empty
+		props_bindable <= props_bindable $mol_tree2_empty
+		Self => Over_self*
+		Inner => Over_inner*

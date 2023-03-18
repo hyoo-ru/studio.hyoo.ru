@@ -1,0 +1,44 @@
+$hyoo_studio_prop_type $mol_pick
+	tree?val $mol_tree2_empty
+	trigger_content /
+		<= Value $mol_paragraph title <= type_display \
+	bubble_content /
+		<= Options_content $mol_list rows /
+			<= Menu_item_unit $mol_switch
+				value? <=> unit? \
+				options <= unit_options *
+					null \null
+					boolean_false \false
+					boolean_true \true
+			<= Menu_item_number $mol_switch
+				value? <=> number? \
+				options <= number_options *
+					number \number
+					number_nan \NaN
+					number_infinity_negative \-Infinity
+					number_infinity_positive \+Infinity
+			<= Menu_item_object $mol_switch
+				value? <=> object? \
+				options <= object_options *
+					text \text
+					list \list
+					dict \dict
+					object \object
+			<= Menu_item_bind $mol_switch
+				value? <=> bind? \
+				options <= bind_options *
+					bind \<=> bind
+					hack \<= bind
+					alias \=> bind
+			<= Menu_item_control $mol_view sub /
+				<= Menu_item_duplicate $mol_button_minor
+					event_click?val <=> menu_item_copy_click?val null
+					sub /
+						<= menu_item_copy_icon $mol_icon_content_copy
+						<= menu_item_copy_label \Duplicate
+				<= Menu_item_delete $mol_button_minor
+					style * color \red
+					click? <=> drop? null
+					sub /
+						<= menu_item_delete_icon $mol_icon_trash_can_outline
+						<= menu_item_delete_label \Drop

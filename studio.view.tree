@@ -1,4 +1,5 @@
 $hyoo_studio $mol_book2
+	comp $hyoo_studio_component
 	plugins /
 		<= Theme $mol_theme_auto
 	pages /
@@ -35,16 +36,24 @@ $hyoo_studio $mol_book2
 							rows /
 								<= Classes $mol_view
 									sub /
-										<= Base_field $mol_form_field
-											name @ \Base Class
-											control <= Base $mol_select
-												value?val <=> base?val \
-												options <= base_options /string
 										<= Self_field $mol_form_field
 											name @ \Component Name
 											control <= Self $mol_string
 												hint \$hyoo_studio_example
 												value?val <=> self?val \
+										<= Base_field $mol_form_field
+											name @ \Base Class
+											control <= Base $mol_select
+												value?val <=> base?val \
+												options <= base_options /string
+								- <= Props_inherited_field $mol_form_field
+									name @ \Display inherited properties
+									control <= Props_inherited_control $mol_check_list
+										option_checked*? <=> props_inherited_checked*? false
+										options <= Props_inherited *
+											a \A
+											b \B
+											c \C
 								<= Props_controls $mol_view
 									sub <= props_controls /
 										<= Prop_filter $mol_search

@@ -217,7 +217,9 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		props() {
-			return this.prop_filtered().map( prop => this.Prop( prop.type ) )
+			return this.prop_filtered().map( prop => {
+				return this.Prop( prop.type )
+			} )
 		}
 		
 		@ $mol_mem
