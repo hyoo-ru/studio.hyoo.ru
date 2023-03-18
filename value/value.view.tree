@@ -1,8 +1,12 @@
 $hyoo_studio_value $mol_list
 	tree? $mol_tree2_empty
+	parent_type \
 	rows /
 		<= Self $mol_view
 			sub <= self /
+				<= Type $hyoo_studio_prop_type
+					tree? <=> tree?
+					type => type
 				<= Str $mol_textarea
 					value?next <=> str?next \
 				<= Locale $mol_check_icon
@@ -11,9 +15,14 @@ $hyoo_studio_value $mol_list
 					checked?next <=> locale?next false
 				<= Numb $mol_number
 					value?next <=> numb?next +NaN
+				<= Over_prop_name $mol_select
+					hint @ \Overrided Property
+					value?next <=> name?next \
+					options <= prop_name_list
+					Trigger_icon null
 				<= Prop_name $mol_select
 					hint @ \Bound Property
-					value?next <=> prop_name?next \
+					value?next <=> prop_name?next null
 					options <= prop_name_list /string
 					Trigger_icon null
 				<= Obj $mol_select
@@ -25,9 +34,6 @@ $hyoo_studio_value $mol_list
 				<= Item_type $mol_string_button
 					hint @ \Item Type
 					value?next <=> item_type?next \any
-				<= Type $hyoo_studio_prop_type
-					tree? <=> tree?
-					type? => type?
 				<= List_add $mol_button_minor
 					hint @ \Add Item
 					sub /
@@ -42,23 +48,13 @@ $hyoo_studio_value $mol_list
 		<= Inner $mol_list
 			sub <= inner_rows /
 	List_value* $hyoo_studio_value
-		tree?next <=> list_value*?next $mol_tree2_empty
+		tree? <=> list_value*? $mol_tree2_empty
+		parent_type \list
 		props_of!klass <= props_of!klass $mol_tree2_empty
 		props_bindable <= props_bindable $mol_tree2_empty
-		Locale null
-	Over_prop* $mol_list
-		rows /
-			<= Prop* $mol_row sub /
-				<= Over_prop_name* $mol_select
-					hint @ \Overrided property
-					value? <=> over_prop_name*? \
-					options <= over_prop_options /string
-					Trigger_icon null
-				<= Over_self*
-			<= Over_inner*
-	Over_value* $hyoo_studio_value
+	Over_prop* $hyoo_studio_value
 		tree? <=> over_value*? $mol_tree2_empty
+		name? <= over_prop_name*?
+		parent_type \object
 		props_of!klass <= props_of!klass $mol_tree2_empty
 		props_bindable <= props_bindable $mol_tree2_empty
-		Self => Over_self*
-		Inner => Over_inner*

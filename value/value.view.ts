@@ -4,21 +4,22 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		self() {
+			const Head = this.parent_type() == 'object'? [this.Over_prop_name(), this.Type()] : [this.Type()]
 			switch( this.type() ) {
-				case 'null' :  return [ this.Type() ]
-				case 'boolean_true' :  return [ this.Type() ]
-				case 'boolean_false' :  return [ this.Type() ]
-				case 'number_nan':  return [ this.Type() ]
-				case 'number_infinity_negative':  return [ this.Type() ]
-				case 'number_infinity_positive':  return [ this.Type() ]
-				case 'text': return [ this.Str(), this.Type() ]
-				case 'number': return [ this.Numb(), this.Type() ]
-				case 'bind': return [ this.Prop_name(), this.Type() ]
-				case 'hack': return [ this.Prop_name(), this.Type() ]
-				case 'alias': return [ this.Prop_name(), this.Type() ]
-				case 'list': return [ this.Item_type(), this.Type(), this.List_add() ]
-				case 'dict': return [ this.Type() ]
-				case 'object': return [ this.Obj(), this.Type(), this.Over_add() ]
+				case 'null' :  return [ ...Head, ]
+				case 'boolean_true' :  return [ ...Head, ]
+				case 'boolean_false' :  return [ ...Head, ]
+				case 'number_nan':  return [ ...Head, ]
+				case 'number_infinity_negative':  return [ ...Head, ]
+				case 'number_infinity_positive':  return [ ...Head, ]
+				case 'text': return [ ...Head,  this.Str(), this.Locale() ]
+				case 'number': return [ ...Head,  this.Numb(),  ]
+				case 'bind': return [ ...Head, this.Prop_name(),  ]
+				case 'get': return [ ...Head, this.Prop_name()]
+				case 'put': return [ ...Head,  this.Prop_name(),  ]
+				case 'list': return [ ...Head,  this.Item_type(), this.List_add() ]
+				case 'dict': return [ ...Head, ]
+				case 'object': return [ ...Head,  this.Obj(), this.Over_add() ]
 				default: return []
 			}
 		}
@@ -83,13 +84,13 @@ namespace $.$$ {
 			
 			const val = this.tree()
 			
-			if( next === undefined ) return val.kids[0].type
+			if( next === undefined ) return val.kids[0].type || '...'
 			
 			this.tree(
 				val.insert( val.struct( next ), null )
 			)
 			
-			return next
+			return next || '...'
 		}
 		
 		@ $mol_mem
@@ -142,11 +143,15 @@ namespace $.$$ {
 				$mol_fail( new SyntaxError( `Item type mustn't have any space chars` ) )
 			}
 			
-			return this.tree(
+			const from_tree = this.tree(
 				next === undefined
 					? undefined
 					: this.tree().struct( '/' + next, this.tree().kids )
 			).type.slice( 1 )
+
+			const focused = this.Item_type().focused()
+
+			return (from_tree) || (focused? '' : 'any')
 			
 		}
 		

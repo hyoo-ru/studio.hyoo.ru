@@ -4,7 +4,10 @@ $hyoo_studio_prop $mol_list
 		<= Head $mol_view sub /
 			<= Self $mol_view sub /
 				<= Title $mol_paragraph
-					title? <= title? \
+					title? <= title?
+				<= Type $hyoo_studio_prop_type
+					tree? <=> value?
+					type? => type?
 				<= Key $mol_check_icon
 					hint @ \Multiple values by key
 					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
@@ -13,14 +16,6 @@ $hyoo_studio_prop $mol_list
 					hint @ \Changeable
 					Icon <= Next_icon $mol_icon_cached
 					checked?next <=> next?next false
-			<= Config $mol_view sub <= config_sub /
-				<= Localized $mol_check_icon
-					hint @ \Localizable
-					Icon <= Locale_icon $mol_icon_translate
-					checked?next <=> localized?next false
-				<= Type $hyoo_studio_prop_type
-					tree? <=> value?
-					type? => type?
 		<= Value $hyoo_studio_value
 			Type null
 			tree? <=> value? $mol_tree2_empty
