@@ -27,9 +27,9 @@ $hyoo_studio_prop_type $mol_pick
 			<= Menu_item_bind $mol_switch
 				value? <=> bind? \
 				options <= bind_options *
-					bind \<=> bind
-					hack \<= bind
-					alias \=> bind
+					bind \<=>
+					get \<=
+					put \=>
 			<= Menu_item_control $mol_view sub /
 				<= Menu_item_duplicate $mol_button_minor
 					event_click?val <=> menu_item_copy_click?val null

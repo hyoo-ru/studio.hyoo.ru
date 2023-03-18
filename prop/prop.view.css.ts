@@ -1,11 +1,17 @@
 namespace $.$$ {
 
 	const { px, rem } = $mol_style_unit
-	
+
 	$mol_style_define( $hyoo_studio_prop, {
 
 		Value: {
-			padding: rem( 0.25 ),
+			padding: $mol_gap.space,
+		},
+
+		Type: {
+			Trigger: {
+				color: $mol_theme.special,
+			},
 		},
 
 		border: {
@@ -15,7 +21,7 @@ namespace $.$$ {
 		background: {
 			color: $mol_theme.card,
 		},
-		
+
 		Head: {
 			background: {
 				color: $mol_theme.card,
@@ -34,8 +40,8 @@ namespace $.$$ {
 			padding: $mol_gap.text,
 		},
 
-		margin: px(16),
-		
+		margin: $mol_gap.block,
+
 	} )
-	
+
 }

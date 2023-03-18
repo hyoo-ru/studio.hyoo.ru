@@ -5,11 +5,17 @@ namespace $.$$ {
 	$mol_style_define( $hyoo_studio_value, {
 
 		Self: {
-			justifyContent: 'flex-end',
 			flex: {
 				grow: 1,
 			},
 		},
+
+		Type: {
+			Trigger: {
+				color: $mol_theme.special,
+			},
+		},
+
 
 		Numb: {
 			flex: {
@@ -42,60 +48,22 @@ namespace $.$$ {
 		Inner: {
 			margin: {
 				left: $mol_gap.block,
-				bottom: $mol_gap.block,
 			},
-			":empty": {
-				margin: 0,
+			padding: {
+				left: $mol_gap.block,
 			},
-			border: {
-				radius: $mol_gap.round,
-			},
-			box: {
-				shadow: [ {
-					x: 0,
-					y: px( 1 ),
-					blur: 0,
-					spread: 0,
-					color: $mol_theme.line,
-				} ],
-			},
+			boxShadow: 'inset 1px 0 0 0 var(--mol_theme_line)',
 		},
 
 		List_value: {
-			box: {
-				shadow: [ {
-					x: px( -1 ),
-					y: px( -1 ),
-					blur: 0,
-					spread: 0,
-					color: $mol_theme.line,
-				} ],
-			},
 			border: {
 				radius: $mol_gap.round,
 			},
-		},
-
-		Item_type: {
-			width: rem( 10 ),
-		},
-
-		Prop: {
-			padding: 0
 		},
 
 		Over_prop: {
 			gap: 0,
 			padding: 0,
-			box: {
-				shadow: [ {
-					x: px( -1 ),
-					y: px( -1 ),
-					blur: 0,
-					spread: 0,
-					color: $mol_theme.line,
-				} ],
-			},
 			border: {
 				radius: $mol_gap.round,
 			},

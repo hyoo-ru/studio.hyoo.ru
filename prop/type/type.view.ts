@@ -52,9 +52,9 @@ namespace $.$$ {
 					case 'list': this.tree( this.tree().struct( '/' ) ); break
 					case 'dict': this.tree( this.tree().struct( '*' ) ); break
 					case 'object': this.tree( this.tree().struct( '$mol_view' ) ); break
-					case 'bind': this.tree( this.tree().struct( '<=>', [ this.tree().data( '' ) ] ) ); break
-					case 'hack': this.tree( this.tree().struct( '<=', [ this.tree().data( '' ) ] ) ); break
-					case 'alias': this.tree( this.tree().struct( '=>', [ this.tree().data( '' ) ] ) ); break
+					case 'bind': this.tree( this.tree().struct( '<=>', [ this.tree().kids[0] ] ) ); break
+					case 'get': this.tree( this.tree().struct( '<=', [ this.tree().kids[0] ] ) ); break
+					case 'put': this.tree( this.tree().struct( '=>', [ this.tree().kids[0] ] ) ); break
 					default : $mol_fail( new TypeError( `Unsupported type: ${ next }` ) )
 				}
 			}
@@ -74,8 +74,8 @@ namespace $.$$ {
 			if (type === 'number') return 'number'
 			if( type === 'locale' ) return 'text'
 			if (type === 'string') return 'text'
-			if( type === 'get' ) return 'hack'
-			if( type === 'put' ) return 'alias'
+			if( type === 'get' ) return 'get'
+			if( type === 'put' ) return 'put'
 			if (type === 'bind') return 'bind'
 			
 			return type

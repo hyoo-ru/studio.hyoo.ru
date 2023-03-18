@@ -85,24 +85,6 @@ namespace $.$$ {
 			return val?.kids[0]
 		}
 
-		@ $mol_mem
-		localized( next?: boolean ) {
-			
-			const val = this.value()
-			
-			if( next === undefined ) return '@' === val.type 
-			
-			this.value(
-				next
-					? val.struct( '@', [
-						val.data( val.text() || val.type )
-					] )
-					: val.data( val.text() || val.type )
-			)
-			
-			return next
-		}
-
 		@ $mol_action
 		list_item_add() {
 			const value = this.value()
@@ -114,14 +96,6 @@ namespace $.$$ {
 			)
 		}
 
-		@ $mol_mem
-		config_sub() {
-			return [
-				... this.type() === 'text' ? [ this.Localized() ] : [],
-				this.Type(),
-			]
-		}
-			
 	}
 	
 }
