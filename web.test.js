@@ -3317,45 +3317,43 @@ var $;
 (function ($_1) {
     var $$;
     (function ($$) {
+        const src = `
+		$${''}my_test $${''}my_super
+			title @ \\title
+			sub /
+				<= Title $${''}mol_view
+					sub /
+						<= title
+				<= Close $${''}mol_button
+					title \close
+					click?event <=> close?event null
+			plugins /
+				<= Speech $${''}mol_speech
+					text => speech
+	`;
+        const dest = $$.$mol_tree2_from_string(`
+		title @ \\title
+		sub /
+			<= Title
+			<= Close
+		plugins / <= Speech
+		Title $${''}mol_view sub / <= title
+		close?event null
+		Close $${''}mol_button
+			title \close
+			click?event <=> close?event
+		Speech $${''}mol_speech text => speech
+	`, 'reference');
         $mol_test({
-            'handle clicks by default'($) {
-                let clicked = false;
-                const clicker = $mol_button.make({
-                    $,
-                    click: (event) => { clicked = true; },
-                });
-                const element = clicker.dom_tree();
-                const event = $mol_dom_context.document.createEvent('mouseevent');
-                event.initEvent('click', true, true);
-                element.dispatchEvent(event);
-                $mol_assert_ok(clicked);
-            },
-            'no handle clicks if disabled'($) {
-                let clicked = false;
-                const clicker = $mol_button.make({
-                    $,
-                    click: (event) => { clicked = true; },
-                    enabled: () => false,
-                });
-                const element = clicker.dom_tree();
-                const event = $mol_dom_context.document.createEvent('mouseevent');
-                event.initEvent('click', true, true);
-                element.dispatchEvent(event);
-                $mol_assert_not(clicked);
-            },
-            'Store error'($) {
-                const clicker = $mol_button.make({
-                    $,
-                    click: (event) => $.$mol_fail(new Error('Test error')),
-                });
-                const event = $mol_dom_context.document.createEvent('mouseevent');
-                $mol_assert_fail(() => clicker.event_activate(event), 'Test error');
-                $mol_assert_equal(clicker.status()[0].message, 'Test error');
-            },
+            'props'($) {
+                const mod = $.$mol_tree2_from_string(src, '/mol/view/tree2/class/props.test.ts');
+                const result = $.$mol_view_tree2_class_props(mod.kids[0]).join('');
+                $mol_assert_equal(result, dest.toString());
+            }
         });
     })($$ = $_1.$$ || ($_1.$$ = {}));
 })($ || ($ = {}));
-//mol/button/button.test.ts
+//mol/view/tree2/class/props.test.ts
 ;
 "use strict";
 //mol/type/merge/merge.test.ts
@@ -3653,6 +3651,138 @@ var $;
 (function ($) {
     var $$;
     (function ($$) {
+        function t(strings) {
+            return strings[0].replace(/#/g, '$');
+        }
+        $mol_test({
+            'component name change'() {
+                const obj = $hyoo_studio_component.make({});
+                obj.source(t `#name #mol_view\n`);
+                $mol_assert_equal(obj.name(), t `#name`);
+                obj.name(t `#changed`);
+                $mol_assert_equal(obj.source(), t `#changed #mol_view\n`);
+            },
+            'base class name changed'() {
+                const obj = $hyoo_studio_component.make({});
+                obj.source(t `#name #mol_view\n`);
+                $mol_assert_equal(obj.base(), t `#mol_view`);
+                obj.base(t `#mol_object`);
+                $mol_assert_equal(obj.source(), t `#name #mol_object\n`);
+            },
+            'property add'() {
+                const src = t `#mol_number #mol_view\n\tvalue? NaN\n`;
+                const dest = t `#mol_number #mol_view\n\tvalue? NaN\n\titems null\n`;
+                const obj = $hyoo_studio_component.make({});
+                obj.source(src);
+                obj.prop_add('items');
+                $mol_assert_equal(obj.source(), dest);
+            },
+            'property drop'() {
+                const src = t `#mol_number #mol_view\n\tvalue? NaN\n\titems null\n`;
+                const dest = t `#mol_number #mol_view value? NaN\n`;
+                const obj = $hyoo_studio_component.make({});
+                obj.source(src);
+                obj.prop_drop('items');
+                $mol_assert_equal(obj.source(), dest);
+            },
+            'property name list'() {
+                const obj = $hyoo_studio_component.make({});
+                obj.source(t `#mol_number #mol_view\n\tvalue? NaN\n\titems null\n`);
+                $mol_assert_like(obj.prop_names(), ['value', 'items']);
+            },
+            'find property by name part'() {
+                const src = `$hyoo_studio_example $mol_view\n\ta null\n\tb? null\n\tc* null\n\td*? null\n`;
+                const obj = $hyoo_studio_component.make({});
+                obj.source(src);
+                $mol_assert_equal(obj.prop_fullname('a'), 'a');
+                $mol_assert_equal(obj.prop_fullname('b'), 'b?');
+                $mol_assert_equal(obj.prop_fullname('c'), 'c*');
+                $mol_assert_equal(obj.prop_fullname('d'), 'd*?');
+            },
+            'property change'() {
+                const src = t `#mol_number #mol_view\n\tvalue? NaN\n\titems null\n`;
+                const dest = t `#mol_number #mol_view\n\tvalue? true\n\titems null\n`;
+                const obj = $hyoo_studio_component.make({});
+                obj.source(src);
+                const val = obj.prop_tree('value');
+                const next = val?.struct('true');
+                obj.prop_tree('value', val?.clone([next]));
+                $mol_assert_equal(obj.source(), dest);
+            }
+        });
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//hyoo/studio/component/component.test.ts
+;
+"use strict";
+var $;
+(function ($_1) {
+    var $$;
+    (function ($$) {
+        $mol_test({
+            'handle clicks by default'($) {
+                let clicked = false;
+                const clicker = $mol_button.make({
+                    $,
+                    click: (event) => { clicked = true; },
+                });
+                const element = clicker.dom_tree();
+                const event = $mol_dom_context.document.createEvent('mouseevent');
+                event.initEvent('click', true, true);
+                element.dispatchEvent(event);
+                $mol_assert_ok(clicked);
+            },
+            'no handle clicks if disabled'($) {
+                let clicked = false;
+                const clicker = $mol_button.make({
+                    $,
+                    click: (event) => { clicked = true; },
+                    enabled: () => false,
+                });
+                const element = clicker.dom_tree();
+                const event = $mol_dom_context.document.createEvent('mouseevent');
+                event.initEvent('click', true, true);
+                element.dispatchEvent(event);
+                $mol_assert_not(clicked);
+            },
+            'Store error'($) {
+                const clicker = $mol_button.make({
+                    $,
+                    click: (event) => $.$mol_fail(new Error('Test error')),
+                });
+                const event = $mol_dom_context.document.createEvent('mouseevent');
+                $mol_assert_fail(() => clicker.event_activate(event), 'Test error');
+                $mol_assert_equal(clicker.status()[0].message, 'Test error');
+            },
+        });
+    })($$ = $_1.$$ || ($_1.$$ = {}));
+})($ || ($ = {}));
+//mol/button/button.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'null by default'() {
+            const key = String(Math.random());
+            $mol_assert_equal($mol_state_session.value(key), null);
+        },
+        'storing'() {
+            const key = String(Math.random());
+            $mol_state_session.value(key, '$mol_state_session_test');
+            $mol_assert_equal($mol_state_session.value(key), '$mol_state_session_test');
+            $mol_state_session.value(key, null);
+            $mol_assert_equal($mol_state_session.value(key), null);
+        },
+    });
+})($ || ($ = {}));
+//mol/state/session/session.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
         $mol_test({
             'Empty needle'() {
                 const app = new $mol_dimmer;
@@ -3729,68 +3859,6 @@ var $;
     });
 })($ || ($ = {}));
 //mol/syntax2/md/md.test.ts
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_test({
-        'null by default'() {
-            const key = String(Math.random());
-            $mol_assert_equal($mol_state_session.value(key), null);
-        },
-        'storing'() {
-            const key = String(Math.random());
-            $mol_state_session.value(key, '$mol_state_session_test');
-            $mol_assert_equal($mol_state_session.value(key), '$mol_state_session_test');
-            $mol_state_session.value(key, null);
-            $mol_assert_equal($mol_state_session.value(key), null);
-        },
-    });
-})($ || ($ = {}));
-//mol/state/session/session.test.ts
-;
-"use strict";
-var $;
-(function ($_1) {
-    var $$;
-    (function ($$) {
-        const src = `
-		$${''}my_test $${''}my_super
-			title @ \\title
-			sub /
-				<= Title $${''}mol_view
-					sub /
-						<= title
-				<= Close $${''}mol_button
-					title \close
-					click?event <=> close?event null
-			plugins /
-				<= Speech $${''}mol_speech
-					text => speech
-	`;
-        const dest = $$.$mol_tree2_from_string(`
-		title @ \\title
-		sub /
-			<= Title
-			<= Close
-		plugins / <= Speech
-		Title $${''}mol_view sub / <= title
-		close?event null
-		Close $${''}mol_button
-			title \close
-			click?event <=> close?event
-		Speech $${''}mol_speech text => speech
-	`, 'reference');
-        $mol_test({
-            'props'($) {
-                const mod = $.$mol_tree2_from_string(src, '/mol/view/tree2/class/props.test.ts');
-                const result = $.$mol_view_tree2_class_props(mod.kids[0]).join('');
-                $mol_assert_equal(result, dest.toString());
-            }
-        });
-    })($$ = $_1.$$ || ($_1.$$ = {}));
-})($ || ($ = {}));
-//mol/view/tree2/class/props.test.ts
 ;
 "use strict";
 var $;
@@ -3941,6 +4009,48 @@ var $;
     });
 })($ || ($ = {}));
 //mol/try/try.test.ts
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_test({
+        'property key change'() {
+            const src = '$hyoo_studio_example $mol_view items null\n';
+            const dest = '$hyoo_studio_example $mol_view items* null\n';
+            const obj = $hyoo_studio_component.make({});
+            obj.source(src);
+            const prop = obj.property('items').as($hyoo_studio_property);
+            prop.key(true);
+            $mol_assert_equal(obj.source(), dest);
+            prop.key(false);
+            $mol_assert_equal(obj.source(), src);
+        },
+        'property next change'() {
+            const src = '$hyoo_studio_example $mol_view items null\n';
+            const dest = '$hyoo_studio_example $mol_view items? null\n';
+            const obj = $hyoo_studio_component.make({});
+            obj.source(src);
+            const prop = obj.property('items').as($hyoo_studio_property);
+            prop.next(true);
+            $mol_assert_equal(obj.source(), dest);
+            prop.next(false);
+            $mol_assert_equal(obj.source(), src);
+        },
+        'property title change'() {
+            const src = '$hyoo_studio_example $mol_view items null\n';
+            const dest = '$hyoo_studio_example $mol_view item null\n';
+            const obj = $hyoo_studio_component.make({});
+            obj.source(src);
+            const prop = obj.property('items');
+            prop.title('item');
+            $mol_assert_equal(obj.source(), dest);
+            prop.title('items');
+            $mol_assert_equal(obj.source(), src);
+            console.log('123', obj.source());
+        },
+    });
+})($ || ($ = {}));
+//hyoo/studio/property/property.test.ts
 ;
 "use strict";
 var $;
