@@ -71,6 +71,12 @@ namespace $.$$ {
 			width: rem(24),
 		},
 
+		Trigger: {
+			flex: {
+				grow: 1,
+			},
+		},
+
 		Prop_tools: {
 			marginLeft: 'auto',
 		},
