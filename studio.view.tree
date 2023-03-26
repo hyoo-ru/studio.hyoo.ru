@@ -96,9 +96,12 @@ $hyoo_studio $mol_book2
 								<= Inspect_depth
 				<= Inspect_graph $mol_dump_value
 					value <= inspect_graph null
-	Prop!name $hyoo_studio_prop
-		tree?next <=> prop_tree!name?next $mol_tree2_empty
+	Prop* $hyoo_studio_prop
+		name <= prop_name* \default
+		sign? <=> prop_sign*? \
+		tree? <=> prop_tree!tree_node_str? $mol_tree2_empty
 		props_of!klass <= props_of!klass $mol_tree2_empty
 		props_bindable <= props_all $mol_tree2_empty
 		class_list <= class_list /string
+		Bound_prop* <= Bound_prop* $hyoo_studio_prop
 	Placeholder null

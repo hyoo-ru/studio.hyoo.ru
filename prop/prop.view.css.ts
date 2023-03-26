@@ -1,10 +1,22 @@
 namespace $.$$ {
 
-	const { px, rem } = $mol_style_unit
+	const { px, rem, per } = $mol_style_unit
 
 	$mol_style_define( $hyoo_studio_prop, {
+		width: per(100),
+		flex: {
+			grow: 1,
+		},
+		outline: `solid 1px var(--mol_theme_line)`,
+		border: {
+			radius: $mol_gap.round,
+		},
+		backgroundColor: 'hsl( var( --mol_theme_hue), calc( var(--mol_theme_satur) * 39% ), calc( 55% + 41% * var(--mol_theme_luma) ) )',
 
 		Value: {
+			flex: {
+				grow: 1,
+			},
 			padding: $mol_gap.space,
 		},
 
@@ -14,33 +26,58 @@ namespace $.$$ {
 			},
 		},
 
-		border: {
-			radius: $mol_gap.round,
+		Inner: {
+			padding: $mol_gap.space,
 		},
 
-		background: {
-			color: $mol_theme.card,
+		Over_props: {
+			gap: $mol_gap.space,
+			flex: {
+				grow: 1,
+			},
+			padding: {
+				left: $mol_gap.block,
+			},
 		},
 
-		Head: {
+		Over_add: {
+			marginLeft: 'auto',
+		},
+
+		Object: {
+			flexDirection: 'column',
+		},
+
+		Expander: {
+			flex: {
+				grow: 1,
+			},
+		},
+
+		Label: {
 			background: {
 				color: $mol_theme.card,
 			},
 			border: {
 				radius: $mol_gap.round,
 			},
-			justifyContent: 'space-between',
 		},
 
-		Self: {
-			alignItems: 'center',
+		Label_content: {
+			flex: {
+				wrap: 'wrap',
+				grow: 1,
+			},
+			width: rem(24),
 		},
 
-		Title: {
-			padding: $mol_gap.text,
+		Prop_tools: {
+			marginLeft: 'auto',
 		},
 
-		margin: $mol_gap.block,
+		Key: {
+			marginLeft: 'auto',
+		},
 
 	} )
 

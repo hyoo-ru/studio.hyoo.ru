@@ -1,5 +1,6 @@
 $hyoo_studio_value $mol_list
 	tree? $mol_tree2_empty
+	guid \
 	parent_type \
 	rows /
 		<= Self $mol_view
@@ -7,6 +8,8 @@ $hyoo_studio_value $mol_list
 				<= Type $hyoo_studio_prop_type
 					tree? <=> tree?
 					type => type
+					object_options <= object_options *
+					bind_options <= bind_options *
 				<= Str $mol_textarea
 					value?next <=> str?next \
 				<= Locale $mol_check_icon
@@ -20,16 +23,12 @@ $hyoo_studio_value $mol_list
 					value?next <=> name?next \
 					options <= prop_name_list
 					Trigger_icon null
-				<= Prop_name $mol_select
+				<= Bound_prop_expand $mol_check_expand
+					checked? <=> bound_expanded? false
+				<= Bound_prop_name $mol_select
 					hint @ \Bound Property
-					value?next <=> prop_name?next null
+					value?next <=> bound_prop_name?next null
 					options <= prop_name_list /string
-					Trigger_icon null
-				<= Obj $mol_select
-					hint @ \Class
-					align_hor \right
-					value?next <=> obj?next \$mol_view
-					options <= class_list /
 					Trigger_icon null
 				<= Item_type $mol_string_button
 					hint @ \Item Type
@@ -39,22 +38,14 @@ $hyoo_studio_value $mol_list
 					sub /
 						<= List_add_icon $mol_icon_plus
 					click?next <=> list_add?next null
-				<= Over_add $mol_select
-					hint @ \Add Override
-					align_hor \left
-					Trigger_icon <= Over_add_icon $mol_icon_wrench_outline
-					value?next <=> over_add?next \
-					options <= over_prop_options /string
-		<= Inner $mol_list
-			sub <= inner_rows /
+		<= List_values $mol_list
+			rows <= list /
 	List_value* $hyoo_studio_value
-		tree? <=> list_value*? $mol_tree2_empty
 		parent_type \list
+		tree? <=> list_value*? $mol_tree2_empty
 		props_of!klass <= props_of!klass $mol_tree2_empty
 		props_bindable <= props_bindable $mol_tree2_empty
-	Over_prop* $hyoo_studio_value
-		tree? <=> over_value*? $mol_tree2_empty
-		name? <= over_prop_name*?
-		parent_type \object
-		props_of!klass <= props_of!klass $mol_tree2_empty
-		props_bindable <= props_bindable $mol_tree2_empty
+		class_list <= class_list /string
+		Bound_prop* <= Bound_prop* null
+		bind_options *
+			get \<=

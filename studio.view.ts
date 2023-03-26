@@ -87,7 +87,7 @@ namespace $.$$ {
 			
 			this.tree(
 				self.clone([
-					base.struct( next, base.kids )
+					self.struct( next )
 				])
 			)
 			
@@ -175,7 +175,17 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem_key
-		props_of( base: string ) {
+		prop_sign( prop_name: string, next?: string ) {
+			if( next !== undefined ) {
+				const tree = this.prop_tree( prop_name )
+				this.prop_tree( prop_name, tree.struct( next, tree.kids ) )
+				return next
+			}
+			return this.props_map( this.self() ).get( prop_name )?.type || ''
+		}
+
+		@ $mol_mem_key
+		props_map( base: string ) {
 			
 			const lib = this.united()
 			const all = new Map< string, $mol_tree2 >()
@@ -197,8 +207,14 @@ namespace $.$$ {
 			}
 
 			collect( base )
-			
-			return lib.list( [ ... all.values() ].reverse() )
+
+			return all
+		}
+		
+		@ $mol_mem_key
+		props_of( base: string ) {
+			const lib = this.united()
+			return lib.list( [ ...this.props_map( base ).values() ].reverse() )
 		}
 		
 		props_all() {
@@ -215,11 +231,18 @@ namespace $.$$ {
 			)
 		}
 		
+		@ $mol_mem_key
+		prop_name( prop_name: string ) {
+			return prop_name
+		}
+		
 		@ $mol_mem
 		props() {
-			return this.prop_filtered().map( prop => {
-				return this.Prop( prop.type )
+			const props = this.prop_filtered().map( prop => {
+				const name = this.$.$mol_view_tree2_prop_split( prop ).name.text()
+				return this.Prop( name )
 			} )
+			return props
 		}
 		
 		@ $mol_mem
@@ -260,15 +283,31 @@ namespace $.$$ {
 			]
 		}
 		
+		@$mol_mem_key
+		Bound_prop( id: string ) {
+			const name = id.split( ':' )[ 0 ]
+			const obj = new this.$.$hyoo_studio_prop()
+			obj.name = () => this.prop_name( name )
+			obj.sign = ( next?: string ) => this.prop_sign( name, next )
+			obj.tree = ( next?: any ) => this.prop_tree( name, next )
+			obj.props_of = ( klass: any ) => this.props_of( klass )
+			obj.props_bindable = () => this.props_all()
+			obj.class_list = () => this.class_list()
+			obj.Bound_prop = ( id: any ) => this.Bound_prop( id )
+			return obj
+		}
+		
 		@ $mol_mem_key
-		prop_tree( prop: string, next?: $mol_tree2 ) {
+		prop_tree( prop_name: string, next?: $mol_tree2 ) {
+			
+			const sign = this.prop_sign( prop_name ) || prop_name
 			
 			if( next !== undefined ) {
-				this.tree( this.tree().insert( next, this.base(), prop ) )
+				this.tree( this.tree().insert( next, this.base(), sign ) )
 				return next
 			}
 			
-			return this.props_all().select( prop ).kids[0] ?? null
+			return this.props_all().select( sign ).kids[0] ?? null
 		}
 		
 	}
