@@ -9,7 +9,6 @@ namespace $.$$ {
 			flex: {
 				grow: 0,
 				shrink: 0,
-				basis: rem( 30 ),
 			},
 
 			Body: {
@@ -47,6 +46,8 @@ namespace $.$$ {
 
 		Props: {
 			padding: $mol_gap.block,
+			gap: $mol_gap.block,
+			alignItems: 'flex-start',
 		},
 
 		Source_page: {

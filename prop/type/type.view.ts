@@ -2,6 +2,14 @@ namespace $.$$ {
 
 	export class $hyoo_studio_prop_type extends $.$hyoo_studio_prop_type {
 
+		object_options(): Partial<{ text: 'text', list: 'list', dict: 'dict', object: 'object' }> {
+			return { text: 'text', list: 'list', dict: 'dict', object: 'object' }
+		}
+
+		bind_options(): Partial<{ bind: '<=>', get: '<=', put: '=>' }> {
+			return { bind: '<=>', get: '<=', put: '=>' }
+		}
+
 		unit(next?: string) {
 			return this.type(next)
 		}

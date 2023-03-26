@@ -1,25 +1,56 @@
 $hyoo_studio_prop $mol_list
 	tree?val $mol_tree2_empty
+	sign? \
 	rows /
-		<= Head $mol_view sub /
-			<= Self $mol_view sub /
-				<= Title $mol_paragraph
-					title? <= title?
-				<= Type $hyoo_studio_prop_type
-					tree? <=> value?
-					type? => type?
-				<= Key $mol_check_icon
-					hint @ \Multiple values by key
-					Icon <= Key_icon $mol_icon_bookmark_multiple_outline
-					checked?next <=> key?next false
-				<= Next $mol_check_icon
-					hint @ \Changeable
-					Icon <= Next_icon $mol_icon_cached
-					checked?next <=> next?next false
-		<= Value $hyoo_studio_value
-			Type null
-			tree? <=> value? $mol_tree2_empty
-			type? <= type?
-			props_of!klass <= props_of!klass $mol_tree2_empty
-			props_bindable <= props_bindable $mol_tree2_empty
-			class_list <= class_list /string
+		<= Head $mol_expander
+			label / 
+				<= name \default
+			expanded? <=> expanded? false
+			Tools <= Prop_tools $mol_view 
+				sub <= prop_tools /
+					<= Type $hyoo_studio_prop_type
+						tree? <=> value?
+						type? => type?
+					<= Key $mol_check_icon
+						hint @ \Multiple values by key
+						Icon <= Key_icon $mol_icon_key_change
+						checked? <=> multiple? false
+					<= Next $mol_check_icon
+						hint @ \Changeable
+						Icon <= Next_icon $mol_icon_atom_variant
+						checked? <=> changeable? false
+			content <= prop_content /
+				<= Object $mol_view 
+					sub /
+						<= Object_head $mol_view
+							sub <= object_head /
+								<= Obj $mol_select
+									hint @ \Class
+									align_hor \right
+									value?next <=> obj?next \$mol_view
+									options <= class_list /string
+									Trigger_icon null
+								<= Over_add $mol_select
+									hint @ \Add Override
+									align_hor \left
+									Trigger_icon <= Over_add_icon $mol_icon_wrench_outline
+									value?next <=> over_add?next \
+									options <= over_prop_options /string
+						<= Inner $mol_view sub <= inner /
+							<= Over_props $mol_list
+								sub <= overs /
+				<= Value $hyoo_studio_value
+					Type null
+					tree? <=> value? $mol_tree2_empty
+					type? <= type?
+					props_of!klass <= props_of!klass $mol_tree2_empty
+					props_bindable <= props_bindable $mol_tree2_empty
+					Bound_prop* <= Bound_prop*
+	Over_prop* $hyoo_studio_value
+		parent_type \object
+		tree? <=> over_value*? $mol_tree2_empty
+		name? <= over_prop_name*? \
+		props_of!klass <= props_of!klass $mol_tree2_empty
+		props_bindable <= props_bindable $mol_tree2_empty
+		class_list <= class_list /string
+		Bound_prop* <= Bound_prop* $hyoo_studio_prop
