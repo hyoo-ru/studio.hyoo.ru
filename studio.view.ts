@@ -240,7 +240,6 @@ namespace $.$$ {
 		props() {
 			const props = this.prop_filtered().map( prop => {
 				const name = this.$.$mol_view_tree2_prop_split( prop ).name.text()
-				// this.prop_sign( name, prop.type )
 				return this.Prop( name )
 			} )
 			return props

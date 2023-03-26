@@ -14,9 +14,9 @@ namespace $.$$ {
 				case 'number_infinity_positive': return [ ...Head, ]
 				case 'text': return [ ...Head, this.Str() ]
 				case 'number': return [ ...Head, this.Numb(), ]
-				case 'bind': return [ ...Head, this.Bound_prop_name(), this.Bound_prop_expand(), ]
-				case 'get': return [ ...Head, this.Bound_prop_name(), this.Bound_prop_expand() ]
-				case 'put': return [ ...Head, this.Bound_prop_name(), this.Bound_prop_expand(), ]
+				case 'bind': return this.bound_expanded() ? [ this.Opened_bound_prop() ] : [ ...Head, this.Bound_prop_name(), this.Bound_prop_expand(), ]
+				case 'get': return this.bound_expanded() ? [ this.Opened_bound_prop() ] : [ ...Head, this.Bound_prop_name(), this.Bound_prop_expand() ]
+				case 'put': return this.bound_expanded() ? [ this.Opened_bound_prop() ] : [ ...Head, this.Bound_prop_name(), this.Bound_prop_expand(), ]
 				case 'list': return [ ...Head, this.Item_type(), this.List_add() ]
 				case 'dict': return [ ...Head, ]
 				default: return []
@@ -29,27 +29,21 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		inner() {
-			switch( this.type() ) {
-				case 'list':
-					return [this.List_values()]
-				case 'bind': case 'get': case 'put':
-					return this.bound_expanded() ? [ this.Opened_bound_prop() ] : []
-				default: return []
-			}
-		}
-		
-		@ $mol_mem
 		Opened_bound_prop() {
 			const prop = this.Bound_prop( this.bound_prop_name() + ':' + this.guid() )
 			prop.expanded = ( next?: boolean ) => this.bound_expanded( next )
+			prop.expander_title = () => ''
+			prop.label_sub = () => [
+				...(this.parent_type() == 'object'? [this.Over_prop_name()]: []), 
+				this.Type(), this.Bound_prop_name(), prop.Trigger(), prop.Prop_tools()
+			]
 			return prop
 		}
 		
 		@ $mol_mem
 		str( next?: string ) {
-			if( next !== undefined ) {
-				this.tree( this.tree().data( next ) )
+			if (next !== undefined){
+				this.tree(this.tree().data( next ))
 				return next
 			}
 			return this.tree().text()
@@ -143,7 +137,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		list() {
-			return this.tree().kids.map( (_,i)=> this.List_value( i ) )
+			return this.type() == 'list' ? this.tree().kids.map( (_,i)=> this.List_value( i ) ) : []
 		}
 		
 		@ $mol_mem

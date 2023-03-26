@@ -1,10 +1,18 @@
-$hyoo_studio_prop $mol_list
+$hyoo_studio_prop $mol_view
 	tree?val $mol_tree2_empty
 	sign? \
-	rows /
-		<= Head $mol_expander
-			label / 
-				<= name \default
+	sub /
+		<= Expander $mol_expander
+			Label <= Label $mol_view
+				sub /
+					<= Label_content $mol_view
+						sub <= label_sub /
+							<= Trigger $mol_check_expand
+								checked?val <=> expanded?val false
+								expandable <= expandable true
+								label /
+									<= expander_title <= name \
+							<= Prop_tools
 			expanded? <=> expanded? false
 			Tools <= Prop_tools $mol_view 
 				sub <= prop_tools /

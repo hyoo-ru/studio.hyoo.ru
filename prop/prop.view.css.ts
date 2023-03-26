@@ -1,16 +1,15 @@
 namespace $.$$ {
 
-	const { px, rem } = $mol_style_unit
+	const { px, rem, per } = $mol_style_unit
 
 	$mol_style_define( $hyoo_studio_prop, {
+		width: per(100),
 		flex: {
 			grow: 1,
 		},
+		outline: `solid 1px var(--mol_theme_line)`,
 		border: {
 			radius: $mol_gap.round,
-			color: $mol_theme.line,
-			style: 'solid',
-			width: px( 1 ),
 		},
 		backgroundColor: 'hsl( var( --mol_theme_hue), calc( var(--mol_theme_satur) * 39% ), calc( 55% + 41% * var(--mol_theme_luma) ) )',
 
@@ -49,16 +48,31 @@ namespace $.$$ {
 			flexDirection: 'column',
 		},
 
-		Head: {
-			Label: {
-				background: {
-					color: $mol_theme.card,
-				},
-				border: {
-					radius: $mol_gap.round,
-				},
-				justifyContent: 'space-between',
-			}
+		Expander: {
+			flex: {
+				grow: 1,
+			},
+		},
+
+		Label: {
+			background: {
+				color: $mol_theme.card,
+			},
+			border: {
+				radius: $mol_gap.round,
+			},
+		},
+
+		Label_content: {
+			flex: {
+				wrap: 'wrap',
+				grow: 1,
+			},
+			width: rem(24),
+		},
+
+		Prop_tools: {
+			marginLeft: 'auto',
 		},
 
 		Key: {

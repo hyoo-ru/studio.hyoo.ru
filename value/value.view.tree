@@ -38,11 +38,8 @@ $hyoo_studio_value $mol_list
 					sub /
 						<= List_add_icon $mol_icon_plus
 					click?next <=> list_add?next null
-		<= Inner $mol_view
-			sub <= inner /
-				<= List_values $mol_list
-					rows <= list /$hyoo_studio_value
-				<= Opened_bound_prop $mol_view
+		<= List_values $mol_list
+			rows <= list /
 	List_value* $hyoo_studio_value
 		parent_type \list
 		tree? <=> list_value*? $mol_tree2_empty
