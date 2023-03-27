@@ -9720,28 +9720,24 @@ var $;
     (function ($$) {
         const { px, rem, per } = $mol_style_unit;
         $mol_style_define($hyoo_studio_prop, {
-            width: per(100),
             flex: {
                 grow: 1,
             },
-            outline: `solid 1px var(--mol_theme_line)`,
             border: {
                 radius: $mol_gap.round,
             },
-            backgroundColor: 'hsl( var( --mol_theme_hue), calc( var(--mol_theme_satur) * 39% ), calc( 55% + 41% * var(--mol_theme_luma) ) )',
+            background: {
+                color: $mol_theme.card,
+            },
             Value: {
                 flex: {
                     grow: 1,
                 },
-                padding: $mol_gap.space,
             },
             Type: {
                 Trigger: {
                     color: $mol_theme.special,
                 },
-            },
-            Inner: {
-                padding: $mol_gap.space,
             },
             Over_props: {
                 gap: $mol_gap.space,
@@ -9776,7 +9772,11 @@ var $;
                     wrap: 'wrap',
                     grow: 1,
                 },
-                width: rem(24),
+            },
+            Trigger: {
+                flex: {
+                    grow: 1,
+                },
             },
             Prop_tools: {
                 marginLeft: 'auto',
@@ -16349,7 +16349,6 @@ var $;
             Props: {
                 padding: $mol_gap.block,
                 gap: $mol_gap.block,
-                alignItems: 'flex-start',
             },
             Source_page: {
                 flex: {
