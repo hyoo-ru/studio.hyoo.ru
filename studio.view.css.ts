@@ -47,7 +47,6 @@ namespace $.$$ {
 		Props: {
 			padding: $mol_gap.block,
 			gap: $mol_gap.block,
-			alignItems: 'flex-start',
 		},
 
 		Source_page: {
