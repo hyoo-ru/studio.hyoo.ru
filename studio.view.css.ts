@@ -53,6 +53,9 @@ namespace $.$$ {
 			flex: {
 				basis: rem( 40 ),
 			},
+			Body: {
+				flexDirection: 'row',
+			},
 		},
 
 		Preview: {
