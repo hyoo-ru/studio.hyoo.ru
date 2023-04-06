@@ -42,29 +42,15 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		str( next?: string ) {
-			if (next !== undefined){
-				this.tree(this.tree().data( next ))
-				return next
-			}
-			return this.tree().text()
-		}
-		
-		@ $mol_mem
-		locale( next?: boolean ) {
 			
 			const val = this.tree()
-			
-			if( next === undefined ) return '@' === val.type
-			
-			this.tree(
-				next
-					? val.struct( '@', [
-						val.data( val.text() || val.type )
-					] )
-					: val.data( val.text() || val.type )
-			)
 
-			return next
+			if (next !== undefined){
+				this.tree( val.type == '@' ? val.struct( '@', [ val.data(next) ] ) : val.data(next) )
+				return next
+			}
+
+			return val.text()
 		}
 		
 		@ $mol_mem

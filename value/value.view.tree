@@ -12,10 +12,6 @@ $hyoo_studio_value $mol_list
 					bind_options <= bind_options *
 				<= Str $mol_textarea
 					value?next <=> str?next \
-				<= Locale $mol_check_icon
-					hint @ \Multilingual
-					Icon <= Locale_icon $mol_icon_translate
-					checked?next <=> locale?next false
 				<= Numb $mol_number
 					value?next <=> numb?next +NaN
 				<= Over_prop_name $mol_select

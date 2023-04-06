@@ -16,6 +16,10 @@ $hyoo_studio_prop $mol_view
 			expanded? <=> expanded? false
 			Tools <= Prop_tools $mol_view 
 				sub <= prop_tools /
+					<= Locale $mol_check_icon
+						hint @ \Multilingual
+						Icon <= Locale_icon $mol_icon_translate
+						checked?next <=> locale?next false
 					<= Type $hyoo_studio_prop_type
 						tree? <=> value?
 						type? => type?

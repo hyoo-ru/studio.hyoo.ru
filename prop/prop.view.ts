@@ -36,6 +36,10 @@ namespace $.$$ {
 			return Boolean( sign_obj.next )
 		}
 		
+		prop_tools() {
+			return this.type() == 'text' ? super.prop_tools() : [ this.Type(), this.Key(), this.Next() ]
+		}
+
 		prop_content() {
 			return this.type() == 'object' ? [ this.Object() ] : [ this.Value() ]
 		}
@@ -114,6 +118,23 @@ namespace $.$$ {
 			}
 			return val.kids[ index ]?.kids[ 0 ]
 		}
+		
+		@ $mol_mem
+		locale( next?: boolean ) {
+			
+			const val = this.value()
+			
+			if( next === undefined ) return '@' === val.type
+			
+			this.value(
+				next
+					? val.struct( '@', [
+						val.data( val.text() || val.type )
+					] )
+					: val.data( val.text() || val.type )
+			)
 
+			return next
+		}
 	}
 }
