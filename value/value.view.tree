@@ -8,8 +8,8 @@ $hyoo_studio_value $mol_list
 				<= Type $hyoo_studio_prop_type
 					tree? <=> tree?
 					type => type
-					object_options <= object_options *
 					bind_options <= bind_options *
+					Object null
 				<= Str $mol_textarea
 					value?next <=> str?next \
 				<= Numb $mol_number

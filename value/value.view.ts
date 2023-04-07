@@ -168,10 +168,6 @@ namespace $.$$ {
 			return { bind: '<=>', get: '<=', put: '=>' }
 		}
 		
-		object_options(): ReturnType<$hyoo_studio_prop_type[ 'object_options' ]> {
-			return { text: 'text', list: 'list', dict: 'dict' }
-		}
-		
 	}
 	
 }

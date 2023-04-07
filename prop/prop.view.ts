@@ -37,11 +37,15 @@ namespace $.$$ {
 		}
 		
 		prop_tools() {
-			return this.type() == 'text' ? super.prop_tools() : [ this.Type(), this.Key(), this.Next() ]
+			switch( this.type() ) {
+				case 'text': return [ this.Type(), this.Locale(), this.Key(), this.Next() ]
+				case 'object': return [ this.Type(), this.Over_add(), this.Key(), this.Next() ]
+				default: return [ this.Type(), this.Key(), this.Next() ]
+			}
 		}
 
 		prop_content() {
-			return this.type() == 'object' ? [ this.Object() ] : [ this.Value() ]
+			return this.type() == 'object' ? [ this.Over_props() ] : [ this.Value() ]
 		}
 		
 		@ $mol_mem

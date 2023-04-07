@@ -9,6 +9,7 @@ namespace $.$$ {
 				grow: 1,
 			},
 			alignItems: 'flex-start',
+			position: 'relative', //for type picker bubble positioning
 		},
 
 		Type: {
@@ -30,7 +31,6 @@ namespace $.$$ {
 				grow: 1,
 				shrink: 1,
 			},
-			maxWidth: rem(30),
 		},
 
 		Item_type: {

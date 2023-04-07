@@ -2,27 +2,15 @@ namespace $.$$ {
 
 	export class $hyoo_studio_prop_type extends $.$hyoo_studio_prop_type {
 
-		object_options(): Partial<{ text: 'text', list: 'list', dict: 'dict', object: 'object' }> {
-			return { text: 'text', list: 'list', dict: 'dict', object: 'object' }
+		object_options(): Partial<{ text: 'text', list: 'list', dict: 'dict' }> {
+			return { text: 'text', list: 'list', dict: 'dict' }
 		}
 
 		bind_options(): Partial<{ bind: '<=>', get: '<=', put: '=>' }> {
 			return { bind: '<=>', get: '<=', put: '=>' }
 		}
 
-		unit(next?: string) {
-			return this.type(next)
-		}
-
-		number(next?: string) {
-			return this.type(next)
-		}
-
-		object(next?: string) {
-			return this.type(next)
-		}
-
-		bind(next?: string) {
+		switch_type(next?: string) {
 			return this.type(next)
 		}
 
@@ -30,14 +18,23 @@ namespace $.$$ {
 			this.type('')
 		}
 
+		bubble_content() {
+			return this.obj_select_showed()? this.Obj_bubble_content() : super.bubble_content()
+		}
+
+		obj_checked( next?: any ): boolean {
+			return this.type() == 'object'? true : false
+		}
+
 		@ $mol_mem
 		type_display() {
-			const value = this.type()
+			const type = this.type()
 
-			if (this.unit_options()[value]) return this.unit_options()[value]
-			if (this.number_options()[value]) return this.number_options()[value]
-			if (this.object_options()[value]) return this.object_options()[value]
-			if (this.bind_options()[value]) return this.bind_options()[value]
+			if (type == 'object') { return this.selected_obj() }
+			if (this.unit_options()[type]) return this.unit_options()[type]
+			if (this.number_options()[type]) return this.number_options()[type]
+			if (this.object_options()[type]) return this.object_options()[type]
+			if (this.bind_options()[type]) return this.bind_options()[type]
 
 			return ''
 		}
@@ -46,7 +43,7 @@ namespace $.$$ {
 		type( next? : string ): string {
 			
 			if( next !== undefined ) {
-				
+
 				switch( next ) {
 					case '' : this.tree(null); break
 					case 'null' : this.tree( this.tree().struct('null') ); break
@@ -59,12 +56,14 @@ namespace $.$$ {
 					case 'text': this.tree( this.tree().data('') ); break
 					case 'list': this.tree( this.tree().struct( '/' ) ); break
 					case 'dict': this.tree( this.tree().struct( '*' ) ); break
-					case 'object': this.tree( this.tree().struct( '$mol_view' ) ); break
+					case 'object': this.tree( this.tree().struct( '$mol_view', [ this.tree().kids[0] ?? this.tree().data( '' ) ] ) ); break
 					case 'bind': this.tree( this.tree().struct( '<=>', [ this.tree().kids[0] ?? this.tree().data( '' ) ] ) ); break
 					case 'get': this.tree( this.tree().struct( '<=', [ this.tree().kids[0] ?? this.tree().data( '' ) ] ) ); break
 					case 'put': this.tree( this.tree().struct( '=>', [ this.tree().kids[0] ?? this.tree().data( '' ) ] ) ); break
 					default : $mol_fail( new TypeError( `Unsupported type: ${ next }` ) )
 				}
+
+				this.showed(false)			
 			}
 
 			const val = this.tree()
@@ -87,6 +86,21 @@ namespace $.$$ {
 			if (type === 'bind') return 'bind'
 			
 			return type
+		}
+
+		show_obj_select() {
+			this.obj_select_showed(true)
+		}
+		
+		@ $mol_mem
+		selected_obj(next?: string) {
+
+			if ( next !== undefined ) {
+				this.showed(false)
+				return this.tree(this.tree().struct( next )).type
+			}
+			
+			return this.tree().type
 		}
 
 	}

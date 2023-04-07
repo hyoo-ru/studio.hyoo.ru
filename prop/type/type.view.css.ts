@@ -8,7 +8,13 @@ namespace $.$$ {
 			padding: $mol_gap.space,
 		},
 
-		Menu_item_control: {
+		Object_options: {
+			flex: 'none',
+		},
+
+		position: 'static', //because pop_bubble should be relative to prop card
+
+		Control: {
 			border: {
 				top: {
 					color: $mol_theme.line,

@@ -50,6 +50,7 @@ namespace $.$$ {
 		},
 
 		Label: {
+			position: 'relative', //for type picker bubble positioning
 			background: {
 				color: $mol_theme.card,
 			},

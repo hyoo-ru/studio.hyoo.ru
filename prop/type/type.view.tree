@@ -4,29 +4,44 @@ $hyoo_studio_prop_type $mol_pick
 		<= Value $mol_paragraph title <= type_display \
 	bubble_content /
 		<= Options_content $mol_list rows /
-			<= Menu_item_unit $mol_switch
-				value? <=> unit? \
+			<= Unit_options $mol_switch
+				value? <=> switch_type? \
 				options <= unit_options *
 					null \null
 					boolean_false \false
 					boolean_true \true
-			<= Menu_item_number $mol_switch
-				value? <=> number? \
+			<= Number_options $mol_switch
+				value? <=> switch_type? \
 				options <= number_options *
 					number \number
 					number_nan \NaN
 					number_infinity_negative \-Infinity
 					number_infinity_positive \+Infinity
-			<= Menu_item_object $mol_switch
-				value? <=> object? \
-				options <= object_options *
-			<= Menu_item_bind $mol_switch
-				value? <=> bind? \
+			<= Object_group $mol_view
+				sub /
+					<= Object_options $mol_switch
+						value? <=> switch_type? \
+						options <= object_options *
+					<= Object $mol_check
+						title \object
+						click <= show_obj_select null
+						checked? <= obj_checked? false
+			<= Bind_options $mol_switch
+				value? <=> switch_type? \
 				options <= bind_options *
-			<= Menu_item_control $mol_view sub /
+			<= Control $mol_view sub /
 				<= Menu_item_delete $mol_button_minor
 					style * color \red
 					click? <=> drop? null
 					sub /
 						<= menu_item_delete_icon $mol_icon_trash_can_outline
 						<= menu_item_delete_label \Drop
+	Object_select $mol_select
+		hint @ \Class
+		align_hor \right
+		value?next <=> selected_obj?next \$mol_view
+		options <= class_list /string
+		Trigger_icon null
+		bubble_content => Obj_bubble_content
+	obj_select_showed? false
+	align_hor \center
