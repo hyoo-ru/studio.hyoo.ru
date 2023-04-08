@@ -2,17 +2,25 @@ namespace $.$$ {
 
 	const { px } = $mol_style_unit
 
-	$mol_style_define( $.$hyoo_studio_prop_type, {
+	$mol_style_define( $.$hyoo_studio_type, {
+
+		flex: {
+			grow: 0,
+		},
 
 		Options_content: {
 			padding: $mol_gap.space,
 		},
 
-		Object_options: {
+		Other_options: {
 			flex: 'none',
 		},
 
 		position: 'static', //because pop_bubble should be relative to prop card
+
+		Value: {
+			color: $mol_theme.special,
+		},
 
 		Control: {
 			border: {

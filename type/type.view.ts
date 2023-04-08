@@ -1,10 +1,6 @@
 namespace $.$$ {
 
-	export class $hyoo_studio_prop_type extends $.$hyoo_studio_prop_type {
-
-		object_options(): Partial<{ text: 'text', list: 'list', dict: 'dict' }> {
-			return { text: 'text', list: 'list', dict: 'dict' }
-		}
+	export class $hyoo_studio_type extends $.$hyoo_studio_type {
 
 		bind_options(): Partial<{ bind: '<=>', get: '<=', put: '=>' }> {
 			return { bind: '<=>', get: '<=', put: '=>' }
@@ -23,17 +19,17 @@ namespace $.$$ {
 		}
 
 		obj_checked( next?: any ): boolean {
-			return this.type() == 'object'? true : false
+			return this.type() === 'object'? true : false
 		}
 
 		@ $mol_mem
 		type_display() {
 			const type = this.type()
 
-			if (type == 'object') { return this.selected_obj() }
+			if (type === 'object') { return this.selected_obj() }
 			if (this.unit_options()[type]) return this.unit_options()[type]
 			if (this.number_options()[type]) return this.number_options()[type]
-			if (this.object_options()[type]) return this.object_options()[type]
+			if (this.other_options()[type]) return this.other_options()[type]
 			if (this.bind_options()[type]) return this.bind_options()[type]
 
 			return ''
@@ -79,10 +75,10 @@ namespace $.$$ {
 			if (type === 'null') return 'null'
 			if (type === 'bool') return val.type === 'true' ? 'boolean_true' : 'boolean_false'
 			if (type === 'number') return 'number'
-			if( type === 'locale' ) return 'text'
+			if (type === 'locale' ) return 'text'
 			if (type === 'string') return 'text'
-			if( type === 'get' ) return 'get'
-			if( type === 'put' ) return 'put'
+			if (type === 'get' ) return 'get'
+			if (type === 'put' ) return 'put'
 			if (type === 'bind') return 'bind'
 			
 			return type

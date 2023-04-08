@@ -13,7 +13,6 @@ namespace $.$$ {
 			
 			if( next !== undefined ) {
 				const new_sign = $mol_view_tree2_prop_signature.generate( { ...sign_obj, key: next ? '*' : '' } )!
-				console.log( new_sign )
 				this.sign( new_sign )
 				return next
 			}
@@ -23,34 +22,82 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		changeable( next?: any ): boolean {
+
 			const sign_obj = [ ...this.sign().matchAll( $mol_view_tree2_prop_signature ) ][ 0 ]?.groups ?? {
 				name: '',
 				key: '',
 				next: '',
 			}
+
 			if( next !== undefined ) {
 				const new_sign = $mol_view_tree2_prop_signature.generate( { ...sign_obj, next: next ? '?' : '' } )!
 				this.sign( new_sign )
 				return next
 			}
+
 			return Boolean( sign_obj.next )
 		}
 		
-		prop_tools() {
-			switch( this.type() ) {
-				case 'text': return [ this.Type(), this.Locale(), this.Key(), this.Next() ]
-				case 'object': return [ this.Type(), this.Over_add(), this.Key(), this.Next() ]
-				default: return [ this.Type(), this.Key(), this.Next() ]
-			}
-		}
-
 		prop_content() {
-			return this.type() == 'object' ? [ this.Over_props() ] : [ this.Value() ]
+			switch (this.type()) {
+				case 'object': return [ this.Value() ]
+				case 'text': return [ this.Value() ]
+				case 'number': return [ this.Value() ]
+				case 'list': return [ this.Value() ]
+				case 'dict': return [ this.Value() ]
+				case 'bind': return [ this.Value() ]
+				case 'get': return [ this.Value() ]
+				case 'put': return [ this.Value() ]
+				default: return []
+			}
 		}
 		
 		@ $mol_mem
+		expandable() {
+			switch (this.type()) {
+				case 'object': return true
+				case 'text': return true
+				case 'number': return true
+				case 'list': return true
+				case 'dict': return true
+				default: return false
+			}
+		}
+
+		@ $mol_mem
+		expanded(next?: boolean): boolean {
+
+			if ( next !== undefined ) return next as never
+
+			let expanded: boolean | undefined = $mol_wire_probe( () => this.expanded() )
+			const type = this.type()
+
+			if ( !expanded ) {
+				switch (type) {
+					case 'object': 
+					case 'list': 
+					case 'dict': 
+						return this.value().kids.length > 0 ? false : true
+					case 'text': return this.value().text().length > 40 ? false : true
+					case 'null' : return true
+					case 'boolean_true' : return true
+					case 'boolean_false' : return true
+					case 'number' : return true
+					case 'number_nan' : return true
+					case 'number_infinity_negative' : return true
+					case 'number_infinity_positive' : return true
+				}
+				return false
+			}
+
+			return expanded
+		}
+
+		@ $mol_mem
 		value( next?: $mol_tree2 ) {
+
 			let val = this.tree()
+
 			if( next !== undefined ) {
 				val = this.tree( next && val.clone( [ next ] ) )
 				return next
@@ -59,86 +106,5 @@ namespace $.$$ {
 			return val?.kids[ 0 ]
 		}
 		
-		@ $mol_mem
-		prop_name_list() {
-			return this.props_bindable().kids.map( prop => prop.type )
-		}
-		
-		@ $mol_mem
-		obj( next?: string ) {
-			return this.value(
-				next === undefined
-					? undefined
-					: this.value().struct( next )
-			).type
-		}
-
-		@ $mol_mem
-		overs() {
-			return this.value().kids.map( ( _, i ) => this.Over_prop( i ) )
-		}
-		
-		@ $mol_mem
-		over_prop_options() {
-			return this.props_of( this.obj() ).kids.map( prop => prop.type )
-		}
-		
-		@ $mol_mem_key
-		over_prop_name( index: number, next?: string ) {
-			let val = this.value()
-			if( next !== undefined ) {
-				val = this.value(
-					val.insert( val.struct( next, val.kids[ index ].kids ), index )
-				)
-			}
-			return val.kids[ index ].type
-		}
-		
-		over_add( next: string ) {
-			
-			if( !next ) return ''
-			
-			const tree = this.value()
-			
-			this.value(
-				tree.clone( [
-					...tree.kids,
-					tree.struct( next, [
-						tree.struct( 'null' ),
-					] ),
-				] )
-			)
-			
-			return next
-		}
-
-		@ $mol_mem_key
-		over_value( index: number, next?: $mol_tree2 ) {
-			let val = this.value()
-			if( next !== undefined ) {
-				val = this.value(
-					val.insert( next && val.kids[ index ].clone( [ next ] ), index )
-				)
-			}
-			return val.kids[ index ]?.kids[ 0 ]
-		}
-		
-		@ $mol_mem
-		locale( next?: boolean ) {
-			
-			const val = this.value()
-			
-			if( next === undefined ) return '@' === val.type
-			
-			this.value(
-				next
-					? val.struct( '@', [
-						val.data( val.text() || val.type )
-					] )
-					: val.data( val.text() || val.type )
-			)
-
-			return next
-		}
 	}
 }

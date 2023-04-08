@@ -1,4 +1,4 @@
-$hyoo_studio_prop_type $mol_pick
+$hyoo_studio_type $mol_pick
 	tree?val $mol_tree2_empty
 	trigger_content /
 		<= Value $mol_paragraph title <= type_display \
@@ -17,12 +17,15 @@ $hyoo_studio_prop_type $mol_pick
 					number_nan \NaN
 					number_infinity_negative \-Infinity
 					number_infinity_positive \+Infinity
-			<= Object_group $mol_view
+			<= Other_options_group $mol_view
 				sub /
-					<= Object_options $mol_switch
+					<= Other_options $mol_switch
 						value? <=> switch_type? \
-						options <= object_options *
-					<= Object $mol_check
+						options <= other_options *
+							text \text
+							list \list
+							dict \dict
+					<= Object_option $mol_check
 						title \object
 						click <= show_obj_select null
 						checked? <= obj_checked? false

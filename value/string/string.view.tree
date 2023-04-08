@@ -1,0 +1,10 @@
+$hyoo_studio_value_string $mol_view
+	tree? $mol_tree2_empty
+	sub <= self /
+		<= Type $hyoo_studio_type
+			tree? <=> tree?
+			type => type
+			bind_options <= bind_options *
+			Object_option null
+		<= Str $mol_textarea
+			value?next <=> str?next \

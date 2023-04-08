@@ -8,28 +8,23 @@ $hyoo_studio_prop $mol_view
 					<= Label_content $mol_view
 						sub <= label_sub /
 							<= Trigger $mol_check_expand
-								checked?val <=> expanded?val false
+								checked? <=> expanded? false
 								expandable <= expandable true
-								label /
-									<= expander_title <= name \
+								label <= trigger_label /
+									<= Expander_title $mol_paragraph
+										title <= name \
 							<= Prop_tools
-			expanded? <=> expanded? false
+			expanded? <=> expanded?
 			Tools <= Prop_tools $mol_view 
 				sub <= prop_tools /
-					<= Locale $mol_check_icon
-						hint @ \Multilingual
-						Icon <= Locale_icon $mol_icon_translate
-						checked?next <=> locale?next false
-					<= Type $hyoo_studio_prop_type
+					<= Type $hyoo_studio_type
 						tree? <=> value?
 						type? => type?
 						class_list <= class_list /string
-					<= Over_add $mol_select
-						hint @ \Add Override
-						align_hor \left
-						Trigger_icon <= Over_add_icon $mol_icon_wrench_outline
-						value?next <=> over_add?next \
-						options <= over_prop_options /string
+					<= Value_tools $hyoo_studio_value_tools
+						tree? <=> value?
+						type? <= type?
+						props_of!klass <= props_of!klass
 					<= Key $mol_check_icon
 						hint @ \Multiple values by key
 						Icon <= Key_icon $mol_icon_key_change
@@ -39,20 +34,11 @@ $hyoo_studio_prop $mol_view
 						Icon <= Next_icon $mol_icon_atom_variant
 						checked? <=> changeable? false
 			content <= prop_content /
-				<= Over_props $mol_list
-					sub <= overs /
 				<= Value $hyoo_studio_value
 					Type null
+					Value_tools null
 					tree? <=> value? $mol_tree2_empty
 					type? <= type?
 					props_of!klass <= props_of!klass $mol_tree2_empty
 					props_bindable <= props_bindable $mol_tree2_empty
-					Bound_prop* <= Bound_prop*
-	Over_prop* $hyoo_studio_value
-		parent_type \object
-		tree? <=> over_value*? $mol_tree2_empty
-		name? <= over_prop_name*? \
-		props_of!klass <= props_of!klass $mol_tree2_empty
-		props_bindable <= props_bindable $mol_tree2_empty
-		class_list <= class_list /string
-		Bound_prop* <= Bound_prop* $hyoo_studio_prop
+					Bound_prop* <= Bound_prop* null

@@ -1,0 +1,30 @@
+$hyoo_studio_value_dict $mol_list
+	tree? $mol_tree2_empty
+	head /
+	rows /
+		<= Self $mol_view 
+			sub <= self /
+				^ head
+				<= Type $hyoo_studio_type
+					tree? <=> tree?
+					type => type
+					bind_options <= bind_options *
+					Object_option null
+				<= Value_tools $hyoo_studio_value_tools
+					tree? <=> tree?
+					type <= type
+					props_of!klass <= props_of!klass
+		<= Key_values $mol_list
+			rows <= list /
+	Item* $mol_view
+		sub /
+			<= Item_name* $mol_textarea
+				value? <=> item_key*? \
+			<= Value* $hyoo_studio_value
+				tree? <=> item_value*? $mol_tree2_empty
+				props_of!klass <= props_of!klass $mol_tree2_empty
+				props_bindable <= props_bindable $mol_tree2_empty
+				class_list <= class_list /string
+				Bound_prop* <= Bound_prop* null
+				head /
+					<= Item_name*

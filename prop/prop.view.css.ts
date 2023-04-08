@@ -19,26 +19,6 @@ namespace $.$$ {
 			},
 		},
 
-		Type: {
-			Trigger: {
-				color: $mol_theme.special,
-			},
-		},
-
-		Over_props: {
-			gap: $mol_gap.space,
-			flex: {
-				grow: 1,
-			},
-			padding: {
-				left: $mol_gap.block,
-			},
-		},
-
-		Over_add: {
-			marginLeft: 'auto',
-		},
-
 		Object: {
 			flexDirection: 'column',
 		},
@@ -51,12 +31,6 @@ namespace $.$$ {
 
 		Label: {
 			position: 'relative', //for type picker bubble positioning
-			background: {
-				color: $mol_theme.card,
-			},
-			border: {
-				radius: $mol_gap.round,
-			},
 		},
 
 		Label_content: {
@@ -72,8 +46,14 @@ namespace $.$$ {
 			},
 		},
 
+		Expander_title: {
+			color: $mol_theme.control,
+		},
+
 		Prop_tools: {
-			marginLeft: 'auto',
+			flex: {
+				shrink: 1,
+			},
 		},
 
 		Key: {

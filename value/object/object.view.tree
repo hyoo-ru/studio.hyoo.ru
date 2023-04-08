@@ -1,0 +1,3 @@
+$hyoo_studio_value_object $hyoo_studio_value_dict
+	Item_name* $mol_paragraph
+		title <= item_key*?

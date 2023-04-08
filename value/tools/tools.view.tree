@@ -1,0 +1,28 @@
+$hyoo_studio_value_tools $mol_view
+	tree? $mol_tree2_empty
+	type \
+	sub <= tools /
+		<= List_items_type $mol_string_button
+			hint @ \Item Type
+			value?next <=> list_items_type?next \any
+		<= List_item_add $mol_button_minor
+			hint @ \Add Item
+			sub /
+				<= List_add_icon $mol_icon_plus
+			click? <=> list_item_add? null
+		<= Key_item_add $mol_button_minor
+			hint @ \Add Key
+			sub /
+				<= Key_add_icon $mol_icon_plus
+			click? <=> dict_item_add? null
+		<= Over_prop_add $mol_select
+			hint @ \Add Override
+			align_hor \left
+			Trigger_icon <= Over_add_icon $mol_icon_wrench_outline
+			value? <=> over_prop_add? \
+			options <= over_prop_options /string
+		<= Locale $mol_check_icon
+			hint @ \Multilingual
+			Icon <= Locale_icon $mol_icon_translate
+			checked? <=> locale? false
+	props_of!klass $mol_tree2_empty

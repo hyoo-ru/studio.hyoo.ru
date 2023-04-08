@@ -1,47 +1,61 @@
-$hyoo_studio_value $mol_list
+$hyoo_studio_value $mol_ghost
 	tree? $mol_tree2_empty
-	guid \
-	parent_type \
-	rows /
-		<= Self $mol_view
-			sub <= self /
-				<= Type $hyoo_studio_prop_type
-					tree? <=> tree?
-					type => type
-					bind_options <= bind_options *
-					Object null
-				<= Str $mol_textarea
-					value?next <=> str?next \
-				<= Numb $mol_number
-					value?next <=> numb?next +NaN
-				<= Over_prop_name $mol_select
-					hint @ \Overrided Property
-					value?next <=> name?next \
-					options <= prop_name_list
-					Trigger_icon null
-				<= Bound_prop_expand $mol_check_expand
-					checked? <=> bound_expanded? false
-				<= Bound_prop_name $mol_select
-					hint @ \Bound Property
-					value?next <=> bound_prop_name?next null
-					options <= prop_name_list /string
-					Trigger_icon null
-				<= Item_type $mol_string_button
-					hint @ \Item Type
-					value?next <=> item_type?next \any
-				<= List_add $mol_button_minor
-					hint @ \Add Item
-					sub /
-						<= List_add_icon $mol_icon_plus
-					click?next <=> list_add?next null
-		<= List_values $mol_list
-			rows <= list /
-	List_value* $hyoo_studio_value
-		parent_type \list
-		tree? <=> list_value*? $mol_tree2_empty
+	Bound $hyoo_studio_value_bound
+		Type <= Type
+		type? <=> type?
+		tree? <=> tree?
+		Value_tools <= Value_tools
 		props_of!klass <= props_of!klass $mol_tree2_empty
 		props_bindable <= props_bindable $mol_tree2_empty
 		class_list <= class_list /string
 		Bound_prop* <= Bound_prop* null
-		bind_options *
-			get \<=
+		head <= head /
+	List $hyoo_studio_value_list
+		Type <= Type
+		type? <=> type?
+		tree? <=> tree?
+		Value_tools <= Value_tools
+		props_of!klass <= props_of!klass
+		props_bindable <= props_bindable
+		class_list <= class_list
+		Bound_prop* <= Bound_prop*
+		head <= head /
+	Dict $hyoo_studio_value_dict
+		Type <= Type
+		type? <=> type?
+		tree? <=> tree?
+		Value_tools <= Value_tools
+		props_of!klass <= props_of!klass
+		props_bindable <= props_bindable
+		class_list <= class_list
+		Bound_prop* <= Bound_prop*
+		head <= head /
+	Object $hyoo_studio_value_object
+		Type <= Type
+		type? <=> type?
+		tree? <=> tree?
+		Value_tools <= Value_tools
+		props_of!klass <= props_of!klass
+		props_bindable <= props_bindable
+		class_list <= class_list
+		Bound_prop* <= Bound_prop*
+		head <= head /
+	String $hyoo_studio_value_string
+		Type <= Type
+		type? <=> type?
+		tree? <=> tree?
+	Number $hyoo_studio_value_number
+		Type <= Type
+		type? <=> type?
+		tree? <=> tree?
+	Unit $mol_view
+		sub / <= Type
+	Type $hyoo_studio_type
+		tree? <=> tree?
+		type? => type?
+		bind_options <= bind_options *
+		Object_option null
+	Value_tools $hyoo_studio_value_tools
+		tree? <=> tree?
+		type? <= type?
+		props_of!klass <= props_of!klass
