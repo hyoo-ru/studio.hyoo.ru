@@ -26,8 +26,25 @@ namespace $.$$ {
 			flex: {
 				wrap: 'wrap',
 			},
+			margin: $mol_gap.block,
+			padding: $mol_gap.block,
+			overflow: 'visible',
 
+		},
 
+		Self_field: {
+			alignItems: 'center',
+			padding: 0,
+		},
+		Self_field_name: {
+			color: $mol_theme.shade		
+		},
+		Base_field: {
+			alignItems: 'center',
+			padding: 0,
+		},
+		Base_field_name: {
+			color: $mol_theme.shade		
 		},
 
 		$mol_form_field: {

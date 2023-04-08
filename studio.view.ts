@@ -18,6 +18,7 @@ namespace $.$$ {
 		pages() {
 			return [
 				this.Edit(),
+				... this.readme_show() ? [ this.Readme_page() ] : [],
 				... this.code_show() ? [ this.Source_page() ] : [],
 				... this.inspector_show() ? [ this.Inspect() ] : [],
 				... this.preview_show() ? [ this.Preview() ] : [],

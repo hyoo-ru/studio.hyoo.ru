@@ -27,25 +27,40 @@ $hyoo_studio $mol_book2
 			body /
 				<= Edit_form $mol_list
 					rows <= form_sections /
-						<= Pack_field $mol_form_field
-							name @ \Components Donor App
-							control <= Pack $mol_string
-								hint <= pack
-								value?val <=> pack?val \https://mol.hyoo.ru
+						<= Donor_expander $mol_expander
+							label @ \Components Donor App
+							content /
+								<= Pack_field $mol_form_field
+									name @ \Donor App website
+									control <= Pack $mol_search
+										query? <=> pack? \https://mol.hyoo.ru
+										suggests <= suggests /
+											\https://mol.hyoo.ru
+											\https://todomvc.hyoo.ru
+								<= Repo_field $mol_form_field
+									name @ \Donor App repo
+									control <= Repo $mol_string
+										hint <= repo
+										value? <=> repo? \hyoo-ru/mam_mol
 						<= Config $mol_list
 							rows /
-								<= Classes $mol_view
+								<= Classes $mol_card
 									sub /
-										<= Self_field $mol_form_field
-											name @ \Component Name
-											control <= Self $mol_string
-												hint \$hyoo_studio_example
-												value?val <=> self?val \
-										<= Base_field $mol_form_field
-											name @ \Base Class
-											control <= Base $mol_select
-												value?val <=> base?val \
-												options <= base_options /string
+										<= Self_field $mol_row
+											sub /
+												<= Self_field_name $mol_paragraph 
+													title @ \Component
+												<= Self $mol_string
+													hint \$hyoo_studio_example
+													value?val <=> self?val \
+										<= Base_field $mol_row
+											sub /
+												<= Base_field_name $mol_paragraph 
+													title @ \Base class
+												<= Base $mol_select
+													value?val <=> base?val \
+													options <= base_options /string
+													- align \bottom
 								- <= Props_inherited_field $mol_form_field
 									name @ \Display inherited properties
 									control <= Props_inherited_control $mol_check_list
@@ -66,6 +81,11 @@ $hyoo_studio $mol_book2
 												<= Prop_add_icon $mol_icon_plus
 								<= Props $mol_list
 									rows <= props /$hyoo_studio_prop
+		<= Readme_page $mol_app_demo_readme
+			repo <= repo
+			opened? <=> readme_show? false
+			module <= module /string
+			source_link <= source_link \
 		<= Source_page $mol_page
 			title @ \Raw Code
 			body /
