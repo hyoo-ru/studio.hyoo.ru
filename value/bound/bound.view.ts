@@ -26,7 +26,7 @@ namespace $.$$ {
 			const prop = this.Bound_prop( this.bound_prop_name() + ':' + this.guid() )
 			prop.trigger_label = () => []
 			prop.label_sub = () => [
-				...this.head(), this.Type(), this.Bound_prop_name(), prop.Trigger(), prop.Prop_tools()
+				...this.head(), this.Value_tools(), this.Bound_prop_name(), prop.Trigger(), prop.Prop_tools()
 			]
 			return prop
 		}
@@ -51,11 +51,6 @@ namespace $.$$ {
 			
 			return next || '...'
 		}
-		
-		bind_options(): ReturnType<$hyoo_studio_type[ 'bind_options' ]> {
-			return { bind: '<=>', get: '<=', put: '=>' }
-		}
-		
 	}
 	
 }

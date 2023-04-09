@@ -1,5 +1,6 @@
 $hyoo_studio_type $mol_pick
 	tree?val $mol_tree2_empty
+	belong_to \
 	trigger_content /
 		<= Value $mol_paragraph title <= type_display \
 	bubble_content /
@@ -10,21 +11,20 @@ $hyoo_studio_type $mol_pick
 					null \null
 					boolean_false \false
 					boolean_true \true
+					number_nan \NaN
 			<= Number_options $mol_switch
 				value? <=> switch_type? \
 				options <= number_options *
 					number \number
-					number_nan \NaN
 					number_infinity_negative \-Infinity
 					number_infinity_positive \+Infinity
 			<= Other_options_group $mol_view
-				sub /
+				sub <= other_options_group /
 					<= Other_options $mol_switch
 						value? <=> switch_type? \
 						options <= other_options *
-							text \text
-							list \list
-							dict \dict
+					<= List_items_type $mol_textarea
+						value? <=> list_items_type? \
 					<= Object_option $mol_check
 						title \object
 						click <= show_obj_select null
@@ -47,4 +47,4 @@ $hyoo_studio_type $mol_pick
 		Trigger_icon null
 		bubble_content => Obj_bubble_content
 	obj_select_showed? false
-	align_hor \center
+	list_type_showed? false

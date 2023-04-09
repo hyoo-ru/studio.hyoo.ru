@@ -18,10 +18,16 @@ namespace $.$$ {
 			return tree.kids[ index ]
 		}
 		
-		bind_options(): ReturnType<$hyoo_studio_type[ 'bind_options' ]> {
-			return { bind: '<=>', get: '<=', put: '=>' }
+		list_item_add() {
+			const tree = this.tree()
+			this.tree(
+				tree.clone([
+					... tree.kids,
+					tree.struct( 'null' ),
+				])
+			)
 		}
-		
+
 	}
 	
 }

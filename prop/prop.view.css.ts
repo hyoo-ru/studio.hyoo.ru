@@ -3,6 +3,7 @@ namespace $.$$ {
 	const { px, rem, per } = $mol_style_unit
 
 	$mol_style_define( $hyoo_studio_prop, {
+
 		flex: {
 			grow: 1,
 		},
@@ -17,6 +18,17 @@ namespace $.$$ {
 			flex: {
 				grow: 1,
 			},
+			padding: {
+				bottom: $mol_gap.space,
+				left: $mol_gap.space,
+			},
+			Bound: {
+				Self: {
+					padding: {
+						left: $mol_gap.block,
+					},
+				},
+			},
 		},
 
 		Object: {
@@ -27,10 +39,6 @@ namespace $.$$ {
 			flex: {
 				grow: 1,
 			},
-		},
-
-		Label: {
-			position: 'relative', //for type picker bubble positioning
 		},
 
 		Label_content: {
@@ -54,10 +62,6 @@ namespace $.$$ {
 			flex: {
 				shrink: 1,
 			},
-		},
-
-		Key: {
-			marginLeft: 'auto',
 		},
 
 	} )

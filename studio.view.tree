@@ -9,6 +9,11 @@ $hyoo_studio $mol_book2
 				<= Source_link $mol_link_source
 					uri \https://github.com/hyoo-ru/studio.hyoo.ru
 				<= Lights $mol_lights_toggle
+				<= Readme_open $mol_check_icon
+					hint @ \Components Readme
+					checked? <=> readme_show? false
+					sub /
+						<= Readme_toggle_icon $mol_icon_information_outline
 				<= Code_open $mol_check_icon
 					hint @ \Show Editor
 					checked? <=> code_show? false
@@ -28,7 +33,7 @@ $hyoo_studio $mol_book2
 				<= Edit_form $mol_list
 					rows <= form_sections /
 						<= Donor_expander $mol_expander
-							label @ \Components Donor App
+							title @ \Components Donor App
 							content /
 								<= Pack_field $mol_form_field
 									name @ \Donor App website
@@ -36,31 +41,18 @@ $hyoo_studio $mol_book2
 										query? <=> pack? \https://mol.hyoo.ru
 										suggests <= suggests /
 											\https://mol.hyoo.ru
-											\https://todomvc.hyoo.ru
 								<= Repo_field $mol_form_field
-									name @ \Donor App repo
-									control <= Repo $mol_string
+									name @ \Donor GitHub repo
+									control <= Repo $mol_textarea
 										hint <= repo
 										value? <=> repo? \hyoo-ru/mam_mol
 						<= Config $mol_list
 							rows /
-								<= Classes $mol_card
-									sub /
-										<= Self_field $mol_row
-											sub /
-												<= Self_field_name $mol_paragraph 
-													title @ \Component
-												<= Self $mol_string
-													hint \$hyoo_studio_example
-													value?val <=> self?val \
-										<= Base_field $mol_row
-											sub /
-												<= Base_field_name $mol_paragraph 
-													title @ \Base class
-												<= Base $mol_select
-													value?val <=> base?val \
-													options <= base_options /string
-													- align \bottom
+								<= Classes $hyoo_studio_component_head
+									self? <=> self? \
+									base? <=> base? \
+									base_options <= base_options /string
+									focus_class? <=> readme_module_name?
 								- <= Props_inherited_field $mol_form_field
 									name @ \Display inherited properties
 									control <= Props_inherited_control $mol_check_list
@@ -83,9 +75,9 @@ $hyoo_studio $mol_book2
 									rows <= props /$hyoo_studio_prop
 		<= Readme_page $mol_app_demo_readme
 			repo <= repo
-			opened? <=> readme_show? false
-			module <= module /string
+			module? <= readme_module? /string
 			source_link <= source_link \
+			opened? <=> readme_show?
 		<= Source_page $mol_page
 			title @ \Raw Code
 			body /
@@ -118,6 +110,7 @@ $hyoo_studio $mol_book2
 					value <= inspect_graph null
 	Prop* $hyoo_studio_prop
 		name <= prop_name* \default
+		focus_class? <=> readme_module_name? \
 		sign? <=> prop_sign*? \
 		tree? <=> prop_tree!tree_node_str? $mol_tree2_empty
 		props_of!klass <= props_of!klass $mol_tree2_empty
@@ -125,3 +118,20 @@ $hyoo_studio $mol_book2
 		class_list <= class_list /string
 		Bound_prop* <= Bound_prop* $hyoo_studio_prop
 	Placeholder null
+
+$hyoo_studio_component_head $mol_view
+	sub /
+		<= Self_field $mol_form_field
+			name @ \Component Name
+			control <= Self $mol_string
+				hint \$hyoo_studio_example
+				value?val <=> self?val \
+		<= Base_field $mol_form_field
+			name @ \Base Class
+			control <= Base $mol_select
+				value?val <=> base?val \
+				options <= base_options /string
+	focus_class? null
+	event *
+		^
+		click? <=> show_info? null

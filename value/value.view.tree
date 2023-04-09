@@ -1,61 +1,39 @@
 $hyoo_studio_value $mol_ghost
 	tree? $mol_tree2_empty
 	Bound $hyoo_studio_value_bound
-		Type <= Type
-		type? <=> type?
-		tree? <=> tree?
-		Value_tools <= Value_tools
-		props_of!klass <= props_of!klass $mol_tree2_empty
-		props_bindable <= props_bindable $mol_tree2_empty
-		class_list <= class_list /string
-		Bound_prop* <= Bound_prop* null
-		head <= head /
 	List $hyoo_studio_value_list
-		Type <= Type
-		type? <=> type?
-		tree? <=> tree?
-		Value_tools <= Value_tools
-		props_of!klass <= props_of!klass
-		props_bindable <= props_bindable
-		class_list <= class_list
-		Bound_prop* <= Bound_prop*
-		head <= head /
 	Dict $hyoo_studio_value_dict
-		Type <= Type
-		type? <=> type?
-		tree? <=> tree?
-		Value_tools <= Value_tools
-		props_of!klass <= props_of!klass
-		props_bindable <= props_bindable
-		class_list <= class_list
-		Bound_prop* <= Bound_prop*
-		head <= head /
 	Object $hyoo_studio_value_object
-		Type <= Type
-		type? <=> type?
-		tree? <=> tree?
-		Value_tools <= Value_tools
-		props_of!klass <= props_of!klass
-		props_bindable <= props_bindable
-		class_list <= class_list
-		Bound_prop* <= Bound_prop*
-		head <= head /
 	String $hyoo_studio_value_string
-		Type <= Type
-		type? <=> type?
-		tree? <=> tree?
 	Number $hyoo_studio_value_number
-		Type <= Type
-		type? <=> type?
-		tree? <=> tree?
-	Unit $mol_view
-		sub / <= Type
-	Type $hyoo_studio_type
-		tree? <=> tree?
-		type? => type?
-		bind_options <= bind_options *
-		Object_option null
-	Value_tools $hyoo_studio_value_tools
-		tree? <=> tree?
-		type? <= type?
-		props_of!klass <= props_of!klass
+	Unit $hyoo_studio_value_unit
+	value_tools /
+	type \
+	selected_obj \
+	head /
+	belong_to \prop
+	hide_tools false
+	props_of!klass $mol_tree2_empty
+	props_bindable $mol_tree2_empty
+	class_list /string
+	Bound_prop* null
+
+$hyoo_studio_value_unit $mol_view
+	head /
+	belong_to \prop
+	hide_tools false
+	props_of!klass $mol_tree2_empty
+	props_bindable $mol_tree2_empty
+	class_list /string
+	Bound_prop* null
+	sub /
+		^ head
+		<= Value_tools $mol_view
+			sub <= visible_tools <= tools /
+				<= Type $hyoo_studio_type
+					tree? <=> tree? $mol_tree2_empty
+					type? => type?
+					belong_to <= belong_to
+					class_list <= class_list /string
+		<= Self $mol_view
+			sub <= self /

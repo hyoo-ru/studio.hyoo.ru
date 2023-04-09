@@ -16,19 +16,12 @@ namespace $.$$ {
 				left: $mol_gap.block,
 			},
 		},
-
-		List_value: {
-			border: {
-				radius: $mol_gap.round,
-			},
-		},
 		
 		Self: {
 			flex: {
 				grow: 1,
+				direction: 'column',
 			},
-			alignItems: 'flex-start',
-			position: 'relative', //for type picker bubble positioning
 		},
 
 	} )

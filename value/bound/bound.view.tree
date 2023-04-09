@@ -1,15 +1,7 @@
-$hyoo_studio_value_bound $mol_view
-	tree? $mol_tree2_empty
-	guid \
-	Opened_bound_prop $hyoo_studio_prop
-	head /
-	sub <= self /
+$hyoo_studio_value_bound $hyoo_studio_value_unit
+	self /
 		^ head
-		<= Type $hyoo_studio_type
-			tree? <=> tree?
-			type => type
-			bind_options <= bind_options *
-			Object_option null
+		<= Value_tools
 		<= Bound_prop_name $mol_select
 			hint @ \Bound Property
 			value?next <=> bound_prop_name?next null
@@ -17,7 +9,3 @@ $hyoo_studio_value_bound $mol_view
 			Trigger_icon null
 		<= Bound_prop_expand $mol_check_expand
 			checked? <=> bound_expanded? false
-	Bound_prop* null
-	props_of!klass $mol_tree2_empty
-	props_bindable $mol_tree2_empty
-	class_list /string

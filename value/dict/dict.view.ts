@@ -39,10 +39,15 @@ namespace $.$$ {
 			return tree.kids[ index ]?.kids[ 0 ]
 		}
 
-		bind_options(): ReturnType<$hyoo_studio_type[ 'bind_options' ]> {
-			return { get: '<=' }
+		dict_item_add() {
+			const tree = this.tree()
+			this.tree(
+				tree.clone([
+					... tree.kids,
+					tree.struct('key', [tree.struct('null')]),
+				])
+			)
 		}
-
 	}
 	
 }

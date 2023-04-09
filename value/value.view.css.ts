@@ -7,7 +7,6 @@ namespace $.$$ {
 		flex: {
 			grow: 1,
 		},
-		position: 'relative', //for type picker bubble positioning
 
 	} )
 

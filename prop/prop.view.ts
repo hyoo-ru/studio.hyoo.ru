@@ -39,28 +39,32 @@ namespace $.$$ {
 		}
 		
 		prop_content() {
-			switch (this.type()) {
-				case 'object': return [ this.Value() ]
-				case 'text': return [ this.Value() ]
-				case 'number': return [ this.Value() ]
-				case 'list': return [ this.Value() ]
-				case 'dict': return [ this.Value() ]
-				case 'bind': return [ this.Value() ]
-				case 'get': return [ this.Value() ]
-				case 'put': return [ this.Value() ]
-				default: return []
+			switch (this.Value().type()) {
+				case 'object':
+				case 'text':
+				case 'number':
+				case 'list':
+				case 'dict':
+				case 'bind':
+				case 'get':
+				case 'put': 
+					return [ this.Value() ]
+				default: 
+					return []
 			}
 		}
 		
 		@ $mol_mem
 		expandable() {
-			switch (this.type()) {
-				case 'object': return true
-				case 'text': return true
-				case 'number': return true
-				case 'list': return true
-				case 'dict': return true
-				default: return false
+			switch (this.Value().type()) {
+				case 'object':
+				case 'text':
+				case 'number':
+				case 'list':
+				case 'dict': 
+					return true
+				default: 
+					return false
 			}
 		}
 
@@ -70,7 +74,8 @@ namespace $.$$ {
 			if ( next !== undefined ) return next as never
 
 			let expanded: boolean | undefined = $mol_wire_probe( () => this.expanded() )
-			const type = this.type()
+
+			const type = this.Value().type()
 
 			if ( !expanded ) {
 				switch (type) {
@@ -78,14 +83,19 @@ namespace $.$$ {
 					case 'list': 
 					case 'dict': 
 						return this.value().kids.length > 0 ? false : true
-					case 'text': return this.value().text().length > 40 ? false : true
-					case 'null' : return true
-					case 'boolean_true' : return true
-					case 'boolean_false' : return true
-					case 'number' : return true
-					case 'number_nan' : return true
-					case 'number_infinity_negative' : return true
-					case 'number_infinity_positive' : return true
+					case 'text': 
+						return this.value().text().length > 40 ? false : true
+					case 'null' :
+					case 'boolean_true' :
+					case 'boolean_false' :
+					case 'number' :
+					case 'number_nan' :
+					case 'number_infinity_negative' :
+					case 'number_infinity_positive' :
+					case 'bind':
+					case 'get':
+					case 'put': 
+						return true
 				}
 				return false
 			}
@@ -100,11 +110,18 @@ namespace $.$$ {
 
 			if( next !== undefined ) {
 				val = this.tree( next && val.clone( [ next ] ) )
+				this.expanded( true )
 				return next
 			}
 			
 			return val?.kids[ 0 ]
 		}
 		
+		@ $mol_mem
+		show_info(event?: Event) {
+			event?.stopPropagation()
+			this.focus_class( this.Value().selected_obj() )
+		}
+
 	}
 }

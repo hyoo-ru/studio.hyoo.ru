@@ -2,8 +2,39 @@ namespace $.$$ {
 
 	export class $hyoo_studio_type extends $.$hyoo_studio_type {
 
+		belong_to(): 'prop' | 'subprop' | 'list' | 'dict' | string  {
+			return 'prop'
+		}
+
 		bind_options(): Partial<{ bind: '<=>', get: '<=', put: '=>' }> {
-			return { bind: '<=>', get: '<=', put: '=>' }
+			switch (this.belong_to()) {
+				case 'prop': return { bind: '<=>', get: '<=', put: '=>' }
+				case 'subprop': return { bind: '<=>', get: '<=', put: '=>' }
+				case 'list': return { get: '<='}
+				case 'dict': return { get: '<='}
+				default: return { bind: '<=>', get: '<=', put: '=>' }
+			}
+		}
+
+		other_options(): Partial<{ text: 'text', dict: 'dict', list: 'list' }> {
+			return { 
+				text: 'text', dict: 'dict', 
+				...(this.list_type_showed() ? {} : {list: 'list'}) 
+			}
+		}
+
+		@ $mol_mem
+		other_options_group(){
+			return [ 
+				this.Other_options(),
+				...(this.list_type_showed() ? [this.List_items_type()] : []),
+				...(this.belong_to() === 'prop'? [this.Object_option()] : []),
+			]
+		}
+
+		@ $mol_mem
+		list_type_showed() {
+			return this.type() === 'list' ? true : false
 		}
 
 		switch_type(next?: string) {
@@ -26,6 +57,9 @@ namespace $.$$ {
 		type_display() {
 			const type = this.type()
 
+			if (type === 'list') { 
+				return `${this.list_items_type() === 'any'? '': this.list_items_type()} list` 
+			}
 			if (type === 'object') { return this.selected_obj() }
 			if (this.unit_options()[type]) return this.unit_options()[type]
 			if (this.number_options()[type]) return this.number_options()[type]
@@ -59,29 +93,10 @@ namespace $.$$ {
 					default : $mol_fail( new TypeError( `Unsupported type: ${ next }` ) )
 				}
 
-				this.showed(false)			
+				this.showed(false)
 			}
 
-			const val = this.tree()
-
-			if( !val ) return ''
-
-			if (val.type === '+NaN') return 'number_nan'
-			if (val.type === '+Infinity') return 'number_infinity_positive'
-			if (val.type === '-Infinity') return 'number_infinity_negative'
-
-			const type = this.$.$mol_view_tree2_value_type( val )
-			
-			if (type === 'null') return 'null'
-			if (type === 'bool') return val.type === 'true' ? 'boolean_true' : 'boolean_false'
-			if (type === 'number') return 'number'
-			if (type === 'locale' ) return 'text'
-			if (type === 'string') return 'text'
-			if (type === 'get' ) return 'get'
-			if (type === 'put' ) return 'put'
-			if (type === 'bind') return 'bind'
-			
-			return type
+			return $hyoo_studio_type_value(this.tree())
 		}
 
 		show_obj_select() {
@@ -96,9 +111,48 @@ namespace $.$$ {
 				return this.tree(this.tree().struct( next )).type
 			}
 			
-			return this.tree().type
+			return this.tree()?.type
+		}
+		
+		@ $mol_mem
+		list_items_type(next?: string) {
+
+			if( next && /\s/.test( next ) ) {
+				$mol_fail( new SyntaxError( `Item type mustn't have any space chars` ) )
+			}
+			
+			const from_tree = this.tree(
+				next === undefined
+					? undefined
+					: this.tree().struct( '/' + next, this.tree().kids )
+			).type.slice( 1 )
+
+			const focused = this.List_items_type().focused()
+
+			return (from_tree) || (focused? '' : 'any')
 		}
 
+	}
+
+	export function $hyoo_studio_type_value(val: $mol_tree2_empty) {
+		if( !val ) return ''
+
+		if (val.type === '+NaN') return 'number_nan'
+		if (val.type === '+Infinity') return 'number_infinity_positive'
+		if (val.type === '-Infinity') return 'number_infinity_negative'
+
+		const type = $$.$mol_view_tree2_value_type( val )
+
+		if (type === 'null') return 'null'
+		if (type === 'bool') return val.type === 'true' ? 'boolean_true' : 'boolean_false'
+		if (type === 'number') return 'number'
+		if (type === 'locale' ) return 'text'
+		if (type === 'string') return 'text'
+		if (type === 'get' ) return 'get'
+		if (type === 'put' ) return 'put'
+		if (type === 'bind') return 'bind'
+		
+		return type
 	}
 
 }

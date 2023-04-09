@@ -7,7 +7,22 @@ namespace $.$$ {
 		Bound_prop_name: {
 			Option_label: {
 				padding: 0,
+			},
+			Menu: {
+				padding: {
+					left: $mol_gap.block,
+					right: $mol_gap.block,
+				},
+			},
+			Trigger: {
+				justifyContent: 'center',
 			}
+		},
+
+		Self: {
+			flex: {
+				grow: 1,
+			},
 		},
 
 	} )

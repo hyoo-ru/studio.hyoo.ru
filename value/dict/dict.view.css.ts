@@ -9,9 +9,6 @@ namespace $.$$ {
 				grow: 1,
 			},
 			gap: $mol_gap.space,
-			margin: {
-				left: $mol_gap.block,
-			},
 			padding: {
 				left: $mol_gap.block,
 			},
@@ -21,22 +18,16 @@ namespace $.$$ {
 			flex: {
 				grow: 0,
 			},
+			Edit: {
+				boxShadow: 'none',
+			},
 		},
-		
+
 		Self: {
 			flex: {
 				grow: 1,
+				direction: 'column',
 			},
-			alignItems: 'flex-start',
-			position: 'relative', //for type picker bubble positioning
-		},
-
-		Item: {
-			flex: {
-				grow: 1,
-			},
-			alignItems: 'flex-start',
-			position: 'relative', //for type picker bubble positioning
 		},
 
 	} )

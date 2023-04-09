@@ -16,20 +16,30 @@ namespace $.$$ {
 			flex: 'none',
 		},
 
-		position: 'static', //because pop_bubble should be relative to prop card
-
 		Value: {
 			color: $mol_theme.special,
 		},
 
+		List_items_type: {
+			flex: {
+				grow: 0,
+			},
+			View: {
+				Rows: {
+					flexDirection: 'row',
+					'::after': {
+						content: '"[]"',
+					},
+				},
+			},
+			Edit: {
+				boxShadow: 'none',
+			},
+			color: $mol_theme.current,
+		},
+
 		Control: {
-			border: {
-				top: {
-					color: $mol_theme.line,
-					style: 'solid',
-					width: px(1),
-				}
-			}
+			borderTop: 'solid 1px var(--mol_theme_line)',
 		}
 
 	} )

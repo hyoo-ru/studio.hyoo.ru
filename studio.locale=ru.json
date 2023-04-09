@@ -2,9 +2,11 @@
 	"$hyoo_studio_Source_page_title": "Сырой код",
 	"$hyoo_studio_Inspector_open_hint": "Инспектор",
 	"$hyoo_studio_Preview_open_hint": "Предпросмотр",
-	"$hyoo_studio_Pack_field_name": "Приложение донор компонентов",
-	"$hyoo_studio_Base_field_name": "Базовый класс",
-	"$hyoo_studio_Self_field_name": "Имя компонента",
+	"$hyoo_studio_Pack_field_name": "Сайт приложения",
+	"$hyoo_studio_Repo_field_name": "GitHub репозиторий",
+	"$hyoo_studio_Donor_expander_title": "Приложение донор компонентов",
+	"$hyoo_studio_component_head_Self_field_name": "Имя компонента",
+	"$hyoo_studio_component_head_Base_field_name": "Базовый класс",
 	"$hyoo_studio_Prop_filter_hint": "Искать свойство или Добавить новое..",
 	"$hyoo_studio_Prop_add_hint": "Добавить это свойство",
 	"$hyoo_studio_Source_field_name": "View.Tree Исходник",
@@ -13,5 +15,7 @@
 	"$hyoo_studio_Inspect_depth_title": "Мин. глубина",
 	"$hyoo_studio_Inspect_stat_vert_title": "кол-во",
 	"$hyoo_studio_Inspect_stat_hor_title": "глубина",
-	"$hyoo_studio_Inspect_title": "Инспектор"
+	"$hyoo_studio_Inspect_title": "Инспектор",
+	"$hyoo_studio_component_head_Self_field_name_title": "Имя компонента",
+	"$hyoo_studio_component_head_Base_field_name_title": "Базовый класс"
 }

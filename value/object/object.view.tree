@@ -1,3 +1,22 @@
 $hyoo_studio_value_object $hyoo_studio_value_dict
-	Item_name* $mol_paragraph
-		title <= item_key*?
+	tools /
+		<= Type
+		<= Over_prop_add $mol_select
+			hint @ \Add Override
+			align_hor \left
+			Trigger_icon <= Over_add_icon $mol_icon_wrench_outline
+			value? <=> over_prop_add? \
+			options <= over_prop_options /string
+	Item* $mol_view
+		sub /
+			<= Over_prop_name* $mol_paragraph
+				title <= item_key*?
+			<= Value* $hyoo_studio_value
+				tree? <=> item_value*?
+				belong_to \subprop
+				props_of!klass <= props_of!klass
+				props_bindable <= props_bindable
+				class_list <= class_list
+				Bound_prop* <= Bound_prop*
+				head /
+					<= Over_prop_name*

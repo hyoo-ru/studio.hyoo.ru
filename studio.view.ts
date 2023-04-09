@@ -13,6 +13,10 @@ namespace $.$$ {
 		code_show( next?: boolean ) {
 			return this.$.$mol_state_arg.value( 'raw', next?.valueOf && ( next ? '' : null ) ) !== null
 		}
+
+		readme_show( next?: boolean ) {
+			return this.$.$mol_state_arg.value( 'readme', next?.valueOf && ( next ? '' : null ) ) !== null
+		}
 		
 		@ $mol_mem
 		pages() {
@@ -34,7 +38,80 @@ namespace $.$$ {
 		source( next?: string ): string {
 			return this.$.$mol_state_arg.value( 'source', next ) ?? super.source()
 		}
+
+		@ $mol_mem
+		preview_html() {
+			
+			const self = this.self()
+			const script = new URL( 'web.js', this.pack() ).toString()
+			const theme = this.Theme().theme()
+			
+			return `
+				<html mol_view_root>
+					<body mol_view_root>
+						<script src="${ script }"></script>
+						<script>${ this.self_code() }</script>
+						<div mol_view_root="${ self }" mol_theme="${ theme }" style="background:none"></div>
+					</body>
+				</html>
+			`
+			
+		}
 		
+		@ $mol_mem
+		preview_window() {
+			this.$.$mol_wait_rest()
+			this.preview_html()
+			this.preview_show()
+			return super.preview_window()
+		}
+		
+		@ $mol_mem
+		inspect_graph() {
+			
+			const win = this.preview_window()
+			
+			try {
+				win['$mol_view'].autobind()
+				return $mol_wire_graph( win['$mol_view']['autobind()'] )
+			} catch( error: any ) {
+				if( 'then' in error ) return $mol_fail_hidden( new Promise( ( done, fail )=> error.then( done, fail ) ) )
+				$mol_fail_hidden( new Error( error.message ) )
+			}
+			
+		}
+		
+		@ $mol_mem
+		inspect_stat() {
+			return this.inspect_graph().group_depth_min.map( nodes => nodes.length )
+		}
+		
+		inspect_stat_depth() {
+			return Object.keys( this.inspect_stat() ).map( Number )
+		}
+		
+		@ $mol_mem
+		readme_module( next?: any ) {
+			
+			const split = this.readme_module_name().replace( /_demo.*$/ , '' ).split('_')
+
+			return split.slice(1)
+		}
+
+		@ $mol_mem
+		source_link() {
+
+			const pieces = this.readme_module_name().split('_').slice(1)
+
+			return `https://github.com/${this.repo()}/tree/master/${pieces.join('/')}`
+
+		}
+
+		@ $mol_mem
+		base_class_readme( next?: any ) {
+			this.readme_module_name(this.base())
+		}
+
 		@ $mol_mem
 		library() {
 			const uri = new URL( 'web.view.tree', this.pack() ).toString()
@@ -93,57 +170,6 @@ namespace $.$$ {
 			)
 			
 			return next
-		}
-		
-		@ $mol_mem
-		preview_html() {
-			
-			const self = this.self()
-			const script = new URL( 'web.js', this.pack() ).toString()
-			const theme = this.Theme().theme()
-			
-			return `
-				<html mol_view_root>
-					<body mol_view_root>
-						<script src="${ script }"></script>
-						<script>${ this.self_code() }</script>
-						<div mol_view_root="${ self }" mol_theme="${ theme }" style="background:none"></div>
-					</body>
-				</html>
-			`
-			
-		}
-		
-		@ $mol_mem
-		preview_window() {
-			this.$.$mol_wait_rest()
-			this.preview_html()
-			this.preview_show()
-			return super.preview_window()
-		}
-		
-		@ $mol_mem
-		inspect_graph() {
-			
-			const win = this.preview_window()
-			
-			try {
-				win['$mol_view'].autobind()
-				return $mol_wire_graph( win['$mol_view']['autobind()'] )
-			} catch( error: any ) {
-				if( 'then' in error ) return $mol_fail_hidden( new Promise( ( done, fail )=> error.then( done, fail ) ) )
-				$mol_fail_hidden( new Error( error.message ) )
-			}
-			
-		}
-		
-		@ $mol_mem
-		inspect_stat() {
-			return this.inspect_graph().group_depth_min.map( nodes => nodes.length )
-		}
-		
-		inspect_stat_depth() {
-			return Object.keys( this.inspect_stat() ).map( Number )
 		}
 		
 		@ $mol_mem
@@ -294,6 +320,7 @@ namespace $.$$ {
 			obj.props_of = ( klass: any ) => this.props_of( klass )
 			obj.props_bindable = () => this.props_all()
 			obj.class_list = () => this.class_list()
+			obj.focus_class = ( next?: any ) => this.readme_module_name( next )
 			obj.Bound_prop = ( id: any ) => this.Bound_prop( id )
 			return obj
 		}
@@ -310,7 +337,17 @@ namespace $.$$ {
 			
 			return this.props_all().select( sign ).kids[0] ?? null
 		}
-		
+	}
+
+
+	export class $hyoo_studio_component_head extends $.$hyoo_studio_component_head {
+
+		@ $mol_mem
+		show_info(event?: Event) {
+			event?.stopPropagation()
+			this.focus_class( this.base() )
+		}
+
 	}
 	
 }

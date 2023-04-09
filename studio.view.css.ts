@@ -4,6 +4,13 @@ namespace $.$$ {
 
 	$mol_style_define( $hyoo_studio, {
 
+		Donor_expander: {
+			padding: {
+				top: $mol_gap.block,
+				bottom: $mol_gap.block,
+			},
+		},
+
 		Edit: {
 
 			flex: {
@@ -22,39 +29,16 @@ namespace $.$$ {
 		},
 
 		Classes: {
-
 			flex: {
 				wrap: 'wrap',
 			},
-			margin: $mol_gap.block,
-			padding: $mol_gap.block,
 			overflow: 'visible',
-
-		},
-
-		Self_field: {
-			alignItems: 'center',
-			padding: 0,
-		},
-		Self_field_name: {
-			color: $mol_theme.shade		
-		},
-		Base_field: {
-			alignItems: 'center',
-			padding: 0,
-		},
-		Base_field_name: {
-			color: $mol_theme.shade		
 		},
 
 		$mol_form_field: {
 			flex: {
 				grow: 1,
 			},
-		},
-
-		Base: {
-			alignSelf: 'stretch',
 		},
 
 		Props_controls: {
