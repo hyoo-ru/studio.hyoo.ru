@@ -4,7 +4,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		guid() {
-			return $mol_guid()
+			return this.toString()
 		}
 		
 		@ $mol_mem

@@ -2,6 +2,9 @@ $hyoo_studio $mol_book2
 	comp $hyoo_studio_component
 	plugins /
 		<= Theme $mol_theme_auto
+	Demo $mol_app_demo
+		Readme_page => Readme_page
+		meta_bundle_base <= pack
 	pages /
 		<= Edit $mol_page
 			title @ \$mol Studio
@@ -9,11 +12,6 @@ $hyoo_studio $mol_book2
 				<= Source_link $mol_link_source
 					uri \https://github.com/hyoo-ru/studio.hyoo.ru
 				<= Lights $mol_lights_toggle
-				<= Readme_open $mol_check_icon
-					hint @ \Components Readme
-					checked? <=> readme_show? false
-					sub /
-						<= Readme_toggle_icon $mol_icon_information_outline
 				<= Code_open $mol_check_icon
 					hint @ \Show Editor
 					checked? <=> code_show? false
@@ -46,12 +44,19 @@ $hyoo_studio $mol_book2
 											name @ \Component Name
 											Content <= Self $mol_string
 												hint \$hyoo_studio_example
-												value?val <=> self?val \
+												value? <=> self? \
 										<= Base_field $mol_form_field
 											name @ \Base Class
-											Content <= Base $mol_select
-												value?val <=> base?val \
-												options <= base_options /string
+											Content <= Base_content $mol_view
+												sub /
+													<= Base $mol_select
+														value? <=> base? \
+														options <= base_options /string
+													<= Readme_open $mol_check_icon
+														hint @ \Readme
+														checked? <=> readme_show? false
+														sub /
+															<= Readme_toggle_icon $mol_icon_information_outline
 								- <= Props_inherited_field $mol_form_field
 									name @ \Display inherited properties
 									control <= Props_inherited_control $mol_check_list
@@ -72,10 +77,7 @@ $hyoo_studio $mol_book2
 												<= Prop_add_icon $mol_icon_plus
 								<= Props $mol_list
 									rows <= props /$hyoo_studio_prop
-		<= Readme_page $mol_app_demo_readme
-			repo <= repo \hyoo-ru/mam_mol
-			module? <= readme_module? /string
-			opened? <=> readme_show?
+		<= Readme_page
 		<= Source_page $mol_page
 			title @ \Raw Code
 			body /
@@ -108,7 +110,7 @@ $hyoo_studio $mol_book2
 					value <= inspect_graph null
 	Prop* $hyoo_studio_prop
 		name <= prop_name* \default
-		focus_class? <=> readme_module_name? \
+		selected_class? <=> readme_module_name? \
 		sign? <=> prop_sign*? \
 		tree? <=> prop_tree!tree_node_str? $mol_tree2_empty
 		props_of!klass <= props_of!klass $mol_tree2_empty

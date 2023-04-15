@@ -116,12 +116,5 @@ namespace $.$$ {
 			
 			return val?.kids[ 0 ]
 		}
-		
-		@ $mol_mem
-		show_info(event?: Event) {
-			event?.stopPropagation()
-			this.focus_class( this.Value().selected_class() )
-		}
-
 	}
 }

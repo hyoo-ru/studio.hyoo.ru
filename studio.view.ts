@@ -15,7 +15,7 @@ namespace $.$$ {
 		}
 
 		readme_show( next?: boolean ) {
-			return this.$.$mol_state_arg.value( 'readme', next?.valueOf && ( next ? '' : null ) ) !== null
+			return this.Demo().readme_page( next )
 		}
 		
 		@ $mol_mem
@@ -99,8 +99,9 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		base_class_readme( next?: any ) {
-			this.readme_module_name(this.base())
+		readme_module_name(next?: any) {
+			if ( next !== undefined ) return $mol_state_arg.value( 'demo', next ) as never
+			return ""
 		}
 
 		@ $mol_mem
@@ -152,7 +153,12 @@ namespace $.$$ {
 			
 			const self = this.tree()
 			const base = this.$.$mol_view_tree2_class_super( self )
-			if( !next ) return base.type
+			
+			if( !next ) {
+				this.readme_module_name( base.type )
+				return base.type
+			}
+			this.readme_module_name( next )
 			
 			this.tree(
 				self.clone([
@@ -311,7 +317,7 @@ namespace $.$$ {
 			obj.props_of = ( klass: any ) => this.props_of( klass )
 			obj.props_bindable = () => this.props_all()
 			obj.class_list = () => this.class_list()
-			obj.focus_class = ( next?: any ) => this.readme_module_name( next )
+			obj.selected_class = ( next?: any ) => this.readme_module_name( next )
 			obj.Bound_prop = ( id: any ) => this.Bound_prop( id )
 			return obj
 		}

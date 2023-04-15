@@ -39,7 +39,4 @@ $hyoo_studio_prop $mol_view
 					props_bindable <= props_bindable $mol_tree2_empty
 					class_list <= class_list /string
 					Bound_prop* <= Bound_prop* $hyoo_studio_prop
-	focus_class? null
-	event *
-		^
-		click? <=> show_info? null
+	selected_class? null

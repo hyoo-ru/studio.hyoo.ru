@@ -33,6 +33,10 @@ namespace $.$$ {
 			width: per (100),
 		},
 
+		Readme_open: {
+			marginLeft: 'auto',
+		},
+
 		Config: {
 			gap: $mol_gap.block,
 		},
