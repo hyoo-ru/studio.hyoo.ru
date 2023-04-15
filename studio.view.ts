@@ -15,6 +15,7 @@ namespace $.$$ {
 		}
 
 		readme_show( next?: boolean ) {
+			if ( next ) this.readme_selected( this.base() )
 			return this.Demo().readme_page( next )
 		}
 		
@@ -90,18 +91,8 @@ namespace $.$$ {
 			return Object.keys( this.inspect_stat() ).map( Number )
 		}
 		
-		@ $mol_mem
-		readme_module( next?: any ) {
-			
-			const split = this.readme_module_name().split('_')
-
-			return split.slice(1)
-		}
-
-		@ $mol_mem
-		readme_module_name(next?: any) {
-			if ( next !== undefined ) return $mol_state_arg.value( 'demo', next ) as never
-			return ""
+		readme_selected( next?: string ) {
+			return $mol_state_arg.value( 'demo', next ) ?? ''
 		}
 
 		@ $mol_mem
@@ -154,11 +145,7 @@ namespace $.$$ {
 			const self = this.tree()
 			const base = this.$.$mol_view_tree2_class_super( self )
 			
-			if( !next ) {
-				this.readme_module_name( base.type )
-				return base.type
-			}
-			this.readme_module_name( next )
+			if( !next ) return base.type
 			
 			this.tree(
 				self.clone([
@@ -166,7 +153,7 @@ namespace $.$$ {
 				])
 			)
 			
-			return next
+			return this.readme_selected( next )
 		}
 		
 		@ $mol_mem
@@ -317,7 +304,6 @@ namespace $.$$ {
 			obj.props_of = ( klass: any ) => this.props_of( klass )
 			obj.props_bindable = () => this.props_all()
 			obj.class_list = () => this.class_list()
-			obj.selected_class = ( next?: any ) => this.readme_module_name( next )
 			obj.Bound_prop = ( id: any ) => this.Bound_prop( id )
 			return obj
 		}

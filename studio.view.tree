@@ -69,10 +69,10 @@ $hyoo_studio $mol_book2
 									sub <= props_controls /
 										<= Prop_filter $mol_search
 											hint @ \Search property or Add one..
-											query?next <=> prop_filter?next \
+											query? <=> prop_filter? \
 										<= Prop_add $mol_button_minor
 											hint @ \Add this property
-											click?next <=> prop_add?next null
+											click? <=> prop_add? null
 											sub /
 												<= Prop_add_icon $mol_icon_plus
 								<= Props $mol_list
@@ -110,10 +110,9 @@ $hyoo_studio $mol_book2
 					value <= inspect_graph null
 	Prop* $hyoo_studio_prop
 		name <= prop_name* \default
-		selected_class? <=> readme_module_name? \
 		sign? <=> prop_sign*? \
-		tree? <=> prop_tree!tree_node_str? $mol_tree2_empty
-		props_of!klass <= props_of!klass $mol_tree2_empty
+		tree? <=> prop_tree*? $mol_tree2_empty
+		props_of* <= props_of* $mol_tree2_empty
 		props_bindable <= props_all $mol_tree2_empty
 		class_list <= class_list /string
 		Bound_prop* <= Bound_prop* $hyoo_studio_prop
