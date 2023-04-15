@@ -9,11 +9,10 @@ $hyoo_studio_value $mol_ghost
 	Unit $hyoo_studio_value_unit
 	value_tools /
 	type \
-	selected_class \
 	head /
 	belong_to \prop
 	hide_tools false
-	props_of!klass $mol_tree2_empty
+	props_of* $mol_tree2_empty
 	props_bindable $mol_tree2_empty
 	class_list /string
 	Bound_prop* $hyoo_studio_prop
@@ -22,7 +21,7 @@ $hyoo_studio_value_unit $mol_view
 	head /
 	belong_to \prop
 	hide_tools false
-	props_of!klass $mol_tree2_empty
+	props_of* $mol_tree2_empty
 	props_bindable $mol_tree2_empty
 	class_list /string
 	Bound_prop* $hyoo_studio_prop

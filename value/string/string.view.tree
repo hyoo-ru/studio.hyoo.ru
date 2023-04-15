@@ -1,7 +1,7 @@
 $hyoo_studio_value_string $hyoo_studio_value_unit
 	self /
 		<= Str $mol_textarea
-			value?next <=> str?next \
+			value? <=> str? \
 	tools /
 		<= Type
 		<= Locale $mol_check_icon

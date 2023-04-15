@@ -35,8 +35,7 @@ $hyoo_studio_prop $mol_view
 					value_tools => value_tools
 					belong_to \prop
 					tree? <=> value? $mol_tree2_empty
-					props_of!klass <= props_of!klass $mol_tree2_empty
+					props_of* <= props_of* $mol_tree2_empty
 					props_bindable <= props_bindable $mol_tree2_empty
 					class_list <= class_list /string
 					Bound_prop* <= Bound_prop* $hyoo_studio_prop
-	selected_class? null

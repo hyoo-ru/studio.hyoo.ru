@@ -49,7 +49,7 @@ $hyoo_studio_type $mol_pick
 	Object_select $mol_select
 		hint @ \Class
 		align_hor \right
-		value?next <=> selected_class?next \$mol_view
+		value? <=> selected_class? \$mol_view
 		options <= class_list /string
 		Trigger_icon null
 		bubble_content => Obj_bubble_content

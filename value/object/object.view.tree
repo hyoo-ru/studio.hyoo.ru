@@ -14,7 +14,7 @@ $hyoo_studio_value_object $hyoo_studio_value_dict
 			<= Value* $hyoo_studio_value
 				tree? <=> item_value*?
 				belong_to \subprop
-				props_of!klass <= props_of!klass
+				props_of* <= props_of*
 				props_bindable <= props_bindable
 				class_list <= class_list
 				Bound_prop* <= Bound_prop*

@@ -39,11 +39,6 @@ namespace $.$$ {
 		type(): string {
 			return this.Sub().Type().type()
 		}
-
-		@ $mol_mem
-		selected_class(): string {
-			return this.Sub().Type().selected_class()
-		}
 		
 	}
 

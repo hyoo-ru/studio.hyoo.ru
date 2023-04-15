@@ -1,4 +1,4 @@
 $hyoo_studio_value_number $hyoo_studio_value_unit
 	self /
 		<= Numb $mol_number
-			value?next <=> numb?next +NaN
+			value? <=> numb? +NaN

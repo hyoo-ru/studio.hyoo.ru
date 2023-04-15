@@ -4,7 +4,7 @@ $hyoo_studio_value_bound $hyoo_studio_value_unit
 		<= Value_tools
 		<= Bound_prop_name $mol_select
 			hint @ \Bound Property
-			value?next <=> bound_prop_name?next null
+			value? <=> bound_prop_name? null
 			options <= prop_name_list /string
 			Trigger_icon null
 		<= Bound_prop_expand $mol_check_expand
