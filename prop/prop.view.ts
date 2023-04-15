@@ -62,6 +62,9 @@ namespace $.$$ {
 				case 'number':
 				case 'list':
 				case 'dict': 
+				case 'bind':
+				case 'get':
+				case 'put': 
 					return true
 				default: 
 					return false
@@ -92,9 +95,6 @@ namespace $.$$ {
 					case 'number_nan' :
 					case 'number_infinity_negative' :
 					case 'number_infinity_positive' :
-					case 'bind':
-					case 'get':
-					case 'put': 
 						return true
 				}
 				return false
