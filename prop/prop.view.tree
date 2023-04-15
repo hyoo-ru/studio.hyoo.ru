@@ -8,14 +8,16 @@ $hyoo_studio_prop $mol_view
 					<= Label_content $mol_view
 						sub <= label_sub /
 							<= Trigger $mol_check_expand
-								checked? <=> expanded? false
-								expandable <= expandable true
-								label <= trigger_label /
+								Icon => Trigger_icon
+								sub <= trigger_sub /
 									<= Expander_title $mol_paragraph
 										title <= name \
+									<= Trigger_icon
+								checked? <=> expanded? false
+								expandable <= expandable true
 							<= Prop_tools
 			expanded? <=> expanded?
-			Tools <= Prop_tools $mol_view 
+			Tools <= Prop_tools $mol_view
 				sub <= prop_tools /
 					<= Value_tools $mol_view
 						sub <= value_tools
@@ -36,7 +38,7 @@ $hyoo_studio_prop $mol_view
 					props_of!klass <= props_of!klass $mol_tree2_empty
 					props_bindable <= props_bindable $mol_tree2_empty
 					class_list <= class_list /string
-					Bound_prop* <= Bound_prop* null
+					Bound_prop* <= Bound_prop* $hyoo_studio_prop
 	focus_class? null
 	event *
 		^

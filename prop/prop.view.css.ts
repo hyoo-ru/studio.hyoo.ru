@@ -62,6 +62,9 @@ namespace $.$$ {
 			flex: {
 				shrink: 1,
 			},
+			margin: {
+				left: 'auto',
+			},
 		},
 
 	} )

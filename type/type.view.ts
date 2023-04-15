@@ -53,24 +53,56 @@ namespace $.$$ {
 			return this.type() === 'object'? true : false
 		}
 
+		bind_option_label(bind_option: keyof ReturnType<$hyoo_studio_type["bind_options"]>){
+			switch (bind_option) {
+				case 'bind': return [ this.Take_put_hack_option() ]
+				case 'get': return [ this.Take_hack_option() ]
+				case 'put': return [ this.Alias_option() ]
+			}
+			return []
+		}
+
+		bind_option_label_display(bind_option: keyof ReturnType<$hyoo_studio_type["bind_options"]>){
+			switch (bind_option) {
+				case 'bind': return [ this.Take_put_hack_icon() ]
+				case 'get': return [ this.Take_hack_icon() ]
+				case 'put': return [ this.Alias_icon() ]
+			}
+			return []
+		}
+
+		trigger_content(){
+			const type = this.type()
+
+			const bind_option = this.bind_options()[type as keyof ReturnType<$hyoo_studio_type["bind_options"]>]
+
+			return bind_option ? 
+				this.bind_option_label_display(type as keyof ReturnType<$hyoo_studio_type["bind_options"]>) : 
+				[ this.Value() ]
+		}
+
 		@ $mol_mem
-		type_display() {
+		type_display(): string {
 			const type = this.type()
 
 			if (type === 'list') { 
 				return `${this.list_items_type() === 'any'? '': this.list_items_type()} list` 
 			}
-			if (type === 'object') { return this.selected_obj() }
-			if (this.unit_options()[type]) return this.unit_options()[type]
-			if (this.number_options()[type]) return this.number_options()[type]
-			if (this.other_options()[type]) return this.other_options()[type]
-			if (this.bind_options()[type]) return this.bind_options()[type]
+			if (type === 'object') { return this.selected_class() }
+			if (this.unit_options()[type as keyof ReturnType<$hyoo_studio_type["unit_options"]>]) 
+				return this.unit_options()[type as keyof ReturnType<$hyoo_studio_type["unit_options"]>]
+			if (this.number_options()[type as keyof ReturnType<$hyoo_studio_type["number_options"]>]) 
+				return this.number_options()[type as keyof ReturnType<$hyoo_studio_type["number_options"]>]
+			if (this.other_options()[type as keyof ReturnType<$hyoo_studio_type["other_options"]>]) 
+				return this.other_options()[type as keyof ReturnType<$hyoo_studio_type["other_options"]>] || ''
 
 			return ''
 		}
 
+
+
 		@ $mol_mem
-		type( next? : string ): string {
+		type( next? : string ) {
 			
 			if( next !== undefined ) {
 

@@ -19,6 +19,15 @@ namespace $.$$ {
 		Value: {
 			color: $mol_theme.special,
 		},
+		Take_put_hack_icon: {
+			color: $mol_theme.special,
+		},
+		Take_hack_icon: {
+			color: $mol_theme.special,
+		},
+		Alias_icon: {
+			color: $mol_theme.special,
+		},
 
 		List_items_type: {
 			flex: {

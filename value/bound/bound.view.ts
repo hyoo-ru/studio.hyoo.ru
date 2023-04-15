@@ -24,9 +24,9 @@ namespace $.$$ {
 		@ $mol_mem
 		Opened_bound_prop() {
 			const prop = this.Bound_prop( this.bound_prop_name() + ':' + this.guid() )
-			prop.trigger_label = () => []
+			prop.trigger_sub = () => []
 			prop.label_sub = () => [
-				...this.head(), this.Value_tools(), this.Bound_prop_name(), prop.Trigger(), prop.Prop_tools()
+				...this.head(), this.Value_tools(), this.Bound_prop_name(), this.Bound_prop_expand(), prop.Prop_tools()
 			]
 			return prop
 		}

@@ -3,6 +3,9 @@ $hyoo_studio_type $mol_pick
 	belong_to \
 	trigger_content /
 		<= Value $mol_paragraph title <= type_display \
+		<= Take_put_hack_icon $mol_icon_arrow_left_right_bold_outline
+		<= Take_hack_icon $mol_icon_arrow_left_bold_outline
+		<= Alias_icon $mol_icon_arrow_right_bold_outline
 	bubble_content /
 		<= Options_content $mol_list rows /
 			<= Unit_options $mol_switch
@@ -31,6 +34,10 @@ $hyoo_studio_type $mol_pick
 						checked? <= obj_checked? false
 			<= Bind_options $mol_switch
 				value? <=> switch_type? \
+				option_label* <= bind_option_label* /
+					<= Take_put_hack_option $mol_icon_arrow_left_right_bold_outline
+					<= Take_hack_option $mol_icon_arrow_left_bold_outline
+					<= Alias_option $mol_icon_arrow_right_bold_outline
 				options <= bind_options *
 			<= Control $mol_view sub /
 				<= Menu_item_delete $mol_button_minor

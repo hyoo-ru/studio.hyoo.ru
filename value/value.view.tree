@@ -16,7 +16,7 @@ $hyoo_studio_value $mol_ghost
 	props_of!klass $mol_tree2_empty
 	props_bindable $mol_tree2_empty
 	class_list /string
-	Bound_prop* null
+	Bound_prop* $hyoo_studio_prop
 
 $hyoo_studio_value_unit $mol_view
 	head /
@@ -25,7 +25,7 @@ $hyoo_studio_value_unit $mol_view
 	props_of!klass $mol_tree2_empty
 	props_bindable $mol_tree2_empty
 	class_list /string
-	Bound_prop* null
+	Bound_prop* $hyoo_studio_prop
 	sub /
 		^ head
 		<= Value_tools $mol_view
