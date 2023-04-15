@@ -93,18 +93,9 @@ namespace $.$$ {
 		@ $mol_mem
 		readme_module( next?: any ) {
 			
-			const split = this.readme_module_name().replace( /_demo.*$/ , '' ).split('_')
+			const split = this.readme_module_name().split('_')
 
 			return split.slice(1)
-		}
-
-		@ $mol_mem
-		source_link() {
-
-			const pieces = this.readme_module_name().split('_').slice(1)
-
-			return `https://github.com/${this.repo()}/tree/master/${pieces.join('/')}`
-
 		}
 
 		@ $mol_mem
@@ -338,16 +329,4 @@ namespace $.$$ {
 			return this.props_all().select( sign ).kids[0] ?? null
 		}
 	}
-
-
-	export class $hyoo_studio_component_head extends $.$hyoo_studio_component_head {
-
-		@ $mol_mem
-		show_info(event?: Event) {
-			event?.stopPropagation()
-			this.focus_class( this.base() )
-		}
-
-	}
-	
 }

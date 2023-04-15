@@ -4,13 +4,6 @@ namespace $.$$ {
 
 	$mol_style_define( $hyoo_studio, {
 
-		Donor_expander: {
-			padding: {
-				top: $mol_gap.block,
-				bottom: $mol_gap.block,
-			},
-		},
-
 		Edit: {
 
 			flex: {
@@ -25,14 +18,9 @@ namespace $.$$ {
 		},
 
 		Edit_form: {
+			padding: $mol_gap.block,
+			gap: $mol_gap.block,
 			display: 'flex',
-		},
-
-		Classes: {
-			flex: {
-				wrap: 'wrap',
-			},
-			overflow: 'visible',
 		},
 
 		$mol_form_field: {
@@ -41,13 +29,23 @@ namespace $.$$ {
 			},
 		},
 
-		Props_controls: {
-			padding: $mol_gap.block,
+		Pack: {
+			width: per (100),
+		},
+
+		Config: {
+			gap: $mol_gap.block,
 		},
 
 		Props: {
-			padding: $mol_gap.block,
 			gap: $mol_gap.block,
+		},
+
+		Props_controls: {
+			padding: {
+				top: $mol_gap.block,
+				bottom: $mol_gap.block,
+			},
 		},
 
 		Source_page: {
