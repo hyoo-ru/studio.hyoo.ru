@@ -120,7 +120,7 @@ namespace $.$$ {
 		@ $mol_mem
 		show_info(event?: Event) {
 			event?.stopPropagation()
-			this.focus_class( this.Value().selected_obj() )
+			this.focus_class( this.Value().selected_class() )
 		}
 
 	}

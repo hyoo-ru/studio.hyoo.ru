@@ -104,7 +104,7 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		selected_obj(next?: string) {
+		selected_class(next?: string) {
 
 			if ( next !== undefined ) {
 				this.showed(false)

@@ -9,7 +9,7 @@ $hyoo_studio_value $mol_ghost
 	Unit $hyoo_studio_value_unit
 	value_tools /
 	type \
-	selected_obj \
+	selected_class \
 	head /
 	belong_to \prop
 	hide_tools false

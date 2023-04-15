@@ -41,8 +41,8 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		selected_obj(): string {
-			return this.Sub().Type().selected_obj()
+		selected_class(): string {
+			return this.Sub().Type().selected_class()
 		}
 		
 	}
