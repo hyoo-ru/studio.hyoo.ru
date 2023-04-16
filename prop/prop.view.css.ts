@@ -3,6 +3,7 @@ namespace $.$$ {
 	const { px, rem, per } = $mol_style_unit
 
 	$mol_style_define( $hyoo_studio_prop, {
+
 		flex: {
 			grow: 1,
 		},
@@ -17,26 +18,17 @@ namespace $.$$ {
 			flex: {
 				grow: 1,
 			},
-		},
-
-		Type: {
-			Trigger: {
-				color: $mol_theme.special,
-			},
-		},
-
-		Over_props: {
-			gap: $mol_gap.space,
-			flex: {
-				grow: 1,
-			},
 			padding: {
-				left: $mol_gap.block,
+				bottom: $mol_gap.space,
+				left: $mol_gap.space,
 			},
-		},
-
-		Over_add: {
-			marginLeft: 'auto',
+			Bound: {
+				Self: {
+					padding: {
+						left: $mol_gap.block,
+					},
+				},
+			},
 		},
 
 		Object: {
@@ -46,15 +38,6 @@ namespace $.$$ {
 		Expander: {
 			flex: {
 				grow: 1,
-			},
-		},
-
-		Label: {
-			background: {
-				color: $mol_theme.card,
-			},
-			border: {
-				radius: $mol_gap.round,
 			},
 		},
 
@@ -71,12 +54,17 @@ namespace $.$$ {
 			},
 		},
 
-		Prop_tools: {
-			marginLeft: 'auto',
+		Expander_title: {
+			color: $mol_theme.control,
 		},
 
-		Key: {
-			marginLeft: 'auto',
+		Prop_tools: {
+			flex: {
+				shrink: 1,
+			},
+			margin: {
+				left: 'auto',
+			},
 		},
 
 	} )

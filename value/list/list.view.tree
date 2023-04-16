@@ -1,0 +1,22 @@
+$hyoo_studio_value_list $hyoo_studio_value_unit
+	self /
+		<= Head $mol_view
+			sub /
+				^ head
+				<= Value_tools
+		<= List_values $mol_list
+			rows <= list / 
+				<= List_value*0 $hyoo_studio_value
+					tree? <=> list_value*? $mol_tree2_empty
+					belong_to \list
+					props_of* <= props_of* $mol_tree2_empty
+					props_bindable <= props_bindable $mol_tree2_empty
+					class_list <= class_list /string
+					Bound_prop* <= Bound_prop* null
+	tools /
+		<= Type
+		<= List_item_add $mol_button_minor
+			hint @ \Add Item
+			sub /
+				<= List_add_icon $mol_icon_plus
+			click? <=> list_item_add? null

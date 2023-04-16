@@ -1,0 +1,57 @@
+$hyoo_studio_type $mol_pick
+	tree?val $mol_tree2_empty
+	belong_to \
+	trigger_content /
+		<= Value $mol_paragraph title <= type_display \
+		<= Take_put_hack_icon $mol_icon_arrow_left_right_bold_outline
+		<= Take_hack_icon $mol_icon_arrow_left_bold_outline
+		<= Alias_icon $mol_icon_arrow_right_bold_outline
+	bubble_content /
+		<= Options_content $mol_list rows /
+			<= Unit_options $mol_switch
+				value? <=> switch_type? \
+				options <= unit_options *
+					null \null
+					boolean_false \false
+					boolean_true \true
+					number_nan \NaN
+			<= Number_options $mol_switch
+				value? <=> switch_type? \
+				options <= number_options *
+					number \number
+					number_infinity_negative \-Infinity
+					number_infinity_positive \+Infinity
+			<= Other_options_group $mol_view
+				sub <= other_options_group /
+					<= Other_options $mol_switch
+						value? <=> switch_type? \
+						options <= other_options *
+					<= List_items_type $mol_textarea
+						value? <=> list_items_type? \
+					<= Object_option $mol_check
+						title \object
+						click <= show_obj_select null
+						checked? <= obj_checked? false
+			<= Bind_options $mol_switch
+				value? <=> switch_type? \
+				option_label* <= bind_option_label* /
+					<= Take_put_hack_option $mol_icon_arrow_left_right_bold_outline
+					<= Take_hack_option $mol_icon_arrow_left_bold_outline
+					<= Alias_option $mol_icon_arrow_right_bold_outline
+				options <= bind_options *
+			<= Control $mol_view sub /
+				<= Menu_item_delete $mol_button_minor
+					style * color \red
+					click? <=> drop? null
+					sub /
+						<= menu_item_delete_icon $mol_icon_trash_can_outline
+						<= menu_item_delete_label \Drop
+	Object_select $mol_select
+		hint @ \Class
+		align_hor \right
+		value? <=> selected_class? \$mol_view
+		options <= class_list /string
+		Trigger_icon null
+		bubble_content => Obj_bubble_content
+	obj_select_showed? false
+	list_type_showed? false

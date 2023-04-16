@@ -13,11 +13,17 @@ namespace $.$$ {
 		code_show( next?: boolean ) {
 			return this.$.$mol_state_arg.value( 'raw', next?.valueOf && ( next ? '' : null ) ) !== null
 		}
+
+		readme_show( next?: boolean ) {
+			if ( next ) this.readme_selected( this.base() )
+			return this.Demo().readme_page( next )
+		}
 		
 		@ $mol_mem
 		pages() {
 			return [
 				this.Edit(),
+				... this.readme_show() ? [ this.Readme_page() ] : [],
 				... this.code_show() ? [ this.Source_page() ] : [],
 				... this.inspector_show() ? [ this.Inspect() ] : [],
 				... this.preview_show() ? [ this.Preview() ] : [],
@@ -33,67 +39,7 @@ namespace $.$$ {
 		source( next?: string ): string {
 			return this.$.$mol_state_arg.value( 'source', next ) ?? super.source()
 		}
-		
-		@ $mol_mem
-		library() {
-			const uri = new URL( 'web.view.tree', this.pack() ).toString()
-			const str = this.$.$mol_fetch.text( uri )
-			const predef = '$mol_view $mol_object\n\tdom_name \\\n\tstyle *\n\tevent *\n\tfield *\n\tattr *\n\tsub /\n\ttitle \\\n'
-			const tree = this.$.$mol_tree2_from_string( predef + str )
-			const norm = this.$.$mol_view_tree2_normalize( tree )
-			return norm
-		}
-		
-		@ $mol_mem
-		tree( next?: $mol_tree2 ) {
-			
-			const source = this.source( next && next.toString() ).replace( /\n?$/, '\n' )
-			
-			const tree = this.$.$mol_view_tree2_normalize(
-				this.$.$mol_tree2_from_string( source )
-			).kids[0]
-			
-			return tree
-		}
-		
-		@ $mol_mem
-		united() {
-			const lib = this.library()
-			return lib.clone([
-				... lib.kids,
-				this.tree(),
-			])
-		}
-		
-		@ $mol_mem
-		self( next?: string ) {
-			
-			const tree = this.tree()
-			if( !next ) return tree.type
-			
-			this.tree(
-				tree.struct( next, tree.kids )
-			)
-			
-			return next
-		}
-		
-		@ $mol_mem
-		base( next?: string ) {
-			
-			const self = this.tree()
-			const base = this.$.$mol_view_tree2_class_super( self )
-			if( !next ) return base.type
-			
-			this.tree(
-				self.clone([
-					self.struct( next )
-				])
-			)
-			
-			return next
-		}
-		
+
 		@ $mol_mem
 		preview_html() {
 			
@@ -143,6 +89,71 @@ namespace $.$$ {
 		
 		inspect_stat_depth() {
 			return Object.keys( this.inspect_stat() ).map( Number )
+		}
+		
+		readme_selected( next?: string ) {
+			return $mol_state_arg.value( 'demo', next ) ?? ''
+		}
+
+		@ $mol_mem
+		library() {
+			const uri = new URL( 'web.view.tree', this.pack() ).toString()
+			const str = this.$.$mol_fetch.text( uri )
+			const predef = '$mol_view $mol_object\n\tdom_name \\\n\tstyle *\n\tevent *\n\tfield *\n\tattr *\n\tsub /\n\ttitle \\\n'
+			const tree = this.$.$mol_tree2_from_string( predef + str )
+			const norm = this.$.$mol_view_tree2_normalize( tree )
+			return norm
+		}
+		
+		@ $mol_mem
+		tree( next?: $mol_tree2 ) {
+			
+			const source = this.source( next && next.toString() ).replace( /\n?$/, '\n' )
+			
+			const tree = this.$.$mol_view_tree2_normalize(
+				this.$.$mol_tree2_from_string( source )
+			).kids[0]
+			
+			return tree
+		}
+		
+		@ $mol_mem
+		united() {
+			const lib = this.library()
+			return lib.clone([
+				... lib.kids,
+				this.tree(),
+			])
+		}
+		
+		@ $mol_mem
+		self( next?: string ) {
+			
+			const tree = this.tree()
+			if( !next ) return tree.type
+			
+			this.tree(
+				tree.struct( next, tree.kids )
+			)
+			
+			return next
+		}
+		
+		@ $mol_mem
+		base( next?: string ) {
+			
+			const self = this.tree()
+			const base = this.$.$mol_view_tree2_class_super( self )
+			
+			if( !next ) return base.type
+			
+			this.tree(
+				self.clone([
+					self.struct( next )
+				])
+			)
+			
+			return this.readme_selected( next )
 		}
 		
 		@ $mol_mem
@@ -309,7 +320,5 @@ namespace $.$$ {
 			
 			return this.props_all().select( sign ).kids[0] ?? null
 		}
-		
 	}
-	
 }

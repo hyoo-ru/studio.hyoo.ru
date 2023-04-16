@@ -18,16 +18,9 @@ namespace $.$$ {
 		},
 
 		Edit_form: {
+			padding: $mol_gap.block,
+			gap: $mol_gap.block,
 			display: 'flex',
-		},
-
-		Classes: {
-
-			flex: {
-				wrap: 'wrap',
-			},
-
-
 		},
 
 		$mol_form_field: {
@@ -36,22 +29,35 @@ namespace $.$$ {
 			},
 		},
 
-		Base: {
-			alignSelf: 'stretch',
+		Pack: {
+			width: per (100),
 		},
 
-		Props_controls: {
-			padding: $mol_gap.block,
+		Readme_open: {
+			marginLeft: 'auto',
+		},
+
+		Config: {
+			gap: $mol_gap.block,
 		},
 
 		Props: {
-			padding: $mol_gap.block,
 			gap: $mol_gap.block,
+		},
+
+		Props_controls: {
+			padding: {
+				top: $mol_gap.block,
+				bottom: $mol_gap.block,
+			},
 		},
 
 		Source_page: {
 			flex: {
 				basis: rem( 40 ),
+			},
+			Body: {
+				flexDirection: 'row',
 			},
 		},
 

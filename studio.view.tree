@@ -2,6 +2,9 @@ $hyoo_studio $mol_book2
 	comp $hyoo_studio_component
 	plugins /
 		<= Theme $mol_theme_auto
+	Demo $mol_app_demo
+		Readme_page => Readme_page
+		meta_bundle_base <= pack
 	pages /
 		<= Edit $mol_page
 			title @ \$mol Studio
@@ -29,23 +32,31 @@ $hyoo_studio $mol_book2
 					rows <= form_sections /
 						<= Pack_field $mol_form_field
 							name @ \Components Donor App
-							control <= Pack $mol_string
-								hint <= pack
-								value?val <=> pack?val \https://mol.hyoo.ru
+							Content <= Pack $mol_search
+								query? <=> pack? \https://mol.hyoo.ru
+								suggests <= suggests /
+									\https://mol.hyoo.ru
 						<= Config $mol_list
 							rows /
 								<= Classes $mol_view
 									sub /
 										<= Self_field $mol_form_field
 											name @ \Component Name
-											control <= Self $mol_string
+											Content <= Self $mol_string
 												hint \$hyoo_studio_example
-												value?val <=> self?val \
+												value? <=> self? \
 										<= Base_field $mol_form_field
 											name @ \Base Class
-											control <= Base $mol_select
-												value?val <=> base?val \
-												options <= base_options /string
+											Content <= Base_content $mol_view
+												sub /
+													<= Base $mol_select
+														value? <=> base? \
+														options <= base_options /string
+													<= Readme_open $mol_check_icon
+														hint @ \Readme
+														checked? <=> readme_show? false
+														sub /
+															<= Readme_toggle_icon $mol_icon_information_outline
 								- <= Props_inherited_field $mol_form_field
 									name @ \Display inherited properties
 									control <= Props_inherited_control $mol_check_list
@@ -58,14 +69,15 @@ $hyoo_studio $mol_book2
 									sub <= props_controls /
 										<= Prop_filter $mol_search
 											hint @ \Search property or Add one..
-											query?next <=> prop_filter?next \
+											query? <=> prop_filter? \
 										<= Prop_add $mol_button_minor
 											hint @ \Add this property
-											click?next <=> prop_add?next null
+											click? <=> prop_add? null
 											sub /
 												<= Prop_add_icon $mol_icon_plus
 								<= Props $mol_list
 									rows <= props /$hyoo_studio_prop
+		<= Readme_page
 		<= Source_page $mol_page
 			title @ \Raw Code
 			body /
@@ -99,8 +111,8 @@ $hyoo_studio $mol_book2
 	Prop* $hyoo_studio_prop
 		name <= prop_name* \default
 		sign? <=> prop_sign*? \
-		tree? <=> prop_tree!tree_node_str? $mol_tree2_empty
-		props_of!klass <= props_of!klass $mol_tree2_empty
+		tree? <=> prop_tree*? $mol_tree2_empty
+		props_of* <= props_of* $mol_tree2_empty
 		props_bindable <= props_all $mol_tree2_empty
 		class_list <= class_list /string
 		Bound_prop* <= Bound_prop* $hyoo_studio_prop

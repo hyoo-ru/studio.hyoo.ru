@@ -1,0 +1,10 @@
+$hyoo_studio_value_string $hyoo_studio_value_unit
+	self /
+		<= Str $mol_textarea
+			value? <=> str? \
+	tools /
+		<= Type
+		<= Locale $mol_check_icon
+			hint @ \Multilingual
+			Icon <= Locale_icon $mol_icon_translate
+			checked? <=> locale? false

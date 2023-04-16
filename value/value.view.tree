@@ -1,51 +1,38 @@
-$hyoo_studio_value $mol_list
+$hyoo_studio_value $mol_ghost
 	tree? $mol_tree2_empty
-	guid \
-	parent_type \
-	rows /
+	Bound $hyoo_studio_value_bound
+	List $hyoo_studio_value_list
+	Dict $hyoo_studio_value_dict
+	Object $hyoo_studio_value_object
+	String $hyoo_studio_value_string
+	Number $hyoo_studio_value_number
+	Unit $hyoo_studio_value_unit
+	value_tools /
+	type \
+	head /
+	belong_to \prop
+	hide_tools false
+	props_of* $mol_tree2_empty
+	props_bindable $mol_tree2_empty
+	class_list /string
+	Bound_prop* $hyoo_studio_prop
+
+$hyoo_studio_value_unit $mol_view
+	head /
+	belong_to \prop
+	hide_tools false
+	props_of* $mol_tree2_empty
+	props_bindable $mol_tree2_empty
+	class_list /string
+	Bound_prop* $hyoo_studio_prop
+	sub /
+		^ head
+		<= Value_tools $mol_view
+			sub <= visible_tools <= tools /
+				<= Type $hyoo_studio_type
+					tree? <=> tree? $mol_tree2_empty
+					type? => type?
+					belong_to <= belong_to
+					class_list <= class_list /string
 		<= Self $mol_view
 			sub <= self /
-				<= Type $hyoo_studio_prop_type
-					tree? <=> tree?
-					type => type
-					object_options <= object_options *
-					bind_options <= bind_options *
-				<= Str $mol_textarea
-					value?next <=> str?next \
-				<= Locale $mol_check_icon
-					hint @ \Multilingual
-					Icon <= Locale_icon $mol_icon_translate
-					checked?next <=> locale?next false
-				<= Numb $mol_number
-					value?next <=> numb?next +NaN
-				<= Over_prop_name $mol_select
-					hint @ \Overrided Property
-					value?next <=> name?next \
-					options <= prop_name_list
-					Trigger_icon null
-				<= Bound_prop_expand $mol_check_expand
-					checked? <=> bound_expanded? false
-				<= Bound_prop_name $mol_select
-					hint @ \Bound Property
-					value?next <=> bound_prop_name?next null
-					options <= prop_name_list /string
-					Trigger_icon null
-				<= Item_type $mol_string_button
-					hint @ \Item Type
-					value?next <=> item_type?next \any
-				<= List_add $mol_button_minor
-					hint @ \Add Item
-					sub /
-						<= List_add_icon $mol_icon_plus
-					click?next <=> list_add?next null
-		<= List_values $mol_list
-			rows <= list /
-	List_value* $hyoo_studio_value
-		parent_type \list
-		tree? <=> list_value*? $mol_tree2_empty
-		props_of!klass <= props_of!klass $mol_tree2_empty
-		props_bindable <= props_bindable $mol_tree2_empty
-		class_list <= class_list /string
-		Bound_prop* <= Bound_prop* null
-		bind_options *
-			get \<=

@@ -1,0 +1,28 @@
+$hyoo_studio_value_dict $hyoo_studio_value_unit
+	self /
+		<= Head $mol_view
+			sub /
+				^ head
+				<= Value_tools
+		<= Key_values $mol_list
+			rows <= list /
+				<= Item*0 $mol_view
+					sub /
+						<= Item_name* $mol_textarea
+							value? <=> item_key*? \
+						<= Value* $hyoo_studio_value
+							tree? <=> item_value*? $mol_tree2_empty
+							belong_to \dict
+							props_of* <= props_of* $mol_tree2_empty
+							props_bindable <= props_bindable $mol_tree2_empty
+							class_list <= class_list /string
+							Bound_prop* <= Bound_prop* null
+							head /
+								<= Item_name*
+	tools /
+		<= Type
+		<= Key_item_add $mol_button_minor
+			hint @ \Add Key
+			sub /
+				<= Key_add_icon $mol_icon_plus
+			click? <=> dict_item_add? null
