@@ -65,5 +65,7 @@
 	pack icon git \https://github.com/nin-jin/mol_icon.git
 \/mol/view
 	include \/mol/view/tree/test
+\/mol/app/demo/main
+	deploy \/mol/readme.md
 \/hyoo/studio
 	include \/mol/offline/install
