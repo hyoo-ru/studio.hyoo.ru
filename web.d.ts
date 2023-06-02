@@ -749,12 +749,12 @@ declare namespace $ {
         right?: Length | 'auto' | Common;
         bottom?: Length | 'auto' | Common;
         left?: Length | 'auto' | Common;
-        border?: {
+        border?: Directions<{
             radius?: Length | [Length, Length];
             style?: 'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | Common;
-            color?: Directions<Color> | Common;
-            width?: Directions<Length> | Common;
-        };
+            color?: Color | Common;
+            width?: Length | Common;
+        }>;
         flex?: 'none' | 'auto' | {
             grow?: number | Common;
             shrink?: number | Common;
@@ -2920,7 +2920,7 @@ declare namespace $ {
 
 declare namespace $.$$ {
     class $mol_embed_any extends $.$mol_embed_any {
-        type(): "image" | "object" | "youtube";
+        type(): "object" | "image" | "youtube";
         sub(): $mol_image[] | $mol_embed_youtube[] | $mol_embed_native[];
     }
 }
@@ -3642,7 +3642,7 @@ declare namespace $.$$ {
         }>;
         other_options_group(): ($mol_check | $mol_switch | $mol_textarea)[];
         list_type_showed(): boolean;
-        switch_type(next?: string): "text" | "" | "object" | "list" | "dict" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "null" | "boolean_true" | "boolean_false" | "number" | "get" | "put" | "bind";
+        switch_type(next?: string): "" | "text" | "object" | "list" | "dict" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "null" | "boolean_true" | "boolean_false" | "number" | "get" | "put" | "bind";
         drop(): void;
         bubble_content(): readonly any[];
         obj_checked(next?: any): boolean;
@@ -3650,12 +3650,12 @@ declare namespace $.$$ {
         bind_option_label_display(bind_option: keyof ReturnType<$hyoo_studio_type["bind_options"]>): $mol_icon_arrow_left_right_bold_outline[];
         trigger_content(): $mol_icon_arrow_left_right_bold_outline[] | $mol_paragraph[];
         type_display(): string;
-        type(next?: string): "text" | "" | "object" | "list" | "dict" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "null" | "boolean_true" | "boolean_false" | "number" | "get" | "put" | "bind";
+        type(next?: string): "" | "text" | "object" | "list" | "dict" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "null" | "boolean_true" | "boolean_false" | "number" | "get" | "put" | "bind";
         show_obj_select(): void;
         selected_class(next?: string): string;
         list_items_type(next?: string): string;
     }
-    function $hyoo_studio_type_value(val: $mol_tree2_empty): "text" | "" | "object" | "list" | "dict" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "null" | "boolean_true" | "boolean_false" | "number" | "get" | "put" | "bind";
+    function $hyoo_studio_type_value(val: $mol_tree2_empty): "" | "text" | "object" | "list" | "dict" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "null" | "boolean_true" | "boolean_false" | "number" | "get" | "put" | "bind";
 }
 
 declare namespace $.$$ {
@@ -3691,7 +3691,7 @@ declare namespace $ {
         Bound_prop(id: any): $$.$hyoo_studio_prop;
         sub(): readonly any[];
         tree(next?: any): $mol_tree2_empty;
-        type(next?: any): "text" | "" | "object" | "list" | "dict" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "null" | "boolean_true" | "boolean_false" | "number" | "get" | "put" | "bind";
+        type(next?: any): "" | "text" | "object" | "list" | "dict" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "null" | "boolean_true" | "boolean_false" | "number" | "get" | "put" | "bind";
         Type(): $$.$hyoo_studio_type;
         tools(): readonly any[];
         visible_tools(): readonly any[];
