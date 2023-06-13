@@ -20709,4 +20709,5 @@ var $;
 })($ || ($ = {}));
 //hyoo/studio/studio.view.css.ts
 
+export default $
 //# sourceMappingURL=web.js.map
