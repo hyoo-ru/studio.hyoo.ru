@@ -2447,14 +2447,14 @@ var $;
 var $;
 (function ($) {
     class $mol_scroll extends $mol_view {
-        scroll_top(val) {
-            if (val !== undefined)
-                return val;
+        scroll_top(next) {
+            if (next !== undefined)
+                return next;
             return 0;
         }
-        scroll_left(val) {
-            if (val !== undefined)
-                return val;
+        scroll_left(next) {
+            if (next !== undefined)
+                return next;
             return 0;
         }
         field() {
@@ -4097,8 +4097,8 @@ var $;
         body() {
             return [];
         }
-        body_scroll_top(val) {
-            return this.Body().scroll_top(val);
+        body_scroll_top(next) {
+            return this.Body().scroll_top(next);
         }
         Body() {
             const obj = new this.$.$mol_scroll();
@@ -4568,9 +4568,9 @@ var $;
 var $;
 (function ($) {
     class $mol_pop extends $mol_view {
-        showed(val) {
-            if (val !== undefined)
-                return val;
+        showed(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         align_vert() {
@@ -5197,9 +5197,9 @@ var $;
 var $;
 (function ($) {
     class $mol_nav extends $mol_plugin {
-        cycle(val) {
-            if (val !== undefined)
-                return val;
+        cycle(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         mod_ctrl() {
@@ -5211,24 +5211,24 @@ var $;
         mod_alt() {
             return false;
         }
-        keys_x(val) {
-            if (val !== undefined)
-                return val;
+        keys_x(next) {
+            if (next !== undefined)
+                return next;
             return [];
         }
-        keys_y(val) {
-            if (val !== undefined)
-                return val;
+        keys_y(next) {
+            if (next !== undefined)
+                return next;
             return [];
         }
-        current_x(val) {
-            if (val !== undefined)
-                return val;
+        current_x(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        current_y(val) {
-            if (val !== undefined)
-                return val;
+        current_y(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         event_up(event) {
@@ -6070,9 +6070,9 @@ var $;
         autocomplete() {
             return false;
         }
-        selection(val) {
-            if (val !== undefined)
-                return val;
+        selection(next) {
+            if (next !== undefined)
+                return next;
             return [
                 0,
                 0
@@ -6121,13 +6121,13 @@ var $;
         disabled() {
             return false;
         }
-        value(val) {
-            if (val !== undefined)
-                return val;
+        value(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
-        value_changed(val) {
-            return this.value(val);
+        value_changed(next) {
+            return this.value(next);
         }
         hint() {
             return "";
@@ -6156,9 +6156,9 @@ var $;
         length_max() {
             return +Infinity;
         }
-        type(val) {
-            if (val !== undefined)
-                return val;
+        type(next) {
+            if (next !== undefined)
+                return next;
             return "text";
         }
         event_change(event) {
@@ -6878,9 +6878,9 @@ var $;
 var $;
 (function ($) {
     class $mol_search extends $mol_pop {
-        query(val) {
-            if (val !== undefined)
-                return val;
+        query(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         suggests() {
@@ -6893,8 +6893,8 @@ var $;
                 this.Nav()
             ];
         }
-        showed(val) {
-            return this.suggests_showed(val);
+        showed(next) {
+            return this.suggests_showed(next);
         }
         align_hor() {
             return "right";
@@ -6915,15 +6915,15 @@ var $;
             obj.sub = () => this.suggest_content(id);
             return obj;
         }
-        clear(val) {
-            if (val !== undefined)
-                return val;
+        clear(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         Hotkey() {
             const obj = new this.$.$mol_hotkey();
             obj.key = () => ({
-                escape: (val) => this.clear(val)
+                escape: (next) => this.clear(next)
             });
             return obj;
         }
@@ -6941,9 +6941,9 @@ var $;
             obj.current_y = (component) => this.nav_focused(component);
             return obj;
         }
-        suggests_showed(val) {
-            if (val !== undefined)
-                return val;
+        suggests_showed(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         hint() {
@@ -6968,7 +6968,7 @@ var $;
         }
         Query() {
             const obj = new this.$.$mol_string();
-            obj.value = (val) => this.query(val);
+            obj.value = (next) => this.query(next);
             obj.hint = () => this.hint();
             obj.submit = (event) => this.submit(event);
             obj.enabled = () => this.enabled();
@@ -7392,8 +7392,8 @@ var $;
                 paddingLeft: this.level_style()
             };
         }
-        checked(val) {
-            return this.expanded(val);
+        checked(next) {
+            return this.expanded(next);
         }
         enabled() {
             return this.expandable();
@@ -7401,9 +7401,9 @@ var $;
         level_style() {
             return "0px";
         }
-        expanded(val) {
-            if (val !== undefined)
-                return val;
+        expanded(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         expandable() {
@@ -7455,9 +7455,9 @@ var $;
                 this.Content()
             ];
         }
-        expanded(val) {
-            if (val !== undefined)
-                return val;
+        expanded(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         expandable() {
@@ -7470,7 +7470,7 @@ var $;
         }
         Trigger() {
             const obj = new this.$.$mol_check_expand();
-            obj.checked = (val) => this.expanded(val);
+            obj.checked = (next) => this.expanded(next);
             obj.expandable = () => this.expandable();
             obj.label = () => this.label();
             return obj;
@@ -7780,14 +7780,14 @@ var $;
             ];
             return obj;
         }
-        filter(val) {
-            if (val !== undefined)
-                return val;
+        filter(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         Filter() {
             const obj = new this.$.$mol_search();
-            obj.query = (val) => this.filter(val);
+            obj.query = (next) => this.filter(next);
             return obj;
         }
         ids_tags() {
@@ -8121,9 +8121,9 @@ var $;
 var $;
 (function ($) {
     class $mol_embed_native extends $mol_scroll {
-        uri(val) {
-            if (val !== undefined)
-                return val;
+        uri(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         dom_name() {
@@ -8333,9 +8333,9 @@ var $;
         clipboard_write() {
             return true;
         }
-        uri(val) {
-            if (val !== undefined)
-                return val;
+        uri(next) {
+            if (next !== undefined)
+                return next;
             return "about:config";
         }
         html() {
@@ -9589,7 +9589,7 @@ var $;
             const obj = new this.$.$mol_check_expand();
             obj.level = () => this.cell_level(id);
             obj.label = () => this.cell_content(id);
-            obj.expanded = (val) => this.cell_expanded(id, val);
+            obj.expanded = (next) => this.cell_expanded(id, next);
             return obj;
         }
         Cell_content(id) {
@@ -9626,9 +9626,9 @@ var $;
         cell_level(id) {
             return 0;
         }
-        cell_expanded(id, val) {
-            if (val !== undefined)
-                return val;
+        cell_expanded(id, next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         needle() {
@@ -11261,16 +11261,16 @@ var $;
         hint() {
             return this.$.$mol_locale.text('$mol_lights_toggle_hint');
         }
-        checked(val) {
-            return this.lights(val);
+        checked(next) {
+            return this.lights(next);
         }
         Lights_icon() {
             const obj = new this.$.$mol_icon_brightness_6();
             return obj;
         }
-        lights(val) {
-            if (val !== undefined)
-                return val;
+        lights(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
     }
@@ -11900,7 +11900,7 @@ var $;
             obj.minimal_width = () => 40;
             obj.minimal_height = () => 40;
             obj.enabled = () => this.trigger_enabled();
-            obj.checked = (val) => this.showed(val);
+            obj.checked = (next) => this.showed(next);
             obj.sub = () => this.trigger_content();
             obj.hint = () => this.hint();
             return obj;
@@ -11963,17 +11963,17 @@ var $;
 var $;
 (function ($) {
     class $mol_select extends $mol_pick {
-        dictionary(val) {
-            if (val !== undefined)
-                return val;
+        dictionary(next) {
+            if (next !== undefined)
+                return next;
             return {};
         }
         options() {
             return [];
         }
-        value(val) {
-            if (val !== undefined)
-                return val;
+        value(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         option_label_default() {
@@ -12009,7 +12009,7 @@ var $;
         }
         Filter() {
             const obj = new this.$.$mol_string();
-            obj.value = (val) => this.filter_pattern(val);
+            obj.value = (next) => this.filter_pattern(next);
             obj.hint = () => this.$.$mol_locale.text('$mol_select_Filter_hint');
             obj.submit = (event) => this.submit(event);
             obj.enabled = () => this.enabled();
@@ -12027,9 +12027,9 @@ var $;
         option_label(id) {
             return "";
         }
-        filter_pattern(val) {
-            if (val !== undefined)
-                return val;
+        filter_pattern(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         Option_label(id) {
@@ -12054,16 +12054,16 @@ var $;
                 return component;
             return null;
         }
-        nav_cycle(val) {
-            if (val !== undefined)
-                return val;
+        nav_cycle(next) {
+            if (next !== undefined)
+                return next;
             return true;
         }
         Nav() {
             const obj = new this.$.$mol_nav();
             obj.keys_y = () => this.nav_components();
             obj.current_y = (component) => this.option_focused(component);
-            obj.cycle = (val) => this.nav_cycle(val);
+            obj.cycle = (next) => this.nav_cycle(next);
             return obj;
         }
         menu_content() {
@@ -12363,7 +12363,7 @@ var $;
     class $mol_check_list extends $mol_view {
         Option(id) {
             const obj = new this.$.$mol_check();
-            obj.checked = (val) => this.option_checked(id, val);
+            obj.checked = (next) => this.option_checked(id, next);
             obj.label = () => this.option_label(id);
             obj.enabled = () => this.option_enabled(id);
             obj.hint = () => this.option_hint(id);
@@ -12379,9 +12379,9 @@ var $;
         sub() {
             return this.items();
         }
-        option_checked(id, val) {
-            if (val !== undefined)
-                return val;
+        option_checked(id, next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         option_title(id) {
@@ -12456,9 +12456,9 @@ var $;
 var $;
 (function ($) {
     class $mol_switch extends $mol_check_list {
-        value(val) {
-            if (val !== undefined)
-                return val;
+        value(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
     }
@@ -12557,9 +12557,9 @@ var $;
                 bracketClose: "}"
             };
         }
-        clickable(val) {
-            if (val !== undefined)
-                return val;
+        clickable(next) {
+            if (next !== undefined)
+                return next;
             return false;
         }
         sidebar_showed() {
@@ -12575,9 +12575,9 @@ var $;
                 return event;
             return null;
         }
-        value(val) {
-            if (val !== undefined)
-                return val;
+        value(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         hint() {
@@ -12592,9 +12592,9 @@ var $;
         length_max() {
             return +Infinity;
         }
-        selection(val) {
-            if (val !== undefined)
-                return val;
+        selection(next) {
+            if (next !== undefined)
+                return next;
             return [];
         }
         submit(next) {
@@ -12607,12 +12607,12 @@ var $;
         }
         Edit() {
             const obj = new this.$.$mol_textarea_edit();
-            obj.value = (val) => this.value(val);
+            obj.value = (next) => this.value(next);
             obj.hint = () => this.hint();
             obj.enabled = () => this.enabled();
             obj.spellcheck = () => this.spellcheck();
             obj.length_max = () => this.length_max();
-            obj.selection = (val) => this.selection(val);
+            obj.selection = (next) => this.selection(next);
             obj.submit = (next) => this.submit(next);
             obj.submit_with_ctrl = () => true;
             return obj;
@@ -14631,9 +14631,9 @@ var $;
         type() {
             return "tel";
         }
-        value_string(val) {
-            if (val !== undefined)
-                return val;
+        value_string(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
         hint() {
@@ -14650,7 +14650,7 @@ var $;
         String() {
             const obj = new this.$.$mol_string();
             obj.type = () => this.type();
-            obj.value = (val) => this.value_string(val);
+            obj.value = (next) => this.value_string(next);
             obj.hint = () => this.hint();
             obj.enabled = () => this.string_enabled();
             obj.submit = (next) => this.submit(next);
@@ -16174,9 +16174,9 @@ var $;
         axis_points() {
             return [];
         }
-        normalize(val) {
-            if (val !== undefined)
-                return val;
+        normalize(next) {
+            if (next !== undefined)
+                return next;
             return 0;
         }
         precision() {
@@ -17094,19 +17094,19 @@ var $;
 var $;
 (function ($) {
     class $mol_touch extends $mol_plugin {
-        start_zoom(val) {
-            if (val !== undefined)
-                return val;
+        start_zoom(next) {
+            if (next !== undefined)
+                return next;
             return 0;
         }
-        start_distance(val) {
-            if (val !== undefined)
-                return val;
+        start_distance(next) {
+            if (next !== undefined)
+                return next;
             return 0;
         }
-        zoom(val) {
-            if (val !== undefined)
-                return val;
+        zoom(next) {
+            if (next !== undefined)
+                return next;
             return 1;
         }
         allow_draw() {
@@ -17118,28 +17118,28 @@ var $;
         allow_zoom() {
             return true;
         }
-        action_type(val) {
-            if (val !== undefined)
-                return val;
+        action_type(next) {
+            if (next !== undefined)
+                return next;
             return "";
         }
-        action_point(val) {
-            if (val !== undefined)
-                return val;
+        action_point(next) {
+            if (next !== undefined)
+                return next;
             const obj = new this.$.$mol_vector_2d(NaN, NaN);
             return obj;
         }
-        start_pan(val) {
-            if (val !== undefined)
-                return val;
+        start_pan(next) {
+            if (next !== undefined)
+                return next;
             return [
                 0,
                 0
             ];
         }
-        pan(val) {
-            if (val !== undefined)
-                return val;
+        pan(next) {
+            if (next !== undefined)
+                return next;
             const obj = new this.$.$mol_vector_2d(0, 0);
             return obj;
         }
@@ -17147,72 +17147,72 @@ var $;
             const obj = new this.$.$mol_vector_2d(NaN, NaN);
             return obj;
         }
-        start_pos(val) {
-            if (val !== undefined)
-                return val;
+        start_pos(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         swipe_precision() {
             return 16;
         }
-        swipe_right(val) {
-            if (val !== undefined)
-                return val;
+        swipe_right(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        swipe_bottom(val) {
-            if (val !== undefined)
-                return val;
+        swipe_bottom(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        swipe_left(val) {
-            if (val !== undefined)
-                return val;
+        swipe_left(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        swipe_top(val) {
-            if (val !== undefined)
-                return val;
+        swipe_top(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        swipe_from_right(val) {
-            if (val !== undefined)
-                return val;
+        swipe_from_right(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        swipe_from_bottom(val) {
-            if (val !== undefined)
-                return val;
+        swipe_from_bottom(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        swipe_from_left(val) {
-            if (val !== undefined)
-                return val;
+        swipe_from_left(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        swipe_from_top(val) {
-            if (val !== undefined)
-                return val;
+        swipe_from_top(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        swipe_to_right(val) {
-            if (val !== undefined)
-                return val;
+        swipe_to_right(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        swipe_to_bottom(val) {
-            if (val !== undefined)
-                return val;
+        swipe_to_bottom(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        swipe_to_left(val) {
-            if (val !== undefined)
-                return val;
+        swipe_to_left(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
-        swipe_to_top(val) {
-            if (val !== undefined)
-                return val;
+        swipe_to_top(next) {
+            if (next !== undefined)
+                return next;
             return null;
         }
         draw_start(event) {
@@ -17617,14 +17617,14 @@ var $;
         aspect() {
             return "none";
         }
-        hue_base(val) {
-            if (val !== undefined)
-                return val;
+        hue_base(next) {
+            if (next !== undefined)
+                return next;
             return +NaN;
         }
-        hue_shift(val) {
-            if (val !== undefined)
-                return val;
+        hue_shift(next) {
+            if (next !== undefined)
+                return next;
             return 111;
         }
         gap_hor() {
@@ -17657,9 +17657,9 @@ var $;
             const obj = new this.$.$mol_vector_2d(0, 0);
             return obj;
         }
-        shift(val) {
-            if (val !== undefined)
-                return val;
+        shift(next) {
+            if (next !== undefined)
+                return next;
             const obj = new this.$.$mol_vector_2d(0, 0);
             return obj;
         }
@@ -17671,20 +17671,20 @@ var $;
             const obj = new this.$.$mol_vector_2d(0, 0);
             return obj;
         }
-        scale(val) {
-            if (val !== undefined)
-                return val;
+        scale(next) {
+            if (next !== undefined)
+                return next;
             const obj = new this.$.$mol_vector_2d(1, -1);
             return obj;
         }
-        scale_x(val) {
-            if (val !== undefined)
-                return val;
+        scale_x(next) {
+            if (next !== undefined)
+                return next;
             return 1;
         }
-        scale_y(val) {
-            if (val !== undefined)
-                return val;
+        scale_y(next) {
+            if (next !== undefined)
+                return next;
             return -1;
         }
         size() {
@@ -17767,9 +17767,9 @@ var $;
         graphs_visible() {
             return this.graphs_positioned();
         }
-        zoom(val) {
-            if (val !== undefined)
-                return val;
+        zoom(next) {
+            if (next !== undefined)
+                return next;
             return 1;
         }
         allow_draw() {
@@ -17807,8 +17807,8 @@ var $;
         }
         Touch() {
             const obj = new this.$.$mol_touch();
-            obj.zoom = (val) => this.zoom(val);
-            obj.pan = (val) => this.shift(val);
+            obj.zoom = (next) => this.zoom(next);
+            obj.pan = (next) => this.shift(next);
             obj.allow_draw = () => this.allow_draw();
             obj.allow_pan = () => this.allow_pan();
             obj.allow_zoom = () => this.allow_zoom();
@@ -18163,15 +18163,15 @@ var $;
         hue_shift() {
             return 111;
         }
-        zoom(val) {
-            return this.Plot().scale_x(val);
+        zoom(next) {
+            return this.Plot().scale_x(next);
         }
         graphs_colored() {
             return this.Plot().graphs_colored();
         }
         Plot() {
             const obj = new this.$.$mol_plot_pane();
-            obj.zoom = (val) => this.zoom(val);
+            obj.zoom = (next) => this.zoom(next);
             obj.gap_left = () => this.gap_left();
             obj.gap_right = () => this.gap_right();
             obj.gap_bottom = () => this.gap_bottom();
