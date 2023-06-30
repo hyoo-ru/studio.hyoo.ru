@@ -52,6 +52,17 @@ namespace $.$$ {
 			},
 		},
 
+		Source_type: {
+			flex: {
+				grow: 1,
+			},
+			Switch: {
+				flex: {
+					grow: 0,
+				},
+			},
+		},
+
 		Source_page: {
 			flex: {
 				basis: rem( 40 ),
@@ -59,6 +70,14 @@ namespace $.$$ {
 			Body: {
 				flexDirection: 'row',
 			},
+		},
+
+		Source_page_list: {
+			width: '100%',
+		},
+
+		Source_prop_name: {
+			padding: $mol_gap.block,
 		},
 
 		Preview: {
