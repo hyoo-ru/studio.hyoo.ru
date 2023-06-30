@@ -871,6 +871,10 @@ $mol_icon_atom $mol_icon path \M12,11C12.55,11 13,11.45 13,12C13,12.55 12.55,13 
 
 $mol_icon_atom_variant $mol_icon path \M18.36,2.64C20,2.64 21.36,4 21.36,5.64C21.36,7.29 20,8.64 18.36,8.64C16.71,8.64 15.36,7.29 15.36,5.64C15.36,5.34 15.41,5.06 15.5,4.8C14.43,4.29 13.25,4 12,4C7.58,4 4,7.58 4,12L4.04,12.84L2.05,13.05L2,12C2,6.48 6.48,2 12,2C13.69,2 15.28,2.42 16.67,3.16C17.16,2.83 17.74,2.64 18.36,2.64M18.36,4.64C17.81,4.64 17.36,5.09 17.36,5.64C17.36,6.19 17.81,6.64 18.36,6.64C18.92,6.64 19.36,6.19 19.36,5.64C19.36,5.08 18.92,4.64 18.36,4.64M5.64,15.36C7.29,15.36 8.64,16.71 8.64,18.36C8.64,18.66 8.59,18.94 8.5,19.2C9.57,19.71 10.75,20 12,20C16.42,20 20,16.42 20,12L19.96,11.16L21.95,10.95L22,12C22,17.52 17.52,22 12,22C10.31,22 8.72,21.58 7.33,20.84C6.84,21.17 6.26,21.36 5.64,21.36C4,21.36 2.64,20 2.64,18.36C2.64,16.71 4,15.36 5.64,15.36M5.64,17.36C5.08,17.36 4.64,17.81 4.64,18.36C4.64,18.92 5.08,19.36 5.64,19.36C6.19,19.36 6.64,18.91 6.64,18.36C6.64,17.81 6.19,17.36 5.64,17.36M12,8C14.21,8 16,9.79 16,12C16,14.21 14.21,16 12,16C9.79,16 8,14.21 8,12C8,9.79 9.79,8 12,8Z
 
+$mol_icon_language_css3 $mol_icon path \M5,3L4.35,6.34H17.94L17.5,8.5H3.92L3.26,11.83H16.85L16.09,15.64L10.61,17.45L5.86,15.64L6.19,14H2.85L2.06,18L9.91,21L18.96,18L20.16,11.97L20.4,10.76L21.94,3H5Z
+
+$mol_icon_language_javascript $mol_icon path \M3,3H21V21H3V3M7.73,18.04C8.13,18.89 8.92,19.59 10.27,19.59C11.77,19.59 12.8,18.79 12.8,17.04V11.26H11.1V17C11.1,17.86 10.75,18.08 10.2,18.08C9.62,18.08 9.38,17.68 9.11,17.21L7.73,18.04M13.71,17.86C14.21,18.84 15.22,19.59 16.8,19.59C18.4,19.59 19.6,18.76 19.6,17.23C19.6,15.82 18.79,15.19 17.35,14.57L16.93,14.39C16.2,14.08 15.89,13.87 15.89,13.37C15.89,12.96 16.2,12.64 16.7,12.64C17.18,12.64 17.5,12.85 17.79,13.37L19.1,12.5C18.55,11.54 17.77,11.17 16.7,11.17C15.19,11.17 14.22,12.13 14.22,13.4C14.22,14.78 15.03,15.43 16.25,15.95L16.67,16.13C17.45,16.47 17.91,16.68 17.91,17.26C17.91,17.74 17.46,18.09 16.76,18.09C15.93,18.09 15.45,17.66 15.09,17.06L13.71,17.86Z
+
 $mol_ghost $mol_view
 	Sub $mol_view
 
@@ -1296,6 +1300,14 @@ $hyoo_studio_prop $mol_view
 						hint @ \Changeable
 						Icon <= Next_icon $mol_icon_atom_variant
 						checked? <=> changeable? false
+					<= Styles $mol_check_icon
+						hint @ \Styles
+						Icon <= Styles_icon $mol_icon_language_css3
+						checked? <=> styles_opened? false
+					<= Behavior $mol_check_icon
+						hint @ \Behavior
+						Icon <= Behavior_icon $mol_icon_language_javascript
+						checked? <=> behavior_opened? false
 			content <= prop_content /
 				<= Value $hyoo_studio_value
 					hide_tools true
@@ -1334,6 +1346,14 @@ $mol_form_field $mol_labeler
 		<= Bid $mol_view
 			sub / <= bid \
 	content / <= control null
+
+$mol_deck $mol_list
+	items /$mol_view
+	rows /$mol_view
+		<= Switch $mol_switch
+			value? <=> current? \0
+			options <= switch_options *
+		<= Content $mol_view
 
 $mol_svg_group $mol_svg
 	dom_name \g
@@ -1860,10 +1880,35 @@ $hyoo_studio $mol_book2
 		<= Source_page $mol_page
 			title @ \Raw Code
 			body /
-				<= Source $mol_textarea
-					hint \$hyoo_studio_example $mol_view
-					sidebar_showed true
-					value?val <=> source?val \$hyoo_studio_example $mol_view
+				<= Source_page_list $mol_list rows <= source_page_body /
+					<= Source_prop_switch $mol_view
+						sub /
+							<= Source_prop_name $mol_paragraph title <= source_prop_name \The property is editing: {prop_name}
+							<= Source_prop_exit $mol_button_minor
+								title @ \Show all
+								click? <=> source_prop_exit? null
+					<= Source_type $mol_deck
+						current? <=> soure_type_current? \0
+						items /
+							<= Source $mol_textarea
+								title \Composition
+								hint \$hyoo_studio_example $mol_view
+								sidebar_showed true
+								value? <=> source_tree? \$hyoo_studio_example $mol_view
+							<= Source_css $mol_textarea
+								title \Styles
+								hint \
+								sidebar_showed true
+								value? <=> source_css_switch? <=> source_css? \
+							<= Source_js $mol_textarea
+								title \Behavior
+								hint \
+								sidebar_showed true
+								value? <=> source_js_switch? <=> source_js? \
+									\class {self} extends $.{self} {
+									\// Don't delete the first and last lines
+									\// Don't delete auto-generated comments
+									\}
 		<= Preview $mol_frame
 			title @ \Preview
 			uri <= pack

@@ -3434,6 +3434,18 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_icon_language_css3 extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
+    class $mol_icon_language_javascript extends $mol_icon {
+        path(): string;
+    }
+}
+
+declare namespace $ {
     class $mol_ghost extends $mol_view {
         Sub(): $mol_view;
     }
@@ -4073,6 +4085,12 @@ declare namespace $ {
         Next_icon(): $mol_icon_atom_variant;
         changeable(next?: any): boolean;
         Next(): $mol_check_icon;
+        Styles_icon(): $mol_icon_language_css3;
+        styles_opened(next?: any): boolean;
+        Styles(): $mol_check_icon;
+        Behavior_icon(): $mol_icon_language_javascript;
+        behavior_opened(next?: any): boolean;
+        Behavior(): $mol_check_icon;
         prop_tools(): readonly any[];
         Prop_tools(): $mol_view;
         value(next?: any): $mol_tree2_empty;
@@ -4091,6 +4109,9 @@ declare namespace $.$$ {
     class $hyoo_studio_prop extends $.$hyoo_studio_prop {
         multiple(next?: any): boolean;
         changeable(next?: any): boolean;
+        styles_opened(next?: boolean): boolean;
+        behavior_opened(next?: boolean): boolean;
+        prop_tools(): ($mol_view | $mol_check_icon)[];
         prop_content(): $hyoo_studio_value[];
         expandable(): boolean;
         expanded(next?: boolean): boolean;
@@ -4163,6 +4184,25 @@ declare namespace $.$$ {
 }
 
 declare namespace $ {
+}
+
+declare namespace $ {
+    class $mol_deck extends $mol_list {
+        items(): readonly $mol_view[];
+        rows(): readonly $mol_view[];
+        current(next?: any): string;
+        switch_options(): Record<string, any>;
+        Switch(): $$.$mol_switch;
+        Content(): $mol_view;
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_deck extends $.$mol_deck {
+        current(next?: string): string;
+        switch_options(): Record<string, string>;
+        Content(): $mol_view;
+    }
 }
 
 declare namespace $ {
@@ -4963,8 +5003,23 @@ declare namespace $ {
         form_sections(): readonly any[];
         Edit_form(): $$.$mol_list;
         Edit(): $mol_page;
-        source(val?: any): string;
+        source_prop_name(): string;
+        Source_prop_name(): $$.$mol_paragraph;
+        source_prop_exit(next?: any): any;
+        Source_prop_exit(): $mol_button_minor;
+        Source_prop_switch(): $mol_view;
+        soure_type_current(next?: any): string;
+        source_tree(next?: any): string;
         Source(): $$.$mol_textarea;
+        source_css(next?: any): string;
+        source_css_switch(next?: any): string;
+        Source_css(): $$.$mol_textarea;
+        source_js(next?: any): string;
+        source_js_switch(next?: any): string;
+        Source_js(): $$.$mol_textarea;
+        Source_type(): $$.$mol_deck;
+        source_page_body(): readonly any[];
+        Source_page_list(): $$.$mol_list;
         Source_page(): $mol_page;
         preview_html(): string;
         preview_window(): any;
@@ -5081,7 +5136,9 @@ declare namespace $.$$ {
         readme_show(next?: boolean): boolean;
         pages(): ($mol_page | $mol_frame | $mol_app_demo_readme)[];
         pack(next?: string): string;
-        source(next?: string): string;
+        source_tree(next?: string): string;
+        source_css(next?: string): string;
+        source_js(next?: string): string;
         preview_html(): string;
         preview_window(): any;
         inspect_graph(): $mol_graph<$mol_wire_pub, number>;
@@ -5108,6 +5165,15 @@ declare namespace $.$$ {
         props_controls(): ($mol_search | $mol_button_minor)[];
         Bound_prop(id: string): $hyoo_studio_prop;
         prop_tree(prop_name: string, next?: $mol_tree2): $mol_tree2;
+        soure_type_current(next?: string): string;
+        source_css_prop(prop_name: string, next?: string): string;
+        source_css_switch(next?: string): string;
+        source_js_decorators(): string;
+        source_js_prop(prop_name: string, next?: string): string;
+        source_js_switch(next?: string): string;
+        source_prop_name(): string;
+        source_prop_exit(): void;
+        source_page_body(): $mol_view[];
     }
 }
 
