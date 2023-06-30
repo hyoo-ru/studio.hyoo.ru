@@ -3,6 +3,16 @@ namespace $.$$ {
 	export class $hyoo_studio_prop extends $.$hyoo_studio_prop {
 
 		@ $mol_mem
+		name() {
+			const sign_obj = [ ...this.sign().matchAll( $mol_view_tree2_prop_signature ) ][ 0 ]?.groups ?? {
+				name: '',
+				key: '',
+				next: '',
+			}
+			return sign_obj.name
+		}
+
+		@ $mol_mem
 		multiple( next?: any ): boolean {
 			
 			const sign_obj = [ ...this.sign().matchAll( $mol_view_tree2_prop_signature ) ][ 0 ]?.groups ?? {
@@ -36,6 +46,28 @@ namespace $.$$ {
 			}
 
 			return Boolean( sign_obj.next )
+		}
+
+		@ $mol_mem
+		style_opened( next?: boolean ) {
+			if (next !== undefined) {
+				this.$.$mol_state_arg.value('raw', next ? '' : null)
+				this.$.$mol_state_arg.value('raw_type', next ? 'css' : null)
+				this.$.$mol_state_arg.value('raw_prop', next ? this.name() : null)
+			}
+
+			return this.$.$mol_state_arg.value('raw_prop') === this.name() && this.$.$mol_state_arg.value('raw') === '' && this.$.$mol_state_arg.value('raw_type') === 'css'
+
+		}
+
+		@ $mol_mem
+		prop_tools() {
+			return [
+				this.Value_tools(),
+				... this.Value().type() === 'object' ? [this.Style()] : [],
+				this.Key(),
+				this.Next(),
+			]
 		}
 		
 		prop_content() {
@@ -71,6 +103,7 @@ namespace $.$$ {
 			}
 		}
 
+			
 		@ $mol_mem
 		expanded(next?: boolean): boolean {
 

@@ -29,6 +29,10 @@ $hyoo_studio_prop $mol_view
 						hint @ \Changeable
 						Icon <= Next_icon $mol_icon_atom_variant
 						checked? <=> changeable? false
+					<= Style $mol_check_icon
+						hint @ \CSS editing
+						Icon <= Style_icon $mol_icon_language_css3
+						checked? <=> style_opened? false
 			content <= prop_content /
 				<= Value $hyoo_studio_value
 					hide_tools true

@@ -41,6 +41,16 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		source_css( next?: string ): string {
+			return this.$.$mol_state_arg.value( 'source_css', next ) ?? super.source_css()
+		}
+
+		@ $mol_mem
+		source_js( next?: string ): string {
+			return this.$.$mol_state_arg.value( 'source_js', next ) ?? super.source_js()
+		}
+
+		@ $mol_mem
 		preview_html() {
 			
 			const self = this.self()
@@ -56,7 +66,6 @@ namespace $.$$ {
 					</body>
 				</html>
 			`
-			
 		}
 		
 		@ $mol_mem
@@ -155,7 +164,7 @@ namespace $.$$ {
 			
 			return this.readme_selected( next )
 		}
-		
+
 		@ $mol_mem
 		self_code() {
 			
@@ -172,7 +181,12 @@ namespace $.$$ {
 			return `
 				$.$mol_wire_auto = parent.$mol_wire_auto
 				$.${ this.self() } = ${ code }
+				;${this.source_js().replaceAll('{self}', this.self())};
+				$.$mol_style_attach(${ this.self() }, \`${ this.source_css().replaceAll('{self}', this.self().slice(1)) }\`)
 			`
+
+				// ${this.source_js_decorators('$mol_mem_key')}
+				// ${this.source_js_decorators('$mol_action')}
 		}
 		
 		@ $mol_mem
@@ -319,6 +333,61 @@ namespace $.$$ {
 			}
 			
 			return this.props_all().select( sign ).kids[0] ?? null
+		}
+
+		@ $mol_mem
+		soure_type_current( next?: string ) {
+			const options = Object.entries(this.Source_type().switch_options())
+			if (next === undefined) {
+				const title = this.$.$mol_state_arg.value('raw_type')
+				const [value] = options.find(([value, label]) => label === title) ?? ['0']
+				return value
+			}
+
+			const next_title = options[Number(next)]?.[1]
+			this.$.$mol_state_arg.value('raw_type', next_title ?? options[0][1])
+			return next
+		}
+
+		@ $mol_mem_key
+		source_css_prop( prop_name: string, next?: string ) {
+			const tag = `/*${prop_name}*/`
+			const [before = '', prop_styles = '', after = ''] = this.source_css().split(tag)
+
+			if (next === undefined) {
+				return prop_styles.trim() || `[{self}_${prop_name.toLowerCase()}] {\n\t\n}`
+			}
+
+			const all = [before, tag, next.trim(), tag, after].join('\n').trim().replaceAll(/\n{2,}/g, '\n\n')
+			this.source_css(all)
+			return next.trim()
+		}
+
+		@ $mol_mem
+		source_css_switch( next?: string ) {
+			const prop_name = this.$.$mol_state_arg.value('raw_prop')
+
+			if (!prop_name) return this.source_css(next)
+
+			return this.source_css_prop(prop_name, next)
+		}
+
+		source_prop_name() {
+			return super.source_prop_name().replaceAll('{prop_name}', this.$.$mol_state_arg.value('raw_prop')!)
+		}
+
+		@ $mol_action
+		source_prop_exit() {
+			this.$.$mol_state_arg.value('raw_prop', null)
+		}
+
+		@ $mol_mem
+		source_page_body() {
+			const show = this.$.$mol_state_arg.value('raw_prop') !== null && this.$.$mol_state_arg.value('raw_type') !== 'view.tree'
+			return [
+				... show ? [this.Source_prop_switch()] : [],
+				this.Source_type(),
+			]
 		}
 	}
 }
