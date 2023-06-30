@@ -376,7 +376,8 @@ namespace $.$$ {
 
 			const add = (prop_name: string, key: boolean, next: boolean) => {
 				if (!key && !next) return
-				if (this.source_js().includes(`/*${prop_name}*/`))
+				if (!this.source_js().includes(`/*${prop_name}*/`)) return
+
 				list.push(`($mol_mem${key ? '_key' : ''}(($.${ this.self() }.prototype), "${ prop_name }"));`)
 			}
 
@@ -387,8 +388,6 @@ namespace $.$$ {
 
 		@ $mol_mem_key
 		source_js_prop( prop_name: string, next?: string ) {
-			console.log(11111111)
-			console.log(this.source_js_decorators())
 			const lines = this.source_js().split('\n')
 			const class_begin = lines.shift()
 			const class_end = lines.pop()
