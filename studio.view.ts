@@ -36,13 +36,13 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		source( next?: string ): string {
-			return this.$.$mol_state_arg.value( 'source', next ) ?? super.source()
+		source_tree( next?: string ): string {
+			return this.$.$mol_state_arg.value( 'source', next ) ?? super.source_tree()
 		}
 
 		@ $mol_mem
 		source_css( next?: string ): string {
-			return this.$.$mol_state_arg.value( 'source_css', next ) ?? super.source_css()
+			return this.$.$mol_state_arg.value( 'source_css', next ) ?? '/* Don\'t delete auto-generated comments */\n'
 		}
 
 		@ $mol_mem
@@ -117,7 +117,7 @@ namespace $.$$ {
 		@ $mol_mem
 		tree( next?: $mol_tree2 ) {
 			
-			const source = this.source( next && next.toString() ).replace( /\n?$/, '\n' )
+			const source = this.source_tree( next && next.toString() ).replace( /\n?$/, '\n' )
 			
 			const tree = this.$.$mol_view_tree2_normalize(
 				this.$.$mol_tree2_from_string( source )
@@ -181,12 +181,10 @@ namespace $.$$ {
 			return `
 				$.$mol_wire_auto = parent.$mol_wire_auto
 				$.${ this.self() } = ${ code }
-				;${this.source_js().replaceAll('{self}', this.self())};
+				$.${ this.self() } = ${this.source_js().replaceAll('{self}', this.self())}
+				;${ this.source_js_decorators() };
 				$.$mol_style_attach(${ this.self() }, \`${ this.source_css().replaceAll('{self}', this.self().slice(1)) }\`)
 			`
-
-				// ${this.source_js_decorators('$mol_mem_key')}
-				// ${this.source_js_decorators('$mol_action')}
 		}
 		
 		@ $mol_mem
@@ -370,6 +368,53 @@ namespace $.$$ {
 			if (!prop_name) return this.source_css(next)
 
 			return this.source_css_prop(prop_name, next)
+		}
+
+		@ $mol_mem
+		source_js_decorators() {
+			const list = new Array<string>()
+
+			const add = (prop_name: string, key: boolean, next: boolean) => {
+				if (!key && !next) return
+				if (this.source_js().includes(`/*${prop_name}*/`))
+				list.push(`($mol_mem${key ? '_key' : ''}(($.${ this.self() }.prototype), "${ prop_name }"));`)
+			}
+
+			this.props().forEach(prop => add(prop.name(), prop.multiple(), prop.changeable()))
+
+			return list.join('\n')
+		}
+
+		@ $mol_mem_key
+		source_js_prop( prop_name: string, next?: string ) {
+			console.log(11111111)
+			console.log(this.source_js_decorators())
+			const lines = this.source_js().split('\n')
+			const class_begin = lines.shift()
+			const class_end = lines.pop()
+
+			const tag = `/*${prop_name}*/`
+			const [before = '', prop_js = '', after = ''] = lines.join('\n').split(tag)
+
+			const multiple = this.Prop(prop_name).multiple()
+			const changeable = this.Prop(prop_name).changeable()
+			const params = [...multiple ? ['key'] : [], ...changeable ? ['next'] : []].join(', ')
+			if (next === undefined) {
+				return prop_js.trim().replace(new RegExp(`${prop_name}\\s*\\(.*\\)`), `${prop_name} (${params})`) || `${prop_name} (${params}) {\n\t\n}`
+			}
+
+			const all = [class_begin, before, tag, next.trim(), tag, after, class_end].join('\n').trim().replaceAll(/\n{2,}/g, '\n\n')
+			this.source_js(all)
+			return next.trim()
+		}
+
+		@ $mol_mem
+		source_js_switch( next?: string ) {
+			const prop_name = this.$.$mol_state_arg.value('raw_prop')
+
+			if (!prop_name) return this.source_js(next)
+
+			return this.source_js_prop(prop_name, next)
 		}
 
 		source_prop_name() {

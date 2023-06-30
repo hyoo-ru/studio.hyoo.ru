@@ -92,22 +92,23 @@ $hyoo_studio $mol_book2
 						current? <=> soure_type_current? \0
 						items /
 							<= Source $mol_textarea
-								title \view.tree
+								title \Composition
 								hint \$hyoo_studio_example $mol_view
 								sidebar_showed true
-								value?val <=> source?val \$hyoo_studio_example $mol_view
+								value? <=> source_tree? \$hyoo_studio_example $mol_view
 							<= Source_css $mol_textarea
-								title \css
+								title \Styles
 								hint \
 								sidebar_showed true
 								value? <=> source_css_switch? <=> source_css? \
 							<= Source_js $mol_textarea
-								title \js
+								title \Behavior
 								hint \
 								sidebar_showed true
-								value?val <=> source_js?val \
-									\$.{self} = class {self} extends $.{self} {
-									\	
+								value? <=> source_js_switch? <=> source_js? \
+									\class {self} extends $.{self} {
+									\// Don't delete the first and last lines
+									\// Don't delete auto-generated comments
 									\}
 		<= Preview $mol_frame
 			title @ \Preview
