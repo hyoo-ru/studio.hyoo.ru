@@ -5008,10 +5008,10 @@ var $;
 						localized <= some*? @ \\v1
 			`);
             const foo = Foo.make({ $ });
-            $mol_assert_ok(foo.owner() instanceof $mol_object);
-            $mol_assert_like(foo.some(), foo.some(1), 'Foo_some');
+            $mol_assert_ok(foo.owner(1) instanceof $mol_object);
+            $mol_assert_like(foo.some(1), foo.some(1), 'Foo_some');
             $mol_assert_equal(foo.owner(1), foo.cls(1));
-            $mol_assert_equal(foo.owner().localized(), foo.some());
+            $mol_assert_equal(foo.owner(1).localized(), foo.some(1));
             $mol_assert_equal(foo.cls(2), foo.owner(2));
         },
         'Left bind in array and object'($) {
@@ -5143,7 +5143,7 @@ var $;
 			`);
             const { Bar } = $2;
             const bar = Bar.make({ $: $2 });
-            $mol_assert_like(bar.Obj().a(), bar.b());
+            $mol_assert_like(bar.Obj().a(1), bar.b(1));
         },
         'Right bind in left bind'($) {
             const $2 = run(`
@@ -5161,7 +5161,7 @@ var $;
         'Right bind indexed'($) {
             const $2 = run(`
 				Foo $mol_object
-					a*? *
+					a? *
 						some 123
 				Bar $mol_object
 					Cls* Foo
