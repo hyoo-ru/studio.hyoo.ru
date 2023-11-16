@@ -37,6 +37,39 @@ namespace $.$$ {
 
 			return Boolean( sign_obj.next )
 		}
+
+		@ $mol_mem
+		styles_opened( next?: boolean ) {
+			if (next !== undefined) {
+				this.$.$mol_state_arg.value('raw', next ? '' : null)
+				this.$.$mol_state_arg.value('raw_type', next ? 'Styles' : null)
+				this.$.$mol_state_arg.value('raw_prop', next ? this.name() : null)
+			}
+
+			return this.$.$mol_state_arg.value('raw_prop') === this.name() && this.$.$mol_state_arg.value('raw') === '' && this.$.$mol_state_arg.value('raw_type') === 'styles'
+		}
+
+		@ $mol_mem
+		behavior_opened( next?: boolean ) {
+			if (next !== undefined) {
+				this.$.$mol_state_arg.value('raw', next ? '' : null)
+				this.$.$mol_state_arg.value('raw_type', next ? 'Behavior' : null)
+				this.$.$mol_state_arg.value('raw_prop', next ? this.name() : null)
+			}
+
+			return this.$.$mol_state_arg.value('raw_prop') === this.name() && this.$.$mol_state_arg.value('raw') === '' && this.$.$mol_state_arg.value('raw_type') === 'behavior'
+		}
+
+		@ $mol_mem
+		prop_tools() {
+			return [
+				this.Value_tools(),
+				... this.Value().type() === 'object' ? [this.Styles()] : [],
+				this.Behavior(),
+				this.Key(),
+				this.Next(),
+			]
+		}
 		
 		prop_content() {
 			switch (this.Value().type()) {
@@ -71,6 +104,7 @@ namespace $.$$ {
 			}
 		}
 
+			
 		@ $mol_mem
 		expanded(next?: boolean): boolean {
 

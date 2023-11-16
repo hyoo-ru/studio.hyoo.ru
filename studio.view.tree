@@ -81,10 +81,35 @@ $hyoo_studio $mol_book2
 		<= Source_page $mol_page
 			title @ \Raw Code
 			body /
-				<= Source $mol_textarea
-					hint \$hyoo_studio_example $mol_view
-					sidebar_showed true
-					value?val <=> source?val \$hyoo_studio_example $mol_view
+				<= Source_page_list $mol_list rows <= source_page_body /
+					<= Source_prop_switch $mol_view
+						sub /
+							<= Source_prop_name $mol_paragraph title <= source_prop_name \The property is editing: {prop_name}
+							<= Source_prop_exit $mol_button_minor
+								title @ \Show all
+								click? <=> source_prop_exit? null
+					<= Source_type $mol_deck
+						current? <=> soure_type_current? \0
+						items /
+							<= Source $mol_textarea
+								title \Composition
+								hint \$hyoo_studio_example $mol_view
+								sidebar_showed true
+								value? <=> source_tree? \$hyoo_studio_example $mol_view
+							<= Source_css $mol_textarea
+								title \Styles
+								hint \
+								sidebar_showed true
+								value? <=> source_css_switch? <=> source_css? \
+							<= Source_js $mol_textarea
+								title \Behavior
+								hint \
+								sidebar_showed true
+								value? <=> source_js_switch? <=> source_js? \
+									\class {self} extends $.{self} {
+									\// Don't delete the first and last lines
+									\// Don't delete auto-generated comments
+									\}
 		<= Preview $mol_frame
 			title @ \Preview
 			uri <= pack
