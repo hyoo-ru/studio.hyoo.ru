@@ -18,7 +18,6 @@ namespace $.$$ {
 		},
 
 		Edit_form: {
-			padding: $mol_gap.block,
 			gap: $mol_gap.block,
 			display: 'flex',
 		},
