@@ -1318,6 +1318,41 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_list extends $mol_view {
+        render_visible_only(): boolean;
+        render_over(): number;
+        sub(): readonly $mol_view[];
+        Empty(): $mol_view;
+        Gap_before(): $mol_view;
+        Gap_after(): $mol_view;
+        view_window(): readonly any[];
+        rows(): readonly $mol_view[];
+        gap_before(): number;
+        gap_after(): number;
+    }
+}
+
+declare namespace $ {
+    function $mol_support_css_overflow_anchor(this: $): boolean;
+}
+
+declare namespace $.$$ {
+    class $mol_list extends $.$mol_list {
+        sub(): readonly $mol_view[];
+        render_visible_only(): boolean;
+        view_window(next?: [number, number]): [number, number];
+        gap_before(): number;
+        gap_after(): number;
+        sub_visible(): $mol_view[];
+        minimal_height(): number;
+        force_render(path: Set<$mol_view>): void;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_page extends $mol_view {
         dom_name(): string;
         field(): Record<string, any>;
@@ -1330,7 +1365,9 @@ declare namespace $ {
         Tools(): $mol_view;
         head(): readonly any[];
         Head(): $mol_view;
-        body(): readonly $mol_view_content[];
+        body(): readonly $mol_view[];
+        Body_content(): $$.$mol_list;
+        body_content(): readonly any[];
         body_scroll_top(next?: any): number;
         Body(): $$.$mol_scroll;
         foot(): readonly $mol_view[];
@@ -2071,41 +2108,6 @@ declare namespace $ {
     class $mol_icon_cross extends $mol_icon {
         path(): string;
     }
-}
-
-declare namespace $ {
-    class $mol_list extends $mol_view {
-        render_visible_only(): boolean;
-        render_over(): number;
-        sub(): readonly $mol_view[];
-        Empty(): $mol_view;
-        Gap_before(): $mol_view;
-        Gap_after(): $mol_view;
-        view_window(): readonly any[];
-        rows(): readonly $mol_view[];
-        gap_before(): number;
-        gap_after(): number;
-    }
-}
-
-declare namespace $ {
-    function $mol_support_css_overflow_anchor(this: $): boolean;
-}
-
-declare namespace $.$$ {
-    class $mol_list extends $.$mol_list {
-        sub(): readonly $mol_view[];
-        render_visible_only(): boolean;
-        view_window(next?: [number, number]): [number, number];
-        gap_before(): number;
-        gap_after(): number;
-        sub_visible(): $mol_view[];
-        minimal_height(): number;
-        force_render(path: Set<$mol_view>): void;
-    }
-}
-
-declare namespace $ {
 }
 
 declare namespace $ {
@@ -4671,12 +4673,34 @@ declare namespace $ {
 }
 
 declare namespace $ {
+    class $mol_gallery extends $mol_view {
+        sub(): readonly $mol_view[];
+        Side(id: any): $$.$mol_gallery;
+        items(): readonly $mol_view[];
+        side_size(id: any): string;
+        side_items(id: any): readonly $mol_view[];
+    }
+}
+
+declare namespace $.$$ {
+    class $mol_gallery extends $.$mol_gallery {
+        sub(): readonly $mol_view[];
+        side_items(id: number): $mol_view[];
+        side_size(id: number): string;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
     class $mol_chart_legend extends $mol_scroll {
         graphs(): readonly $mol_plot_graph[];
         graphs_front(): readonly $mol_plot_graph[];
-        sub(): readonly $mol_view[];
+        sub(): readonly any[];
         Graph_legend(id: any): $mol_view;
         graph_legends(): readonly $mol_view[];
+        Gallery(): $$.$mol_gallery;
         Graph_sample(id: any): any;
         Graph_sample_box(id: any): $mol_view;
         graph_title(id: any): string;
