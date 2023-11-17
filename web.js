@@ -5685,6 +5685,59 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_log3_area_lazy(event) {
+        const self = this;
+        const stack = self.$mol_log3_stack;
+        const deep = stack.length;
+        let logged = false;
+        stack.push(() => {
+            logged = true;
+            self.$mol_log3_area.call(self, event);
+        });
+        return () => {
+            if (logged)
+                self.console.groupEnd();
+            if (stack.length > deep)
+                stack.length = deep;
+        };
+    }
+    $.$mol_log3_area_lazy = $mol_log3_area_lazy;
+    $.$mol_log3_stack = [];
+})($ || ($ = {}));
+//mol/log3/log3.ts
+;
+"use strict";
+var $;
+(function ($) {
+    function $mol_log3_web_make(level, color) {
+        return function $mol_log3_logger(event) {
+            const pending = this.$mol_log3_stack.pop();
+            if (pending)
+                pending();
+            let tpl = '%c';
+            const chunks = Object.values(event);
+            for (let i = 0; i < chunks.length; ++i) {
+                tpl += (typeof chunks[i] === 'string') ? ' ⦙ %s' : ' ⦙ %o';
+            }
+            const style = `color:${color};font-weight:bolder`;
+            this.console[level](tpl, style, ...chunks);
+            const self = this;
+            return () => self.console.groupEnd();
+        };
+    }
+    $.$mol_log3_web_make = $mol_log3_web_make;
+    $.$mol_log3_come = $mol_log3_web_make('info', 'royalblue');
+    $.$mol_log3_done = $mol_log3_web_make('info', 'forestgreen');
+    $.$mol_log3_fail = $mol_log3_web_make('error', 'orangered');
+    $.$mol_log3_warn = $mol_log3_web_make('warn', 'goldenrod');
+    $.$mol_log3_rise = $mol_log3_web_make('log', 'magenta');
+    $.$mol_log3_area = $mol_log3_web_make('group', 'cyan');
+})($ || ($ = {}));
+//mol/log3/log3.web.ts
+;
+"use strict";
+var $;
+(function ($) {
     function $mol_wire_sync(obj) {
         return new Proxy(obj, {
             get(obj, field) {
@@ -5715,11 +5768,20 @@ var $;
         static native() {
             return this.$.$mol_dom_context.navigator.storage;
         }
-        static persisted(next) {
+        static persisted(next, cache) {
             $mol_mem_persist();
+            if (cache)
+                return Boolean(next);
             const native = this.native();
-            if (next)
-                native.persist();
+            if (next && !$mol_mem_cached(() => this.persisted())) {
+                native.persist().then(actual => {
+                    setTimeout(() => this.persisted(actual, 'cache'), 5000);
+                    if (actual)
+                        this.$.$mol_log3_rise({ place: this, message: `Persist` });
+                    else
+                        this.$.$mol_log3_fail({ place: this, message: `Non persist` });
+                });
+            }
             return next ?? $mol_wire_sync(native).persisted();
         }
         static estimate() {
@@ -7911,12 +7973,11 @@ var $;
                 return next;
             return null;
         }
-        Body() {
-            const obj = new this.$.$mol_scroll();
-            obj.sub = () => [
-                this.List()
+        body() {
+            return [
+                this.Filter(),
+                this.Tree()
             ];
-            return obj;
         }
         Option(id) {
             const obj = new this.$.$mol_link();
@@ -7952,14 +8013,6 @@ var $;
             obj.levels_expanded = () => this.levels_expanded();
             return obj;
         }
-        List() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Filter(),
-                this.Tree()
-            ];
-            return obj;
-        }
         option_arg(id) {
             return {};
         }
@@ -7977,9 +8030,6 @@ var $;
         $mol_mem
     ], $mol_app_demo_menu.prototype, "search_start", null);
     __decorate([
-        $mol_mem
-    ], $mol_app_demo_menu.prototype, "Body", null);
-    __decorate([
         $mol_mem_key
     ], $mol_app_demo_menu.prototype, "Option", null);
     __decorate([
@@ -7991,9 +8041,6 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_app_demo_menu.prototype, "Tree", null);
-    __decorate([
-        $mol_mem
-    ], $mol_app_demo_menu.prototype, "List", null);
     __decorate([
         $mol_mem_key
     ], $mol_app_demo_menu.prototype, "Option_title", null);

@@ -8153,12 +8153,11 @@ var $;
                 return next;
             return null;
         }
-        Body() {
-            const obj = new this.$.$mol_scroll();
-            obj.sub = () => [
-                this.List()
+        body() {
+            return [
+                this.Filter(),
+                this.Tree()
             ];
-            return obj;
         }
         Option(id) {
             const obj = new this.$.$mol_link();
@@ -8194,14 +8193,6 @@ var $;
             obj.levels_expanded = () => this.levels_expanded();
             return obj;
         }
-        List() {
-            const obj = new this.$.$mol_list();
-            obj.rows = () => [
-                this.Filter(),
-                this.Tree()
-            ];
-            return obj;
-        }
         option_arg(id) {
             return {};
         }
@@ -8219,9 +8210,6 @@ var $;
         $mol_mem
     ], $mol_app_demo_menu.prototype, "search_start", null);
     __decorate([
-        $mol_mem
-    ], $mol_app_demo_menu.prototype, "Body", null);
-    __decorate([
         $mol_mem_key
     ], $mol_app_demo_menu.prototype, "Option", null);
     __decorate([
@@ -8233,9 +8221,6 @@ var $;
     __decorate([
         $mol_mem
     ], $mol_app_demo_menu.prototype, "Tree", null);
-    __decorate([
-        $mol_mem
-    ], $mol_app_demo_menu.prototype, "List", null);
     __decorate([
         $mol_mem_key
     ], $mol_app_demo_menu.prototype, "Option_title", null);
