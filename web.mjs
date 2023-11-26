@@ -8798,7 +8798,7 @@ var $;
                 this.Close()
             ];
         }
-        body() {
+        body_content() {
             return [
                 this.Demo()
             ];
