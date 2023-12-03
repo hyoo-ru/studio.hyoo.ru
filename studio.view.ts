@@ -214,7 +214,7 @@ namespace $.$$ {
 			const all = new Map< string, $mol_tree2 >()
 			
 			const add = ( prop: $mol_tree2 )=> {
-				const name = this.$.$mol_view_tree2_prop_split( prop ).name.text()
+				const name = this.$.$mol_view_tree2_prop_parts( prop ).name
 				all.set( name, prop )
 			}
 
@@ -262,7 +262,7 @@ namespace $.$$ {
 		@ $mol_mem
 		props() {
 			const props = this.prop_filtered().map( prop => {
-				const name = this.$.$mol_view_tree2_prop_split( prop ).name.text()
+				const name = this.$.$mol_view_tree2_prop_parts( prop ).name
 				return this.Prop( name )
 			} )
 			return props

@@ -42,7 +42,7 @@ namespace $.$$ {
 			const val = this.tree()
 			
 			if( next === undefined ) {
-				return this.$.$mol_view_tree2_prop_split( val.kids[ 0 ] ).name.text() || '...'
+				return this.$.$mol_view_tree2_prop_parts( val.kids[ 0 ] ).name || '...'
 			}
 			
 			this.tree(

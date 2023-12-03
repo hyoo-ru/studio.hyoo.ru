@@ -47,7 +47,7 @@ namespace $ {
 
 		@ $mol_mem
 		prop_names() {
-			return this.$.$mol_view_tree2_class_props( this.tree() ).map( tree => this.$.$mol_view_tree2_prop_split( tree ).name.text() )
+			return this.$.$mol_view_tree2_class_props( this.tree() ).map( tree => this.$.$mol_view_tree2_prop_parts( tree ).name )
 		}
 
 		@ $mol_mem
