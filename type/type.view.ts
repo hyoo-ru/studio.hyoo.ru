@@ -103,32 +103,36 @@ namespace $.$$ {
 
 		@ $mol_mem
 		type( next? : string ) {
-			
-			if( next !== undefined ) {
+			const tree = this.tree()
+			if (! tree) throw new Error(`tree prop not provided`)
+			if (next === undefined) return $hyoo_studio_type_value(tree)
 
-				switch( next ) {
-					case '' : this.tree(null); break
-					case 'null' : this.tree( this.tree().struct('null') ); break
-					case 'boolean_true' : this.tree( this.tree().struct('true') ); break
-					case 'boolean_false' : this.tree( this.tree().struct('false') ); break
-					case 'number': this.tree( this.tree().struct('0') ); break
-					case 'number_nan': this.tree( this.tree().struct('+NaN') ); break
-					case 'number_infinity_negative': this.tree( this.tree().struct('-Infinity') ); break
-					case 'number_infinity_positive': this.tree( this.tree().struct('+Infinity') ); break
-					case 'text': this.tree( this.tree().data('') ); break
-					case 'list': this.tree( this.tree().struct( '/' ) ); break
-					case 'dict': this.tree( this.tree().struct( '*' ) ); break
-					case 'object': this.tree( this.tree().struct( '$mol_view', [ this.tree().kids[0] ?? this.tree().data( '' ) ] ) ); break
-					case 'bind': this.tree( this.tree().struct( '<=>', [ this.tree().kids[0] ?? this.tree().data( '' ) ] ) ); break
-					case 'get': this.tree( this.tree().struct( '<=', [ this.tree().kids[0] ?? this.tree().data( '' ) ] ) ); break
-					case 'put': this.tree( this.tree().struct( '=>', [ this.tree().kids[0] ?? this.tree().data( '' ) ] ) ); break
-					default : $mol_fail( new TypeError( `Unsupported type: ${ next }` ) )
-				}
+			let val
 
-				this.showed(false)
+			switch( next ) {
+				case '' : val = null; break
+				case 'null' : val = tree.struct('null'); break
+				case 'boolean_true' : val = tree.struct('true'); break
+				case 'boolean_false' : val = tree.struct('false'); break
+				case 'number': val = tree.struct('0'); break
+				case 'number_nan': val = tree.struct('+NaN'); break
+				case 'number_infinity_negative': val = tree.struct('-Infinity'); break
+				case 'number_infinity_positive': val = tree.struct('+Infinity'); break
+				case 'text': val = tree.data(''); break
+				case 'list': val = tree.struct( '/' ); break
+				case 'dict': val = tree.struct( '*' ); break
+				case 'object': val = tree.struct( '$mol_view', [ tree.kids[0] ?? tree.data( '' ) ] ); break
+				case 'bind': val = tree.struct( '<=>', [ tree.kids[0] ?? tree.data( '' ) ] ); break
+				case 'get': val = tree.struct( '<=', [ tree.kids[0] ?? tree.data( '' ) ] ); break
+				case 'put': val = tree.struct( '=>', [ tree.kids[0] ?? tree.data( '' ) ] ); break
 			}
 
-			return $hyoo_studio_type_value(this.tree())
+			if (val === undefined) $mol_fail( new TypeError( `Unsupported type: ${ next }` ) )
+
+			const next_tree = this.tree(val)!
+			this.showed(false)
+
+			return $hyoo_studio_type_value(next_tree)
 		}
 
 		show_obj_select() {
@@ -140,10 +144,10 @@ namespace $.$$ {
 
 			if ( next !== undefined ) {
 				this.showed(false)
-				return this.tree(this.tree().struct( next )).type
+				return this.tree(this.tree()?.struct( next ))?.type ?? super.selected_class()
 			}
 			
-			return this.tree()?.type
+			return this.tree()?.type ?? super.selected_class()
 		}
 		
 		@ $mol_mem
@@ -156,8 +160,8 @@ namespace $.$$ {
 			const from_tree = this.tree(
 				next === undefined
 					? undefined
-					: this.tree().struct( '/' + next, this.tree().kids )
-			).type.slice( 1 )
+					: this.tree()?.struct( '/' + next, this.tree()?.kids ?? []) ?? null
+			)?.type.slice( 1 )
 
 			const focused = this.List_items_type().focused()
 

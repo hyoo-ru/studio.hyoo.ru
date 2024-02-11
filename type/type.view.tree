@@ -1,6 +1,7 @@
 $hyoo_studio_type $mol_pick
-	tree?val $mol_tree2_empty
+	tree?val null $mol_tree2_empty
 	belong_to \
+	type? \
 	trigger_content /
 		<= Value $mol_paragraph title <= type_display \
 		<= Take_put_hack_icon $mol_icon_arrow_left_right_bold_outline
