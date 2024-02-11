@@ -75,5 +75,7 @@
 	include \/mol/view/tree/test
 \/mol/app/demo/main
 	deploy \/mol/readme.md
+\/mol/view/tree2/to/js
+	include \/mol/view/tree2/to/js/test
 \/hyoo/studio
 	include \/mol/offline/install
