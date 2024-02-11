@@ -16,10 +16,10 @@ namespace $ {
 
 
 		as< Prop extends typeof $hyoo_studio_property >( Prop: Prop ) {
-			return Prop.make({
+			return Prop.make( {
 				name: () => this.name(),
 				tree: next => this.tree(next)
-			}) as InstanceType< Prop >
+			} as InstanceType< Prop > )
 		}
 
 		@ $mol_mem
