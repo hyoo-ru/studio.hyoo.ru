@@ -792,17 +792,13 @@ var $;
                         result = this.task.call(this.host, ...this.args);
                         break;
                 }
-                if ($mol_promise_like(result)) {
+                if ($mol_promise_like(result) && !handled.has(result)) {
                     const put = (res) => {
                         if (this.cache === result)
                             this.put(res);
                         return res;
                     };
-                    result = Object.assign(result.then(put, put), {
-                        destructor: result['destructor'] ?? (() => { })
-                    });
-                    Error.captureStackTrace(result);
-                    handled.add(result);
+                    result = result.then(put, put);
                 }
             }
             catch (error) {
@@ -813,15 +809,19 @@ var $;
                     result = new Error(String(error), { cause: error });
                 }
                 if ($mol_promise_like(result) && !handled.has(result)) {
-                    result = Object.assign(result.finally(() => {
+                    result = result.finally(() => {
                         if (this.cache === result)
                             this.absorb();
-                    }), {
-                        destructor: result['destructor'] ?? (() => { })
                     });
-                    Error.captureStackTrace(result);
-                    handled.add(result);
                 }
+            }
+            if ($mol_promise_like(result) && !handled.has(result)) {
+                result = Object.assign(result, {
+                    destructor: result['destructor'] ?? (() => { })
+                });
+                handled.add(result);
+                const error = new Error();
+                Object.defineProperty(result, 'stack', { get: () => error.stack });
             }
             if (!$mol_promise_like(result)) {
                 this.track_cut();
@@ -18321,6 +18321,14 @@ var $;
         nodes = new Set();
         edges_out = new Map();
         edges_in = new Map();
+        link(from, to, edge) {
+            this.link_out(from, to, edge);
+            this.link_in(to, from, edge);
+        }
+        unlink(from, to) {
+            this.edges_in.get(to)?.delete(from);
+            this.edges_out.get(from)?.delete(to);
+        }
         link_out(from, to, edge) {
             let pair = this.edges_out.get(from);
             if (!pair) {
@@ -18341,19 +18349,14 @@ var $;
             pair.set(from, edge);
             this.nodes.add(to);
         }
+        edge(from, to) {
+            return this.edge_out(from, to) ?? this.edge_in(to, from);
+        }
         edge_out(from, to) {
             return this.edges_out.get(from)?.get(to) ?? null;
         }
         edge_in(to, from) {
             return this.edges_in.get(to)?.get(from) ?? null;
-        }
-        link(from, to, edge) {
-            this.link_out(from, to, edge);
-            this.link_in(to, from, edge);
-        }
-        unlink(from, to) {
-            this.edges_in.get(to)?.delete(from);
-            this.edges_out.get(from)?.delete(to);
         }
         acyclic(get_weight) {
             const checked = [];
@@ -18425,7 +18428,7 @@ var $;
             }
             return roots;
         }
-        depth(select) {
+        nodes_depth(select) {
             const stat = new Map();
             const visit = (node, depth = 0) => {
                 if (stat.has(node))
@@ -18439,27 +18442,15 @@ var $;
                 visit(root);
             return stat;
         }
-        get depth_min() {
-            return this.depth(Math.min);
-        }
-        get depth_max() {
-            return this.depth(Math.max);
-        }
-        group_depth(select) {
+        depth_nodes(select) {
             const groups = [];
-            for (const [node, depth] of this.depth(select).entries()) {
+            for (const [node, depth] of this.nodes_depth(select).entries()) {
                 if (groups[depth])
                     groups[depth].push(node);
                 else
                     groups[depth] = [node];
             }
             return groups;
-        }
-        get group_depth_min() {
-            return this.group_depth(Math.min);
-        }
-        get proup_depth_max() {
-            return this.group_depth(Math.max);
         }
     }
     $.$mol_graph = $mol_graph;
@@ -19276,7 +19267,7 @@ var $;
                 }
             }
             inspect_stat() {
-                return this.inspect_graph().group_depth_min.map(nodes => nodes.length);
+                return this.inspect_graph().depth_nodes(Math.min).map(nodes => nodes.length);
             }
             inspect_stat_depth() {
                 return Object.keys(this.inspect_stat()).map(Number);
