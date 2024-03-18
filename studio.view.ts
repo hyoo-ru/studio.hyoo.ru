@@ -93,7 +93,7 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		inspect_stat() {
-			return this.inspect_graph().group_depth_min.map( nodes => nodes.length )
+			return this.inspect_graph().depth_nodes( Math.min ).map( nodes => nodes.length )
 		}
 		
 		inspect_stat_depth() {
