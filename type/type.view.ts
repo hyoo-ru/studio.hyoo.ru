@@ -173,20 +173,23 @@ namespace $.$$ {
 	export function $hyoo_studio_type_value(val: $mol_tree2_empty) {
 		if( !val ) return ''
 
-		if (val.type === '+NaN') return 'number_nan'
-		if (val.type === '+Infinity') return 'number_infinity_positive'
-		if (val.type === '-Infinity') return 'number_infinity_negative'
+		switch( val.type ) {
+			case '=': return '' //todo
+			case '+NaN': return 'number_nan'
+			case '+Infinity': return 'number_infinity_positive'
+			case '-Infinity': return 'number_infinity_negative'
+		}
 
 		const type = $$.$mol_view_tree2_value_type( val )
 
-		if (type === 'null') return 'null'
-		if (type === 'bool') return val.type === 'true' ? 'boolean_true' : 'boolean_false'
-		if (type === 'number') return 'number'
-		if (type === 'locale' ) return 'text'
-		if (type === 'string') return 'text'
-		if (type === 'get' ) return 'get'
-		if (type === 'put' ) return 'put'
-		if (type === 'bind') return 'bind'
+		switch( type ) {
+			case 'bool':
+				return val.type === 'true' ? 'boolean_true' : 'boolean_false'
+			
+			case 'locale':
+			case 'string':
+				return 'text'
+		}
 		
 		return type
 	}
