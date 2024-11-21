@@ -418,21 +418,6 @@ namespace $.$$ {
 			}
 		}
 
-		// @ $mol_mem_key
-		// source_css_prop( prop_name: string, next?: string ) {
-		// 	const tag = `/*${prop_name}*/`
-		// 	const [before = '', prop_styles = '', after = ''] = this.source_css().split(tag)
-
-		// 	const class_name = this.self().slice(1)
-		// 	if (next === undefined) {
-		// 		return prop_styles.trim() || `[${class_name}_${prop_name.toLowerCase()}] {\n\t\n}`
-		// 	}
-
-		// 	const all = [before, tag, next.trim(), tag, after].join('\n').trim().replaceAll(/\n{2,}/g, '\n\n')
-		// 	this.source_css(all)
-		// 	return next.trim()
-		// }
-
 		@ $mol_mem
 		source_css_switch( next?: string ) {
 			const prop_name = this.$.$mol_state_arg.value('raw_prop')
