@@ -42,7 +42,8 @@ namespace $.$$ {
 			const val = this.tree()
 			
 			if( next === undefined ) {
-				return this.$.$mol_view_tree2_prop_parts( val.kids[ 0 ] ).name || '...'
+				const name = this.$.$mol_view_tree2_prop_parts( val.kids[ 0 ] ).name
+				return name == 'undefined' ? '...' : name
 			}
 			
 			this.tree(
