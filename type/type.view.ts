@@ -104,7 +104,7 @@ namespace $.$$ {
 		@ $mol_mem
 		type( next? : string ) {
 			const tree = this.tree()
-			if (! tree) throw new Error(`tree prop not provided`)
+			if (! tree) return ''
 			if (next === undefined) return $hyoo_studio_type_value(tree)
 
 			let val
@@ -122,9 +122,9 @@ namespace $.$$ {
 				case 'list': val = tree.struct( '/' ); break
 				case 'dict': val = tree.struct( '*' ); break
 				case 'object': val = tree.struct( '$mol_view', [ tree.kids[0] ?? tree.data( '' ) ] ); break
-				case 'bind': val = tree.struct( '<=>', [ tree.kids[0] ?? tree.data( '' ) ] ); break
-				case 'get': val = tree.struct( '<=', [ tree.kids[0] ?? tree.data( '' ) ] ); break
-				case 'put': val = tree.struct( '=>', [ tree.kids[0] ?? tree.data( '' ) ] ); break
+				case 'bind': val = tree.struct( '<=>', [ tree.kids[0] ?? tree.struct( `undefined`, [tree.data('')] ) ] ); break
+				case 'get': val = tree.struct( '<=', [ tree.kids[0] ?? tree.struct( `undefined`, [tree.data('')] ) ] ); break
+				case 'put': val = tree.struct( '=>', [ tree.kids[0] ?? tree.struct( `undefined`, [tree.data('')] ) ] ); break
 			}
 
 			if (val === undefined) $mol_fail( new TypeError( `Unsupported type: ${ next }` ) )
