@@ -168,6 +168,7 @@ declare namespace $ {
 
 declare namespace $ {
     class $mol_wire_pub_sub extends $mol_wire_pub implements $mol_wire_sub {
+        [x: symbol]: () => any[];
         protected pub_from: number;
         protected cursor: $mol_wire_cursor;
         get temp(): boolean;
@@ -202,6 +203,7 @@ declare namespace $ {
 
 declare namespace $ {
     abstract class $mol_wire_fiber<Host, Args extends readonly unknown[], Result> extends $mol_wire_pub_sub {
+        [x: symbol]: string | (() => any[]);
         readonly task: (this: Host, ...args: Args) => Result;
         readonly host?: Host | undefined;
         static warm: boolean;
@@ -536,14 +538,14 @@ declare namespace $ {
         timeout?: number;
         env?: Record<string, string | undefined>;
     };
-    function $mol_run_async(this: $, { dir, timeout, command, env }: $mol_run_options): import("child_process").SpawnSyncReturns<Buffer> | (Promise<$mol_run_error_context> & {
+    function $mol_run_async(this: $, { dir, timeout, command, env }: $mol_run_options): import("child_process").SpawnSyncReturns<Buffer<ArrayBufferLike>> | (Promise<$mol_run_error_context> & {
         destructor: () => void;
     });
-    function $mol_run(this: $, options: $mol_run_options): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer>;
+    function $mol_run(this: $, options: $mol_run_options): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer<ArrayBufferLike>>;
 }
 
 declare namespace $ {
-    function $mol_exec(this: $, dir: string, command: string, ...args: readonly string[]): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer>;
+    function $mol_exec(this: $, dir: string, command: string, ...args: readonly string[]): $mol_run_error_context | import("child_process").SpawnSyncReturns<Buffer<ArrayBufferLike>>;
 }
 
 declare namespace $ {
@@ -916,6 +918,7 @@ declare namespace $ {
     function $mol_view_visible_height(): number;
     function $mol_view_state_key(suffix: string): string;
     class $mol_view extends $mol_object {
+        [x: symbol]: () => any[];
         static Root<This extends typeof $mol_view>(this: This, id: number): InstanceType<This>;
         autorun(): void;
         static autobind(): void;
@@ -1207,7 +1210,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_charset_encode(value: string): Uint8Array;
+    function $mol_charset_encode(value: string): Uint8Array<ArrayBufferLike>;
 }
 
 declare namespace $ {
@@ -1275,7 +1278,7 @@ declare namespace $ {
         stat(next?: $mol_file_stat | null, virt?: 'virt'): $mol_file_stat | null;
         ensure(): void;
         drop(): void;
-        buffer(next?: Uint8Array): Uint8Array;
+        buffer(next?: Uint8Array): Uint8Array<ArrayBufferLike>;
         sub(): $mol_file[];
         resolve(path: string): $mol_file;
         relate(base?: $mol_file): string;
@@ -2776,9 +2779,9 @@ declare namespace $ {
 		foot( ): readonly($mol_view)[]
 		Foot( ): $mol_view
 		dom_name( ): string
-		field( ): ({ 
+		attr( ): ({ 
 			'tabIndex': ReturnType< $mol_page['tabindex'] >,
-		})  & ReturnType< $mol_view['field'] >
+		})  & ReturnType< $mol_view['attr'] >
 		sub( ): readonly(any)[]
 	}
 	
@@ -5235,7 +5238,7 @@ declare namespace $ {
 }
 
 declare namespace $ {
-    function $mol_view_tree2_value_type(this: $, val: $mol_tree2): "bool" | "null" | "dict" | "locale" | "string" | "get" | "bind" | "put" | "list" | "number" | "object";
+    function $mol_view_tree2_value_type(this: $, val: $mol_tree2): "object" | "bool" | "null" | "dict" | "locale" | "string" | "get" | "bind" | "put" | "list" | "number";
 }
 
 declare namespace $ {
@@ -5447,7 +5450,7 @@ declare namespace $.$$ {
         }>;
         other_options_group(): ($.$mol_check | $.$mol_textarea | $.$mol_switch)[];
         list_type_showed(): boolean;
-        switch_type(next?: string): "" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "boolean_true" | "boolean_false" | "text" | "null" | "dict" | "get" | "bind" | "put" | "list" | "number" | "object";
+        switch_type(next?: string): "" | "object" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "boolean_true" | "boolean_false" | "text" | "null" | "dict" | "get" | "bind" | "put" | "list" | "number";
         drop(): void;
         bubble_content(): readonly any[];
         obj_checked(next?: any): boolean;
@@ -5455,12 +5458,12 @@ declare namespace $.$$ {
         bind_option_label_display(bind_option: keyof ReturnType<$hyoo_studio_type["bind_options"]>): $mol_icon_arrow_left_right_bold_outline[];
         trigger_content(): $mol_icon_arrow_left_right_bold_outline[] | $.$mol_paragraph[];
         type_display(): string;
-        type(next?: string): "" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "boolean_true" | "boolean_false" | "text" | "null" | "dict" | "get" | "bind" | "put" | "list" | "number" | "object";
+        type(next?: string): "" | "object" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "boolean_true" | "boolean_false" | "text" | "null" | "dict" | "get" | "bind" | "put" | "list" | "number";
         show_obj_select(): void;
         selected_class(next?: string): string;
         list_items_type(next?: string): string;
     }
-    function $hyoo_studio_type_value(val: $mol_tree2_empty): "" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "boolean_true" | "boolean_false" | "text" | "null" | "dict" | "get" | "bind" | "put" | "list" | "number" | "object";
+    function $hyoo_studio_type_value(val: $mol_tree2_empty): "" | "object" | "number_nan" | "number_infinity_positive" | "number_infinity_negative" | "boolean_true" | "boolean_false" | "text" | "null" | "dict" | "get" | "bind" | "put" | "list" | "number";
 }
 
 declare namespace $.$$ {
@@ -7668,7 +7671,7 @@ declare namespace $ {
         message(): string;
         headers(): Headers;
         mime(): string | null;
-        stream(): ReadableStream<Uint8Array> | null;
+        stream(): ReadableStream<Uint8Array<ArrayBufferLike>> | null;
         text(): string;
         json(): unknown;
         blob(): Blob;
@@ -7683,7 +7686,7 @@ declare namespace $ {
         };
         static response(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
         static success(input: RequestInfo, init?: RequestInit): $mol_fetch_response;
-        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array> | null;
+        static stream(input: RequestInfo, init?: RequestInit): ReadableStream<Uint8Array<ArrayBufferLike>> | null;
         static text(input: RequestInfo, init?: RequestInit): string;
         static json(input: RequestInfo, init?: RequestInit): unknown;
         static blob(input: RequestInfo, init?: RequestInit): Blob;
