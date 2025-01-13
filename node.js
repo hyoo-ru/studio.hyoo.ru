@@ -7135,6 +7135,11 @@ var $;
 			(obj.rows) = () => ((this.menu_items()));
 			return obj;
 		}
+		Bubble_pane(){
+			const obj = new this.$.$mol_scroll();
+			(obj.sub) = () => ([(this.Menu())]);
+			return obj;
+		}
 		suggest_select(id, next){
 			if(next !== undefined) return next;
 			return null;
@@ -7173,7 +7178,7 @@ var $;
 			return obj;
 		}
 		bubble_content(){
-			return [(this.Menu())];
+			return [(this.Bubble_pane())];
 		}
 		Suggest(id){
 			const obj = new this.$.$mol_button_minor();
@@ -7193,6 +7198,7 @@ var $;
 	($mol_mem(($.$mol_search.prototype), "Clear_icon"));
 	($mol_mem(($.$mol_search.prototype), "Clear"));
 	($mol_mem(($.$mol_search.prototype), "Menu"));
+	($mol_mem(($.$mol_search.prototype), "Bubble_pane"));
 	($mol_mem_key(($.$mol_search.prototype), "suggest_select"));
 	($mol_mem_key(($.$mol_search.prototype), "Suggest_label"));
 	($mol_mem(($.$mol_search.prototype), "Anchor"));
@@ -13297,16 +13303,6 @@ var $;
 
 ;
 "use strict";
-var $;
-(function ($) {
-    function $mol_view_tree2_value_number(type) {
-        return type.match(/[\+\-]*NaN/) || !Number.isNaN(Number(type));
-    }
-    $.$mol_view_tree2_value_number = $mol_view_tree2_value_number;
-})($ || ($ = {}));
-
-;
-"use strict";
 
 ;
 "use strict";
@@ -19400,6 +19396,16 @@ var $;
 "use strict";
 var $;
 (function ($) {
+    function $mol_tree2_js_is_number(type) {
+        return type.match(/[\+\-]*NaN/) || !Number.isNaN(Number(type));
+    }
+    $.$mol_tree2_js_is_number = $mol_tree2_js_is_number;
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
     function is_identifier(tree) {
         if (tree.type)
             return false;
@@ -19601,7 +19607,7 @@ var $;
                     return [
                         input.data(input.type),
                     ];
-                if ($mol_view_tree2_value_number(input.type))
+                if ($mol_tree2_js_is_number(input.type))
                     return [
                         input.data(input.type)
                     ];
@@ -19749,7 +19755,7 @@ var $;
                     return [
                         input.struct('[,]', input.hack(belt)),
                     ];
-                if (input.type && $mol_view_tree2_value_number(input.type))
+                if (input.type && $mol_tree2_js_is_number(input.type))
                     return [
                         input
                     ];

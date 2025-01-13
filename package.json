@@ -346,6 +346,8 @@
     "$mol_tree2_js_to_text",
     "$mol_tree2_js_to",
     "$mol_tree2_js",
+    "$mol_tree2_js_is_number",
+    "$mol_tree2_js_is",
     "$mol_view_tree2_to_js",
     "$mol_view_tree2_to",
     "$mol_guard",
