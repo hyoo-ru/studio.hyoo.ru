@@ -20050,18 +20050,18 @@ var $;
             }
             self_code() {
                 const tree = this.tree();
-                const code = this.$.$mol_tree2_text_to_string_mapped_js(this.$.$mol_tree2_js_to_text(this.$.$mol_view_tree2_to_js(tree.list([tree]))));
+                const base_js = this.$.$mol_tree2_text_to_string_mapped_js(this.$.$mol_tree2_js_to_text(this.$.$mol_view_tree2_to_js(tree.list([tree]))));
                 const class_name = this.self();
                 return `
 				$.$mol_wire_auto = parent.$mol_wire_auto
-				$.${class_name} = ${code}
+				$.${class_name} = ${base_js}
 
 				$.${class_name} = class ${class_name} extends $.${class_name} {
 					${this.source_js()}
 				}
 
 				;${this.source_js_decorators()};
-				$.$mol_style_attach(${class_name}, ${this.source_css()})
+				$.$mol_style_attach(${class_name}, \`${this.source_css()}\` )
 			`;
             }
             base_options() {
@@ -20193,8 +20193,6 @@ var $;
                         brace_count++;
                     }
                 }
-                console.log('props', props);
-                console.log('brace_count', brace_count);
                 if (brace_count !== 0)
                     throw new Error('Curly braces is not balanced');
                 return props;
