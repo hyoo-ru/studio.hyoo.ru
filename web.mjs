@@ -18942,6 +18942,8 @@ var $;
                         $mol_fail_hidden(error);
                 }
                 for (const [index, pub] of fiber.pub_list.entries()) {
+                    if (pub === undefined)
+                        continue;
                     graph.link(sub, pub, index);
                     visit(pub);
                 }
