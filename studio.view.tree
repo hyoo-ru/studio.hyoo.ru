@@ -106,10 +106,6 @@ $hyoo_studio $mol_book2
 								hint \
 								sidebar_showed true
 								value? <=> source_js_switch? <=> source_js? \
-									\class {self} extends $.{self} {
-									\// Don't delete the first and last lines
-									\// Don't delete auto-generated comments
-									\}
 		<= Preview $mol_frame
 			title @ \Preview
 			uri <= pack

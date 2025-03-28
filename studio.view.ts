@@ -42,7 +42,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		source_css( next?: string ): string {
-			return this.$.$mol_state_arg.value( 'source_css', next ) ?? '/* Don\'t delete auto-generated comments */\n'
+			return this.$.$mol_state_arg.value( 'source_css', next ) ?? super.source_css()
 		}
 
 		@ $mol_mem
@@ -198,7 +198,7 @@ namespace $.$$ {
 			
 			const tree = this.tree()
 			
-			const code = this.$.$mol_tree2_text_to_string_mapped_js(
+			const base_js = this.$.$mol_tree2_text_to_string_mapped_js(
 				this.$.$mol_tree2_js_to_text(
 					this.$.$mol_view_tree2_to_js(
 						tree.list([ tree ])
@@ -206,12 +206,17 @@ namespace $.$$ {
 				)
 			)
 			
+			const class_name = this.self()
 			return `
 				$.$mol_wire_auto = parent.$mol_wire_auto
-				$.${ this.self() } = ${ code }
-				$.${ this.self() } = ${this.source_js().replaceAll('{self}', this.self())}
+				$.${ class_name } = ${ base_js }
+
+				$.${ class_name } = class ${ class_name } extends $.${ class_name } {
+					${ this.source_js() }
+				}
+
 				;${ this.source_js_decorators() };
-				$.$mol_style_attach(${ this.self() }, \`${ this.source_css().replaceAll('{self}', this.self().slice(1)) }\`)
+				$.$mol_style_attach(${ class_name }, \`${ this.source_css() }\` )
 			`
 		}
 		
@@ -289,9 +294,9 @@ namespace $.$$ {
 		
 		@ $mol_mem
 		props() {
-			const props = this.prop_filtered().map( prop => {
+			const props = this.prop_filtered().flatMap( prop => {
 				const name = this.$.$mol_view_tree2_prop_parts( prop ).name
-				return this.Prop( name )
+				return name == 'undefined' ? [] : [this.Prop( name )]
 			} )
 			return props
 		}
@@ -375,18 +380,68 @@ namespace $.$$ {
 			return next
 		}
 
-		@ $mol_mem_key
-		source_css_prop( prop_name: string, next?: string ) {
-			const tag = `/*${prop_name}*/`
-			const [before = '', prop_styles = '', after = ''] = this.source_css().split(tag)
+		props_css( class_body: string ) {
+			const props: Map< string/*prop name*/, string/*code*/ > = new Map
+			
+			let code_start = 0
+			let body_start = 0
+			let brace_count = 0
+			const class_name = this.self().slice(1)
+			for( let i = 0; i < class_body.length; i++ ) {
+				const char = class_body[ i ]
 
-			if (next === undefined) {
-				return prop_styles.trim() || `[{self}_${prop_name.toLowerCase()}] {\n\t\n}`
+				if( char == '}' ) {
+					brace_count--
+					if( brace_count !== 0 ) continue
+
+					const attr = class_body.slice( code_start, body_start ).match( /\[([\w]+)\]/ )?.[1]
+					const name = attr?.replace( class_name + '_', '' )
+					if( !name ) continue
+
+					props.set( name, class_body.slice( code_start, i + 1 ).trim()! )
+					code_start = i + 1
+				}
+
+				else if( char == '{' ) {
+					if( brace_count === 0 ) body_start = i
+					brace_count++
+				}
+
 			}
 
-			const all = [before, tag, next.trim(), tag, after].join('\n').trim().replaceAll(/\n{2,}/g, '\n\n')
-			this.source_css(all)
-			return next.trim()
+			if( brace_count !== 0 ) throw new Error('Curly braces is not balanced')
+			return props
+		}
+
+		@ $mol_mem_key
+		source_css_prop_default( prop_name: string ) {
+			const class_name = this.self().slice(1)
+			return `[${class_name}_${prop_name.toLowerCase()}] {\n\t\n}`
+		}
+
+		@ $mol_mem_key
+		source_css_prop( prop_name: string, next?: string ) {
+			const prop_name_lower = prop_name.toLowerCase()
+			try {
+				const props = this.props_css( this.source_css() )
+
+				if( next === undefined ) {
+					if( props.get( prop_name_lower ) ) return props.get( prop_name_lower )!
+					return this.source_css_prop_default( prop_name_lower )
+				}
+	
+				props.set( prop_name_lower, next )
+				this.source_css( [...props.values()].join('\n\n') )
+				
+				return next
+				
+			} catch (error) {
+				if( !this.$.$mol_promise_like( error ) ) {
+					this.$.$mol_fail_log( error )
+				}
+
+				return this.source_css_prop_default( prop_name_lower )
+			}
 		}
 
 		@ $mol_mem
@@ -413,27 +468,67 @@ namespace $.$$ {
 			return list.join('\n')
 		}
 
+		props_js( class_body: string ) {
+			const props: Map< string/*prop name*/, string/*code*/ > = new Map
+
+			let code_start = 0
+			let body_start = 0
+			let brace_count = 0
+			for( let i = 0; i < class_body.length; i++ ) {
+				const char = class_body[ i ]
+
+				if( char == '}' ) {
+					brace_count--
+					if( brace_count !== 0 ) continue
+
+					const name = class_body.slice( code_start, body_start ).match( /([\w]+)[\s]*\(/ )?.[1]
+					if( !name ) continue
+
+					props.set( name, class_body.slice( code_start, i + 1 ).trim()! )
+					code_start = i + 1
+				}
+
+				else if( char == '{' ) {
+					if( brace_count === 0 ) body_start = i
+					brace_count++
+				}
+
+			}
+
+			if( brace_count !== 0 ) throw new Error('Curly braces is not balanced')
+			return props
+		}
+
 		@ $mol_mem_key
-		source_js_prop( prop_name: string, next?: string ) {
-			console.log(11111111)
-			console.log(this.source_js_decorators())
-			const lines = this.source_js().split('\n')
-			const class_begin = lines.shift()
-			const class_end = lines.pop()
-
-			const tag = `/*${prop_name}*/`
-			const [before = '', prop_js = '', after = ''] = lines.join('\n').split(tag)
-
+		source_js_prop_default( prop_name: string ) {
 			const multiple = this.Prop(prop_name).multiple()
 			const changeable = this.Prop(prop_name).changeable()
 			const params = [...multiple ? ['key'] : [], ...changeable ? ['next'] : []].join(', ')
-			if (next === undefined) {
-				return prop_js.trim().replace(new RegExp(`${prop_name}\\s*\\(.*\\)`), `${prop_name} (${params})`) || `${prop_name} (${params}) {\n\t\n}`
-			}
+			return `${prop_name}( ${params} ) {\n\t\n}`
+		}
 
-			const all = [class_begin, before, tag, next.trim(), tag, after, class_end].join('\n').trim().replaceAll(/\n{2,}/g, '\n\n')
-			this.source_js(all)
-			return next.trim()
+		@ $mol_mem_key
+		source_js_prop( prop_name: string, next?: string ) {
+			try {
+				const props = this.props_js( this.source_js() )
+
+				if( next === undefined ) {
+					if( props.get( prop_name ) ) return props.get( prop_name )!
+					return this.source_js_prop_default( prop_name )
+				}
+	
+				props.set( prop_name, next )
+				this.source_js( [...props.values()].join('\n\n') )
+				
+				return next
+				
+			} catch (error) {
+				if( !this.$.$mol_promise_like( error ) ) {
+					this.$.$mol_fail_log( error )
+				}
+
+				return this.source_js_prop_default( prop_name )
+			}
 		}
 
 		@ $mol_mem
