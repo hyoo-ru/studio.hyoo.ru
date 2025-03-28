@@ -1,9 +1,6 @@
 {
 	"$hyoo_studio_Base_field_name": "Базовый класс",
 	"$hyoo_studio_Edit_title": "$mol Студия",
-	"$hyoo_studio_Inspect_depth_title": "Мин. глубина",
-	"$hyoo_studio_Inspect_stat_hor_title": "глубина",
-	"$hyoo_studio_Inspect_stat_vert_title": "кол-во",
 	"$hyoo_studio_Inspect_title": "Инспектор",
 	"$hyoo_studio_Inspector_open_hint": "Инспектор",
 	"$hyoo_studio_Pack_field_name": "Приложение донор компонентов",

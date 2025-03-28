@@ -10032,7 +10032,9 @@ var $;
                 if (points.length === 0)
                     return '';
                 const [, shift_y] = this.shift();
-                return points.map(point => `M ${point[0]} ${shift_y} V ${point[1]}`).join(' ');
+                return points.map(point => (Number.isFinite(point[0]) && Number.isFinite(point[1]))
+                    ? `M ${point[0]} ${shift_y} V ${point[1]}`
+                    : ``).join(' ');
             }
             stroke_width() {
                 return (8 / Math.sqrt(this.indexes().length)).toPrecision(2) + '%';
@@ -12168,74 +12170,6 @@ var $;
 })($ || ($ = {}));
 
 ;
-	($.$mol_dump_list) = class $mol_dump_list extends ($.$mol_view) {
-		dump_value(id){
-			return null;
-		}
-		dump_expanded(id, next){
-			if(next !== undefined) return next;
-			return false;
-		}
-		prototypes(){
-			return false;
-		}
-		preview_show(){
-			return true;
-		}
-		Dump(id){
-			const obj = new this.$.$mol_dump_value();
-			(obj.value) = () => ((this.dump_value(id)));
-			(obj.expanded) = (next) => ((this.dump_expanded(id, next)));
-			(obj.prototypes) = () => ((this.prototypes()));
-			(obj.preview_show) = () => ((this.preview_show()));
-			return obj;
-		}
-		values(){
-			return [];
-		}
-		sub(){
-			return [(this.Dump("0"))];
-		}
-	};
-	($mol_mem_key(($.$mol_dump_list.prototype), "dump_expanded"));
-	($mol_mem_key(($.$mol_dump_list.prototype), "Dump"));
-
-
-;
-"use strict";
-
-;
-"use strict";
-var $;
-(function ($) {
-    var $$;
-    (function ($$) {
-        class $mol_dump_list extends $.$mol_dump_list {
-            sub() {
-                return this.values().map((_, index) => this.Dump(index));
-            }
-            dump_value(index) {
-                return this.values()[index];
-            }
-            expand_all(event) {
-                this.Dump(1).expanded(true);
-            }
-        }
-        __decorate([
-            $mol_mem
-        ], $mol_dump_list.prototype, "sub", null);
-        $$.$mol_dump_list = $mol_dump_list;
-    })($$ = $.$$ || ($.$$ = {}));
-})($ || ($ = {}));
-
-;
-"use strict";
-var $;
-(function ($) {
-    $mol_style_attach("mol/dump/list/list.view.css", "[mol_dump_list] {\n\talign-items: flex-start;\n\tgap: var(--mol_gap_space);\n}\n\n[mol_dump_list_dump]:first-child {\n\tposition: sticky;\n\ttop: 0;\n}\n");
-})($ || ($ = {}));
-
-;
 	($.$mol_expander) = class $mol_expander extends ($.$mol_list) {
 		expanded(next){
 			if(next !== undefined) return next;
@@ -12312,6 +12246,74 @@ var $;
 var $;
 (function ($) {
     $mol_style_attach("mol/expander/expander.view.css", "[mol_expander] {\n\tflex-direction: column;\n}\n\n[mol_expander_label] {\n\tdisplay: flex;\n\tflex-wrap: wrap;\n\tborder-radius: var(--mol_gap_round);\n}\n\n[mol_expander_trigger] {\n\tflex: auto;\n\tposition: relative;\n}\n");
+})($ || ($ = {}));
+
+;
+	($.$mol_dump_list) = class $mol_dump_list extends ($.$mol_view) {
+		dump_value(id){
+			return null;
+		}
+		dump_expanded(id, next){
+			if(next !== undefined) return next;
+			return false;
+		}
+		prototypes(){
+			return false;
+		}
+		preview_show(){
+			return true;
+		}
+		Dump(id){
+			const obj = new this.$.$mol_dump_value();
+			(obj.value) = () => ((this.dump_value(id)));
+			(obj.expanded) = (next) => ((this.dump_expanded(id, next)));
+			(obj.prototypes) = () => ((this.prototypes()));
+			(obj.preview_show) = () => ((this.preview_show()));
+			return obj;
+		}
+		values(){
+			return [];
+		}
+		sub(){
+			return [(this.Dump("0"))];
+		}
+	};
+	($mol_mem_key(($.$mol_dump_list.prototype), "dump_expanded"));
+	($mol_mem_key(($.$mol_dump_list.prototype), "Dump"));
+
+
+;
+"use strict";
+
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $mol_dump_list extends $.$mol_dump_list {
+            sub() {
+                return this.values().map((_, index) => this.Dump(index));
+            }
+            dump_value(index) {
+                return this.values()[index];
+            }
+            expand_all(event) {
+                this.Dump(1).expanded(true);
+            }
+        }
+        __decorate([
+            $mol_mem
+        ], $mol_dump_list.prototype, "sub", null);
+        $$.$mol_dump_list = $mol_dump_list;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+
+;
+"use strict";
+var $;
+(function ($) {
+    $mol_style_attach("mol/dump/list/list.view.css", "[mol_dump_list] {\n\talign-items: flex-start;\n\tgap: var(--mol_gap_space);\n}\n\n[mol_dump_list_dump]:first-child {\n\tposition: sticky;\n\ttop: 0;\n}\n");
 })($ || ($ = {}));
 
 ;
@@ -18878,42 +18880,127 @@ var $;
 			(obj.html) = () => ((this.preview_html()));
 			return obj;
 		}
-		inspect_stat(){
+		inspect_depth(){
 			return [];
+		}
+		Inspect_depth_count(){
+			const obj = new this.$.$mol_plot_bar();
+			(obj.series_y) = () => ((this.inspect_depth()));
+			return obj;
+		}
+		Inspect_depth_vert(){
+			const obj = new this.$.$mol_plot_ruler_vert();
+			return obj;
+		}
+		inspect_depth_labels(){
+			return [];
+		}
+		Inspect_depth_hor(){
+			const obj = new this.$.$mol_plot_mark_hor();
+			(obj.series_x) = () => ((this.inspect_depth_labels()));
+			return obj;
+		}
+		Marker_depth_cross(){
+			const obj = new this.$.$mol_plot_mark_cross();
+			(obj.graphs) = () => ([(this.Inspect_depth_count())]);
+			return obj;
 		}
 		Inspect_depth(){
-			const obj = new this.$.$mol_plot_bar();
-			(obj.title) = () => ((this.$.$mol_locale.text("$hyoo_studio_Inspect_depth_title")));
-			(obj.series_y) = () => ((this.inspect_stat()));
-			return obj;
-		}
-		Inspect_stat_vert(){
-			const obj = new this.$.$mol_plot_ruler_vert();
-			(obj.title) = () => ((this.$.$mol_locale.text("$hyoo_studio_Inspect_stat_vert_title")));
-			return obj;
-		}
-		inspect_stat_depth(){
-			return [];
-		}
-		Inspect_stat_hor(){
-			const obj = new this.$.$mol_plot_mark_hor();
-			(obj.title) = () => ((this.$.$mol_locale.text("$hyoo_studio_Inspect_stat_hor_title")));
-			(obj.series_x) = () => ((this.inspect_stat_depth()));
-			return obj;
-		}
-		Marker_cross(){
-			const obj = new this.$.$mol_plot_mark_cross();
-			(obj.graphs) = () => ([(this.Inspect_depth())]);
-			return obj;
-		}
-		Inspect_stat(){
 			const obj = new this.$.$mol_chart();
 			(obj.graphs) = () => ([
-				(this.Inspect_depth()), 
-				(this.Inspect_stat_vert()), 
-				(this.Inspect_stat_hor()), 
-				(this.Marker_cross())
+				(this.Inspect_depth_count()), 
+				(this.Inspect_depth_vert()), 
+				(this.Inspect_depth_hor()), 
+				(this.Marker_depth_cross())
 			]);
+			return obj;
+		}
+		Inspect_depth_expander(){
+			const obj = new this.$.$mol_expander();
+			(obj.title) = () => ("Stats by Min Depth");
+			(obj.content) = () => ([(this.Inspect_depth())]);
+			return obj;
+		}
+		inspect_pubs(){
+			return [];
+		}
+		Inspect_pubs_count(){
+			const obj = new this.$.$mol_plot_bar();
+			(obj.series_y) = () => ((this.inspect_pubs()));
+			return obj;
+		}
+		Inspect_pubs_vert(){
+			const obj = new this.$.$mol_plot_ruler_vert();
+			return obj;
+		}
+		inspect_pubs_labels(){
+			return [];
+		}
+		Inspect_pubs_hor(){
+			const obj = new this.$.$mol_plot_mark_hor();
+			(obj.series_x) = () => ((this.inspect_pubs_labels()));
+			return obj;
+		}
+		Marker_pubs_cross(){
+			const obj = new this.$.$mol_plot_mark_cross();
+			(obj.graphs) = () => ([(this.Inspect_pubs_count())]);
+			return obj;
+		}
+		Inspect_pubs(){
+			const obj = new this.$.$mol_chart();
+			(obj.graphs) = () => ([
+				(this.Inspect_pubs_count()), 
+				(this.Inspect_pubs_vert()), 
+				(this.Inspect_pubs_hor()), 
+				(this.Marker_pubs_cross())
+			]);
+			return obj;
+		}
+		Inspect_pubs_expander(){
+			const obj = new this.$.$mol_expander();
+			(obj.title) = () => ("Stats by Pubs Count");
+			(obj.content) = () => ([(this.Inspect_pubs())]);
+			return obj;
+		}
+		inspect_subs(){
+			return [];
+		}
+		Inspect_subs_count(){
+			const obj = new this.$.$mol_plot_bar();
+			(obj.series_y) = () => ((this.inspect_subs()));
+			return obj;
+		}
+		Inspect_subs_vert(){
+			const obj = new this.$.$mol_plot_ruler_vert();
+			return obj;
+		}
+		inspect_subs_labels(){
+			return [];
+		}
+		Inspect_subs_hor(){
+			const obj = new this.$.$mol_plot_mark_hor();
+			(obj.series_x) = () => ((this.inspect_subs_labels()));
+			return obj;
+		}
+		Marker_subs_cross(){
+			const obj = new this.$.$mol_plot_mark_cross();
+			(obj.graphs) = () => ([(this.Inspect_subs_count())]);
+			return obj;
+		}
+		Inspect_subs(){
+			const obj = new this.$.$mol_chart();
+			(obj.graphs) = () => ([
+				(this.Inspect_subs_count()), 
+				(this.Inspect_subs_vert()), 
+				(this.Inspect_subs_hor()), 
+				(this.Marker_subs_cross())
+			]);
+			return obj;
+		}
+		Inspect_subs_expander(){
+			const obj = new this.$.$mol_expander();
+			(obj.title) = () => ("Stats by Subs Count");
+			(obj.content) = () => ([(this.Inspect_subs())]);
 			return obj;
 		}
 		inspect_graph(){
@@ -18927,7 +19014,12 @@ var $;
 		Inspect(){
 			const obj = new this.$.$mol_page();
 			(obj.title) = () => ((this.$.$mol_locale.text("$hyoo_studio_Inspect_title")));
-			(obj.body) = () => ([(this.Inspect_stat()), (this.Inspect_graph())]);
+			(obj.body) = () => ([
+				(this.Inspect_depth_expander()), 
+				(this.Inspect_pubs_expander()), 
+				(this.Inspect_subs_expander()), 
+				(this.Inspect_graph())
+			]);
 			return obj;
 		}
 		prop_name(id){
@@ -19044,11 +19136,24 @@ var $;
 	($mol_mem(($.$hyoo_studio.prototype), "Source_page_list"));
 	($mol_mem(($.$hyoo_studio.prototype), "Source_page"));
 	($mol_mem(($.$hyoo_studio.prototype), "Preview"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_depth_count"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_depth_vert"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_depth_hor"));
+	($mol_mem(($.$hyoo_studio.prototype), "Marker_depth_cross"));
 	($mol_mem(($.$hyoo_studio.prototype), "Inspect_depth"));
-	($mol_mem(($.$hyoo_studio.prototype), "Inspect_stat_vert"));
-	($mol_mem(($.$hyoo_studio.prototype), "Inspect_stat_hor"));
-	($mol_mem(($.$hyoo_studio.prototype), "Marker_cross"));
-	($mol_mem(($.$hyoo_studio.prototype), "Inspect_stat"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_depth_expander"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_pubs_count"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_pubs_vert"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_pubs_hor"));
+	($mol_mem(($.$hyoo_studio.prototype), "Marker_pubs_cross"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_pubs"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_pubs_expander"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_subs_count"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_subs_vert"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_subs_hor"));
+	($mol_mem(($.$hyoo_studio.prototype), "Marker_subs_cross"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_subs"));
+	($mol_mem(($.$hyoo_studio.prototype), "Inspect_subs_expander"));
 	($mol_mem(($.$hyoo_studio.prototype), "Inspect_graph"));
 	($mol_mem(($.$hyoo_studio.prototype), "Inspect"));
 	($mol_mem_key(($.$hyoo_studio.prototype), "prop_sign"));
@@ -20075,11 +20180,34 @@ var $;
                     $mol_fail_hidden(new Error(error.message));
                 }
             }
-            inspect_stat() {
+            inspect_depth() {
                 return this.inspect_graph().depth_nodes(Math.min).map(nodes => nodes.length);
             }
-            inspect_stat_depth() {
-                return Object.keys(this.inspect_stat()).map(Number);
+            inspect_depth_labels() {
+                return Object.keys(this.inspect_depth()).map(Number);
+            }
+            inspect_pubs() {
+                const stat = [];
+                for (const pub of this.inspect_graph().nodes.values()) {
+                    const len = pub?.pub_list?.length;
+                    if (len >= 0)
+                        stat[len] = (stat[len] ?? 0) + 1;
+                }
+                return stat;
+            }
+            inspect_pubs_labels() {
+                return Object.keys(this.inspect_pubs()).map(Number);
+            }
+            inspect_subs() {
+                const stat = [];
+                for (const pub of this.inspect_graph().nodes.values()) {
+                    const len = pub.sub_list.length;
+                    stat[len] = (stat[len] ?? 0) + 1;
+                }
+                return stat;
+            }
+            inspect_subs_labels() {
+                return Object.keys(this.inspect_subs()).map(Number);
             }
             readme_selected(next) {
                 return $mol_state_arg.value('demo', next) ?? '';
@@ -20409,7 +20537,13 @@ var $;
         ], $hyoo_studio.prototype, "inspect_graph", null);
         __decorate([
             $mol_mem
-        ], $hyoo_studio.prototype, "inspect_stat", null);
+        ], $hyoo_studio.prototype, "inspect_depth", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_studio.prototype, "inspect_pubs", null);
+        __decorate([
+            $mol_mem
+        ], $hyoo_studio.prototype, "inspect_subs", null);
         __decorate([
             $mol_mem
         ], $hyoo_studio.prototype, "library", null);
@@ -20586,10 +20720,13 @@ var $;
             },
             Inspect: {
                 flex: {
-                    basis: rem(30),
+                    basis: rem(40),
                     shrink: 0,
                     grow: 1,
                 },
+            },
+            Inspect_graph: {
+                padding: $mol_gap.text,
             },
         });
     })($$ = $.$$ || ($.$$ = {}));

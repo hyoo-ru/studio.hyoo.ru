@@ -4803,52 +4803,6 @@ declare namespace $ {
 
 declare namespace $ {
 
-	type $mol_dump_value__value_mol_dump_list_1 = $mol_type_enforce<
-		ReturnType< $mol_dump_list['dump_value'] >
-		,
-		ReturnType< $mol_dump_value['value'] >
-	>
-	type $mol_dump_value__expanded_mol_dump_list_2 = $mol_type_enforce<
-		ReturnType< $mol_dump_list['dump_expanded'] >
-		,
-		ReturnType< $mol_dump_value['expanded'] >
-	>
-	type $mol_dump_value__prototypes_mol_dump_list_3 = $mol_type_enforce<
-		ReturnType< $mol_dump_list['prototypes'] >
-		,
-		ReturnType< $mol_dump_value['prototypes'] >
-	>
-	type $mol_dump_value__preview_show_mol_dump_list_4 = $mol_type_enforce<
-		ReturnType< $mol_dump_list['preview_show'] >
-		,
-		ReturnType< $mol_dump_value['preview_show'] >
-	>
-	export class $mol_dump_list extends $mol_view {
-		dump_value( id: any): any
-		dump_expanded( id: any, next?: boolean ): boolean
-		prototypes( ): boolean
-		preview_show( ): boolean
-		Dump( id: any): $mol_dump_value
-		values( ): readonly(any)[]
-		sub( ): readonly(any)[]
-	}
-	
-}
-
-//# sourceMappingURL=list.view.tree.d.ts.map
-declare namespace $.$$ {
-    class $mol_dump_list extends $.$mol_dump_list {
-        sub(): $.$mol_dump_value[];
-        dump_value(index: number): any;
-        expand_all(event?: Event): void;
-    }
-}
-
-declare namespace $ {
-}
-
-declare namespace $ {
-
 	type $mol_check_expand__checked_mol_expander_1 = $mol_type_enforce<
 		ReturnType< $mol_expander['expanded'] >
 		,
@@ -4893,6 +4847,52 @@ declare namespace $.$$ {
     class $mol_expander extends $.$mol_expander {
         rows(): $mol_view[];
         expandable(): boolean;
+    }
+}
+
+declare namespace $ {
+}
+
+declare namespace $ {
+
+	type $mol_dump_value__value_mol_dump_list_1 = $mol_type_enforce<
+		ReturnType< $mol_dump_list['dump_value'] >
+		,
+		ReturnType< $mol_dump_value['value'] >
+	>
+	type $mol_dump_value__expanded_mol_dump_list_2 = $mol_type_enforce<
+		ReturnType< $mol_dump_list['dump_expanded'] >
+		,
+		ReturnType< $mol_dump_value['expanded'] >
+	>
+	type $mol_dump_value__prototypes_mol_dump_list_3 = $mol_type_enforce<
+		ReturnType< $mol_dump_list['prototypes'] >
+		,
+		ReturnType< $mol_dump_value['prototypes'] >
+	>
+	type $mol_dump_value__preview_show_mol_dump_list_4 = $mol_type_enforce<
+		ReturnType< $mol_dump_list['preview_show'] >
+		,
+		ReturnType< $mol_dump_value['preview_show'] >
+	>
+	export class $mol_dump_list extends $mol_view {
+		dump_value( id: any): any
+		dump_expanded( id: any, next?: boolean ): boolean
+		prototypes( ): boolean
+		preview_show( ): boolean
+		Dump( id: any): $mol_dump_value
+		values( ): readonly(any)[]
+		sub( ): readonly(any)[]
+	}
+	
+}
+
+//# sourceMappingURL=list.view.tree.d.ts.map
+declare namespace $.$$ {
+    class $mol_dump_list extends $.$mol_dump_list {
+        sub(): $.$mol_dump_value[];
+        dump_value(index: number): any;
+        expand_all(event?: Event): void;
     }
 }
 
@@ -8597,92 +8597,147 @@ declare namespace $ {
 		,
 		ReturnType< $mol_frame['html'] >
 	>
-	type $mol_plot_bar__title_hyoo_studio_64 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_plot_bar['title'] >
-	>
-	type $mol_plot_bar__series_y_hyoo_studio_65 = $mol_type_enforce<
-		ReturnType< $hyoo_studio['inspect_stat'] >
+	type $mol_plot_bar__series_y_hyoo_studio_64 = $mol_type_enforce<
+		ReturnType< $hyoo_studio['inspect_depth'] >
 		,
 		ReturnType< $mol_plot_bar['series_y'] >
 	>
-	type $mol_plot_ruler_vert__title_hyoo_studio_66 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_plot_ruler_vert['title'] >
-	>
-	type $mol_plot_mark_hor__title_hyoo_studio_67 = $mol_type_enforce<
-		string
-		,
-		ReturnType< $mol_plot_mark_hor['title'] >
-	>
-	type $mol_plot_mark_hor__series_x_hyoo_studio_68 = $mol_type_enforce<
-		ReturnType< $hyoo_studio['inspect_stat_depth'] >
+	type $mol_plot_mark_hor__series_x_hyoo_studio_65 = $mol_type_enforce<
+		ReturnType< $hyoo_studio['inspect_depth_labels'] >
 		,
 		ReturnType< $mol_plot_mark_hor['series_x'] >
 	>
-	type $mol_plot_mark_cross__graphs_hyoo_studio_69 = $mol_type_enforce<
+	type $mol_plot_mark_cross__graphs_hyoo_studio_66 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_plot_mark_cross['graphs'] >
 	>
-	type $mol_chart__graphs_hyoo_studio_70 = $mol_type_enforce<
+	type $mol_chart__graphs_hyoo_studio_67 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_chart['graphs'] >
 	>
-	type $mol_dump_value__value_hyoo_studio_71 = $mol_type_enforce<
+	type $mol_expander__title_hyoo_studio_68 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_expander['title'] >
+	>
+	type $mol_expander__content_hyoo_studio_69 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_expander['content'] >
+	>
+	type $mol_plot_bar__series_y_hyoo_studio_70 = $mol_type_enforce<
+		ReturnType< $hyoo_studio['inspect_pubs'] >
+		,
+		ReturnType< $mol_plot_bar['series_y'] >
+	>
+	type $mol_plot_mark_hor__series_x_hyoo_studio_71 = $mol_type_enforce<
+		ReturnType< $hyoo_studio['inspect_pubs_labels'] >
+		,
+		ReturnType< $mol_plot_mark_hor['series_x'] >
+	>
+	type $mol_plot_mark_cross__graphs_hyoo_studio_72 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_plot_mark_cross['graphs'] >
+	>
+	type $mol_chart__graphs_hyoo_studio_73 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_chart['graphs'] >
+	>
+	type $mol_expander__title_hyoo_studio_74 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_expander['title'] >
+	>
+	type $mol_expander__content_hyoo_studio_75 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_expander['content'] >
+	>
+	type $mol_plot_bar__series_y_hyoo_studio_76 = $mol_type_enforce<
+		ReturnType< $hyoo_studio['inspect_subs'] >
+		,
+		ReturnType< $mol_plot_bar['series_y'] >
+	>
+	type $mol_plot_mark_hor__series_x_hyoo_studio_77 = $mol_type_enforce<
+		ReturnType< $hyoo_studio['inspect_subs_labels'] >
+		,
+		ReturnType< $mol_plot_mark_hor['series_x'] >
+	>
+	type $mol_plot_mark_cross__graphs_hyoo_studio_78 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_plot_mark_cross['graphs'] >
+	>
+	type $mol_chart__graphs_hyoo_studio_79 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_chart['graphs'] >
+	>
+	type $mol_expander__title_hyoo_studio_80 = $mol_type_enforce<
+		string
+		,
+		ReturnType< $mol_expander['title'] >
+	>
+	type $mol_expander__content_hyoo_studio_81 = $mol_type_enforce<
+		readonly(any)[]
+		,
+		ReturnType< $mol_expander['content'] >
+	>
+	type $mol_dump_value__value_hyoo_studio_82 = $mol_type_enforce<
 		ReturnType< $hyoo_studio['inspect_graph'] >
 		,
 		ReturnType< $mol_dump_value['value'] >
 	>
-	type $mol_page__title_hyoo_studio_72 = $mol_type_enforce<
+	type $mol_page__title_hyoo_studio_83 = $mol_type_enforce<
 		string
 		,
 		ReturnType< $mol_page['title'] >
 	>
-	type $mol_page__body_hyoo_studio_73 = $mol_type_enforce<
+	type $mol_page__body_hyoo_studio_84 = $mol_type_enforce<
 		readonly(any)[]
 		,
 		ReturnType< $mol_page['body'] >
 	>
-	type $mol_app_demo__meta_bundle_base_hyoo_studio_74 = $mol_type_enforce<
+	type $mol_app_demo__meta_bundle_base_hyoo_studio_85 = $mol_type_enforce<
 		ReturnType< $hyoo_studio['pack'] >
 		,
 		ReturnType< $mol_app_demo['meta_bundle_base'] >
 	>
-	type $hyoo_studio_prop__name_hyoo_studio_75 = $mol_type_enforce<
+	type $hyoo_studio_prop__name_hyoo_studio_86 = $mol_type_enforce<
 		ReturnType< $hyoo_studio['prop_name'] >
 		,
 		ReturnType< $hyoo_studio_prop['name'] >
 	>
-	type $hyoo_studio_prop__sign_hyoo_studio_76 = $mol_type_enforce<
+	type $hyoo_studio_prop__sign_hyoo_studio_87 = $mol_type_enforce<
 		ReturnType< $hyoo_studio['prop_sign'] >
 		,
 		ReturnType< $hyoo_studio_prop['sign'] >
 	>
-	type $hyoo_studio_prop__tree_hyoo_studio_77 = $mol_type_enforce<
+	type $hyoo_studio_prop__tree_hyoo_studio_88 = $mol_type_enforce<
 		ReturnType< $hyoo_studio['prop_tree'] >
 		,
 		ReturnType< $hyoo_studio_prop['tree'] >
 	>
-	type $hyoo_studio_prop__props_of_hyoo_studio_78 = $mol_type_enforce<
+	type $hyoo_studio_prop__props_of_hyoo_studio_89 = $mol_type_enforce<
 		ReturnType< $hyoo_studio['props_of'] >
 		,
 		ReturnType< $hyoo_studio_prop['props_of'] >
 	>
-	type $hyoo_studio_prop__props_bindable_hyoo_studio_79 = $mol_type_enforce<
+	type $hyoo_studio_prop__props_bindable_hyoo_studio_90 = $mol_type_enforce<
 		ReturnType< $hyoo_studio['props_all'] >
 		,
 		ReturnType< $hyoo_studio_prop['props_bindable'] >
 	>
-	type $hyoo_studio_prop__class_list_hyoo_studio_80 = $mol_type_enforce<
+	type $hyoo_studio_prop__class_list_hyoo_studio_91 = $mol_type_enforce<
 		ReturnType< $hyoo_studio['class_list'] >
 		,
 		ReturnType< $hyoo_studio_prop['class_list'] >
 	>
-	type $hyoo_studio_prop__Bound_prop_hyoo_studio_81 = $mol_type_enforce<
+	type $hyoo_studio_prop__Bound_prop_hyoo_studio_92 = $mol_type_enforce<
 		ReturnType< $hyoo_studio['Bound_prop'] >
 		,
 		ReturnType< $hyoo_studio_prop['Bound_prop'] >
@@ -8751,13 +8806,30 @@ declare namespace $ {
 		preview_html( ): string
 		preview_window( ): ReturnType< ReturnType< $hyoo_studio['Preview'] >['window'] >
 		Preview( ): $mol_frame
-		inspect_stat( ): readonly(number)[]
-		Inspect_depth( ): $mol_plot_bar
-		Inspect_stat_vert( ): $mol_plot_ruler_vert
-		inspect_stat_depth( ): readonly(number)[]
-		Inspect_stat_hor( ): $mol_plot_mark_hor
-		Marker_cross( ): $mol_plot_mark_cross
-		Inspect_stat( ): $mol_chart
+		inspect_depth( ): readonly(number)[]
+		Inspect_depth_count( ): $mol_plot_bar
+		Inspect_depth_vert( ): $mol_plot_ruler_vert
+		inspect_depth_labels( ): readonly(number)[]
+		Inspect_depth_hor( ): $mol_plot_mark_hor
+		Marker_depth_cross( ): $mol_plot_mark_cross
+		Inspect_depth( ): $mol_chart
+		Inspect_depth_expander( ): $mol_expander
+		inspect_pubs( ): readonly(number)[]
+		Inspect_pubs_count( ): $mol_plot_bar
+		Inspect_pubs_vert( ): $mol_plot_ruler_vert
+		inspect_pubs_labels( ): readonly(number)[]
+		Inspect_pubs_hor( ): $mol_plot_mark_hor
+		Marker_pubs_cross( ): $mol_plot_mark_cross
+		Inspect_pubs( ): $mol_chart
+		Inspect_pubs_expander( ): $mol_expander
+		inspect_subs( ): readonly(number)[]
+		Inspect_subs_count( ): $mol_plot_bar
+		Inspect_subs_vert( ): $mol_plot_ruler_vert
+		inspect_subs_labels( ): readonly(number)[]
+		Inspect_subs_hor( ): $mol_plot_mark_hor
+		Marker_subs_cross( ): $mol_plot_mark_cross
+		Inspect_subs( ): $mol_chart
+		Inspect_subs_expander( ): $mol_expander
 		inspect_graph( ): any
 		Inspect_graph( ): $mol_dump_value
 		Inspect( ): $mol_page
@@ -8793,8 +8865,12 @@ declare namespace $.$$ {
         preview_html(): string;
         preview_window(): any;
         inspect_graph(): $mol_graph<$mol_wire_pub, number>;
-        inspect_stat(): number[];
-        inspect_stat_depth(): number[];
+        inspect_depth(): number[];
+        inspect_depth_labels(): number[];
+        inspect_pubs(): number[];
+        inspect_pubs_labels(): number[];
+        inspect_subs(): number[];
+        inspect_subs_labels(): number[];
         readme_selected(next?: string): string;
         library(): $mol_tree2;
         tree(next?: $mol_tree2): $mol_tree2;
