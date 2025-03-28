@@ -10,8 +10,5 @@
 	"$hyoo_studio_Source_field_name": "View.Tree Исходник",
 	"$hyoo_studio_Edit_title": "$mol Студия",
 	"$hyoo_studio_Preview_title": "Предпросмотр",
-	"$hyoo_studio_Inspect_depth_title": "Мин. глубина",
-	"$hyoo_studio_Inspect_stat_vert_title": "кол-во",
-	"$hyoo_studio_Inspect_stat_hor_title": "глубина",
 	"$hyoo_studio_Inspect_title": "Инспектор"
 }

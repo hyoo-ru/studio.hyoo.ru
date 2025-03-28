@@ -92,12 +92,40 @@ namespace $.$$ {
 		}
 		
 		@ $mol_mem
-		inspect_stat() {
+		inspect_depth() {
 			return this.inspect_graph().depth_nodes( Math.min ).map( nodes => nodes.length )
 		}
 		
-		inspect_stat_depth() {
-			return Object.keys( this.inspect_stat() ).map( Number )
+		inspect_depth_labels() {
+			return Object.keys( this.inspect_depth() ).map( Number )
+		}
+		
+		@ $mol_mem
+		inspect_pubs() {
+			const stat = [] as number[]
+			for( const pub of this.inspect_graph().nodes.values() ) {
+				const len = ( pub as $mol_wire_sub )?.pub_list?.length
+				if( len >= 0 ) stat[ len ] = ( stat[ len ] ?? 0 ) + 1
+			}
+			return stat
+		}
+		
+		inspect_pubs_labels() {
+			return Object.keys( this.inspect_pubs() ).map( Number )
+		}
+		
+		@ $mol_mem
+		inspect_subs() {
+			const stat = [] as number[]
+			for( const pub of this.inspect_graph().nodes.values() ) {
+				const len = pub.sub_list.length
+				stat[ len ] = ( stat[ len ] ?? 0 ) + 1
+			}
+			return stat
+		}
+		
+		inspect_subs_labels() {
+			return Object.keys( this.inspect_subs() ).map( Number )
 		}
 		
 		readme_selected( next?: string ) {

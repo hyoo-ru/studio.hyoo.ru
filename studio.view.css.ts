@@ -100,10 +100,14 @@ namespace $.$$ {
 
 		Inspect: {
 			flex: {
-				basis: rem( 30 ),
+				basis: rem( 40 ),
 				shrink: 0,
 				grow: 1,
 			},
+		},
+		
+		Inspect_graph: {
+			padding: $mol_gap.text,
 		},
 
 	} )
