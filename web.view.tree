@@ -1839,6 +1839,9 @@ $mol_app_demo_main $mol_page
 			text <= description \
 			uri_base <= project_uri
 
+$mol_button_major $mol_button_minor
+	theme \$mol_theme_base
+
 $mol_row $mol_view
 
 $mol_form $mol_list
@@ -1847,12 +1850,20 @@ $mol_form $mol_list
 	event *
 		^
 		keydown?event <=> keydown?event null
-	submit?event null
+	save?event null
+	message_done @ \Saved
+	message_invalid @ \Form is not valid
 	rows /
 		<= Body $mol_list
 			sub <= body <= form_fields /$mol_form_field
 		<= Foot $mol_row
 			sub <= foot <= buttons /$mol_view
+				<= Submit $mol_button_major
+					title <= submit_title @ \Save
+					hint <= submit_hint \
+					click? <=> submit? null
+				<= Result $mol_status
+					message <= result? null
 
 $hyoo_studio $mol_book2
 	comp $hyoo_studio_component
