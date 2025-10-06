@@ -4901,6 +4901,29 @@ var $;
 
 
 ;
+	($.$mol_view_tree2_to_js_test_ex_simple_factory_inheritance_bar) = class $mol_view_tree2_to_js_test_ex_simple_factory_inheritance_bar extends ($.$mol_object) {
+		config(){
+			return {"ips": ["127.0.0.1"]};
+		}
+	};
+	($.$mol_view_tree2_to_js_test_ex_simple_factory_inheritance_foo) = class $mol_view_tree2_to_js_test_ex_simple_factory_inheritance_foo extends ($.$mol_object) {
+		addon(){
+			return ["1.1.1.1"];
+		}
+		Having(){
+			const obj = new this.$.$mol_view_tree2_to_js_test_ex_simple_factory_inheritance_bar();
+			(obj.config) = () => ({"ips": [
+				...(this.$.$mol_view_tree2_to_js_test_ex_simple_factory_inheritance_bar.prototype.config.call(obj).ips), 
+				"0.0.0.0", 
+				...(this.addon())
+			]});
+			return obj;
+		}
+	};
+	($mol_mem(($.$mol_view_tree2_to_js_test_ex_simple_factory_inheritance_foo.prototype), "Having"));
+
+
+;
 	($.$mol_view_tree2_to_js_test_ex_structural_with_inheritance_foo) = class $mol_view_tree2_to_js_test_ex_structural_with_inheritance_foo extends ($.$mol_object) {
 		field(){
 			return {"xxx": 123, "xxy": "test"};
@@ -5142,6 +5165,9 @@ var $;
     ], $mol_view_tree2_to_js_test_ex_right_hierarchy_bar.prototype, "domain", null);
     $.$mol_view_tree2_to_js_test_ex_right_hierarchy_bar = $mol_view_tree2_to_js_test_ex_right_hierarchy_bar;
 })($ || ($ = {}));
+
+;
+"use strict";
 
 ;
 "use strict";
@@ -5532,6 +5558,11 @@ sub
             $mol_assert_equal(foo.button().loc(), `$mol_view_tree2_to_js_test_ex_simple_factory_props_foo_button_loc`);
             $mol_assert_equal(foo.button().deep().loc, `$mol_view_tree2_to_js_test_ex_simple_factory_props_foo_button_deep_loc`);
             $mol_assert_equal(foo.button().sub()[0], 1);
+        },
+        'simple factory inheritance'($) {
+            const _foo = $mol_view_tree2_to_js_test_ex_simple_factory_inheritance_foo;
+            const foo = _foo.make({ $ });
+            $mol_assert_equal(foo.Having().config(), { ips: ['127.0.0.1', '0.0.0.0', '1.1.1.1'] });
         },
         'simple nan'($) {
             const _foo = $mol_view_tree2_to_js_test_ex_simple_nan_foo;
