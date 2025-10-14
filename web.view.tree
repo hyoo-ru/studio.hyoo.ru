@@ -81,13 +81,7 @@ $mol_link_source $mol_link
 		<= Icon $mol_icon_script_text
 
 $mol_speck $mol_view
-	minimal_width 12
-	attr *
-		^
-		mol_theme <= theme \$mol_theme_accent
-	style *
-		^
-		minHeight \1em
+	theme \$mol_theme_accent
 	sub /
 		<= value null
 
