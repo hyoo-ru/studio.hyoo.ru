@@ -334,6 +334,8 @@
     "$mol_embed_rutube",
     "$mol_embed_vklive",
     "$mol_fetch",
+    "$mol_rest_code",
+    "$mol_rest",
     "$mol_dom_parse",
     "$mol_func_is_class",
     "$mol_func_is",
